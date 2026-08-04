@@ -1,16 +1,16 @@
 import type { NextConfig } from "next";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const appRoot = path.dirname(fileURLToPath(import.meta.url));
+// Prefer __dirname-style path for Next config reliability on Railway
+const appRoot = process.cwd();
 
 const nextConfig: NextConfig = {
-  // Prevent monorepo root from becoming the workspace root on Railway
   turbopack: {
     root: appRoot,
   },
-  outputFileTracingRoot: appRoot,
+  outputFileTracingRoot: path.join(appRoot),
   images: {
+    unoptimized: false,
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },

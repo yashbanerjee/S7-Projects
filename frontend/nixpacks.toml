@@ -1,17 +1,6 @@
-# Root Directory on Railway for this service: frontend
-
+# Prefer Root Directory = frontend. Nixpacks still needs Node 22.
 [variables]
 NIXPACKS_NODE_VERSION = "22"
 
 [phases.setup]
 nixPkgs = ["nodejs_22", "npm-9_x"]
-
-[phases.install]
-cmds = ["npm install --include=dev"]
-
-[phases.build]
-# Force production Next build (Railway sometimes sets non-standard NODE_ENV)
-cmds = ["NODE_ENV=production npm run build"]
-
-[start]
-cmd = "npm run start"

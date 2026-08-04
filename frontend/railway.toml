@@ -1,12 +1,13 @@
-# Frontend-only Railway service
-# Settings → Root Directory MUST be: frontend
+# Config file path on Railway: /frontend/railway.toml
+# Root Directory: set to "frontend" (recommended) OR leave empty (auto-detect)
 
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm install --include=dev && npm run build"
+# Auto-detect monorepo root vs frontend Root Directory
+buildCommand = "set -e; if [ -f next.config.ts ] || [ -f next.config.js ]; then export NODE_ENV=production NEXT_TELEMETRY_DISABLED=1; npm install --include=dev; npm run build; else cd frontend; export NODE_ENV=production NEXT_TELEMETRY_DISABLED=1; npm install --include=dev; npm run build; fi"
 
 [deploy]
-startCommand = "npm run start"
+startCommand = "set -e; if [ -f next.config.ts ] || [ -f next.config.js ]; then export HOSTNAME=0.0.0.0; npm run start; else cd frontend; export HOSTNAME=0.0.0.0; npm run start; fi"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

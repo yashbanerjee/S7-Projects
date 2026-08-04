@@ -1,12 +1,12 @@
-# Backend-only Railway service
-# Settings → Root Directory MUST be: backend
+# Config file path on Railway: /backend/railway.toml
+# Root Directory: set to "backend" (recommended) OR leave empty (auto-detect)
 
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm install --include=dev && npm run build"
+buildCommand = "set -e; if [ -f prisma/schema.prisma ]; then npm install --include=dev; npx prisma generate; npx tsc; else cd backend; npm install --include=dev; npx prisma generate; npx tsc; fi"
 
 [deploy]
-startCommand = "npm run start:prod"
+startCommand = "set -e; if [ -f prisma/schema.prisma ]; then npm run start:prod; else cd backend; npm run start:prod; fi"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
