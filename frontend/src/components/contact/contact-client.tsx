@@ -1,18 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
+import { PhoneInput, phoneOptionalSchema } from "@/components/ui/phone-input";
 import { siteConfig } from "@/lib/brand";
 import { Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 
 const schema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().optional(),
+  phone: phoneOptionalSchema,
   subject: z.string().optional(),
   message: z.string().min(10),
 });
@@ -37,8 +38,12 @@ export function ContactClient({
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: { phone: "" },
+  });
 
   const onSubmit = handleSubmit(async (data) => {
     setStatus("loading");
@@ -50,7 +55,7 @@ export function ContactClient({
       });
       if (!res.ok) throw new Error("fail");
       setStatus("success");
-      reset();
+      reset({ phone: "" });
     } catch {
       setStatus("error");
     }
@@ -133,7 +138,19 @@ export function ContactClient({
               </label>
               <label className="block">
                 <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">Phone</span>
-                <input className={inputCls} {...register("phone")} />
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <PhoneInput
+                      name={field.name}
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  )}
+                />
+                {errors.phone && <span className="mt-1 block text-xs text-pink">{errors.phone.message}</span>}
               </label>
               <label className="block">
                 <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">Subject</span>

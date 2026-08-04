@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
+import { PhoneInput, phoneOptionalSchema } from "@/components/ui/phone-input";
 import { siteConfig } from "@/lib/brand";
 import type { fallbackJobs } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,7 @@ type Job = (typeof fallbackJobs)[number];
 const schema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().optional(),
+  phone: phoneOptionalSchema,
   cover: z.string().min(20, "Please share a short cover note"),
   portfolio: z.string().optional(),
 });
@@ -31,8 +32,12 @@ export function CareersClient({ jobs }: { jobs: Job[] }) {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: { phone: "" },
+  });
 
   const job = jobs.find((j) => j.slug === selected) || jobs[0];
 
@@ -49,7 +54,7 @@ export function CareersClient({ jobs }: { jobs: Job[] }) {
       });
       if (!res.ok) throw new Error("Failed");
       setStatus("success");
-      reset();
+      reset({ phone: "" });
       setResume(null);
     } catch {
       setStatus("error");
@@ -112,8 +117,19 @@ export function CareersClient({ jobs }: { jobs: Job[] }) {
                   <Field label="Email" error={errors.email?.message}>
                     <input type="email" className={inputCls} {...register("email")} />
                   </Field>
-                  <Field label="Phone">
-                    <input className={inputCls} {...register("phone")} />
+                  <Field label="Phone" error={errors.phone?.message}>
+                    <Controller
+                      name="phone"
+                      control={control}
+                      render={({ field }) => (
+                        <PhoneInput
+                          name={field.name}
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                        />
+                      )}
+                    />
                   </Field>
                   <Field label="Portfolio URL">
                     <input className={inputCls} {...register("portfolio")} />

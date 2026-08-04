@@ -17,7 +17,9 @@ router.post(
       company: z.string().min(2),
       name: z.string().min(2),
       email: z.string().email(),
-      phone: z.string().min(6),
+      phone: z
+        .string()
+        .regex(/^\+971\d{7,10}$/, "Phone must be +971 followed by 7–10 digits"),
       country: z.string().optional(),
       service: z.string().optional(),
       budget: z.string().optional(),

@@ -1,11 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
+import { PhoneInput, phoneRequiredSchema } from "@/components/ui/phone-input";
 import { siteConfig } from "@/lib/brand";
 import { fallbackServices } from "@/lib/content";
 
@@ -13,7 +14,7 @@ const schema = z.object({
   company: z.string().min(2),
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().min(6),
+  phone: phoneRequiredSchema,
   country: z.string().optional(),
   service: z.string().optional(),
   budget: z.string().optional(),
@@ -31,8 +32,12 @@ export function QuoteForm() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: { phone: "" },
+  });
 
   const onSubmit = handleSubmit(async (data) => {
     setStatus("loading");
@@ -46,7 +51,7 @@ export function QuoteForm() {
       });
       if (!res.ok) throw new Error("fail");
       setStatus("success");
-      reset();
+      reset({ phone: "" });
       setFile(null);
     } catch {
       setStatus("error");
@@ -74,7 +79,19 @@ export function QuoteForm() {
               <input type="email" className={inputCls} {...register("email")} />
             </Field>
             <Field label="Phone *" error={errors.phone?.message}>
-              <input className={inputCls} {...register("phone")} />
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput
+                    name={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    required
+                  />
+                )}
+              />
             </Field>
             <Field label="Country">
               <input className={inputCls} {...register("country")} />
