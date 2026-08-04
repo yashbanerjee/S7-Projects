@@ -1,0 +1,15 @@
+# When Root Directory is monorepo root, force Node 22 and frontend build path
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+[phases.setup]
+nixPkgs = ["nodejs_22", "npm-9_x"]
+
+[phases.install]
+cmds = ["npm install --prefix frontend --include=dev"]
+
+[phases.build]
+cmds = ["npm run build --prefix frontend"]
+
+[start]
+cmd = "npm run start --prefix frontend"

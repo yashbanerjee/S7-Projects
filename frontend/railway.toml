@@ -1,3 +1,6 @@
+# Prefer: set Railway Root Directory to `frontend` on this service.
+# If Root Directory is empty (repo root), monorepo root railway.toml/nixpacks handles frontend.
+
 [build]
 builder = "NIXPACKS"
 buildCommand = "npm install --include=dev && npm run build"
