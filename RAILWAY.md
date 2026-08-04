@@ -8,6 +8,18 @@ This monorepo deploys as **two services** + one **Postgres** database.
 2. **backend** – Root Directory: `backend`
 3. **frontend** – Root Directory: `frontend`
 
+### Frontend service (required settings)
+
+| Setting | Value |
+|---------|--------|
+| **Root Directory** | `frontend` (not empty / not monorepo root) |
+| Node | 22 (set via `nixpacks.toml`) |
+| Vars | `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_API_URL` must exist at **build** time |
+
+If Root Directory is empty, Nixpacks runs at repo root → `npm run build` fails in ~1s with no real compile logs.
+
+Also settle the Railway **past-due subscription** banner if deploys still abort unexpectedly.
+
 Connect both to the same Railway project. Link **backend** to the Postgres plugin so `DATABASE_URL` is injected (or paste it manually).
 
 ---
@@ -88,12 +100,19 @@ NEXT_PUBLIC_API_URL=https://your-backend.up.railway.app/api
 
 ---
 
-## Deploy order
+## Railway frontend notes
 
-1. Postgres plugin (done)
-2. Deploy **backend** first → wait until `/api/health` is OK (schema + seed run on start)
-3. Deploy **frontend** with backend public URL in `NEXT_PUBLIC_API_URL`
-4. Set backend `FRONTEND_URL` / `CORS_ORIGINS` to the frontend URL and redeploy backend if needed
+### Critical service settings
+1. **Root Directory** must be `frontend` (Settings → Root Directory).  
+   If left empty, `npm run build` runs at the monorepo root and fails (no build script).
+2. Generate a public domain after deploy.
+3. Set variables **before** build:
+   - `NEXT_PUBLIC_SITE_URL=https://your-frontend.up.railway.app`
+   - `NEXT_PUBLIC_API_URL=https://your-backend.up.railway.app/api`
+4. Node is pinned to **22** via `frontend/nixpacks.toml` (Next.js 16 needs Node ≥ 20.9).
+
+### Clear billing
+Railway may block builds if the subscription is past due — settle the balance if deploys still fail after a clean config.
 
 ---
 
