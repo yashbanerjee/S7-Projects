@@ -71,9 +71,59 @@ router.put(
   "/:id",
   requireAuth,
   asyncHandler(async (req, res) => {
+    const schema = z
+      .object({
+        title: z.string().min(2).optional(),
+        slug: z.string().min(2).optional(),
+        category: z.string().optional(),
+        client: z.string().nullable().optional(),
+        location: z.string().nullable().optional(),
+        year: z.string().nullable().optional(),
+        description: z.string().optional(),
+        content: z.string().nullable().optional(),
+        coverImage: z.string().optional(),
+        gallery: z.array(z.string()).optional(),
+        tags: z.array(z.string()).optional(),
+        featured: z.boolean().optional(),
+        published: z.boolean().optional(),
+        order: z.number().optional(),
+        metaTitle: z.string().nullable().optional(),
+        metaDesc: z.string().nullable().optional(),
+      })
+      .strict();
+    const data = schema.parse(req.body);
     const item = await prisma.portfolio.update({
       where: { id: param(req, "id") },
-      data: req.body,
+      data,
+    });
+    res.json({ success: true, data: item });
+  })
+);
+
+/** Quick publish toggle */
+router.patch(
+  "/:id/publish",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const published =
+      typeof req.body?.published === "boolean"
+        ? req.body.published
+        : undefined;
+    if (published === undefined) {
+      const current = await prisma.portfolio.findUnique({
+        where: { id: param(req, "id") },
+      });
+      if (!current) throw new AppError("Portfolio item not found", 404);
+      const item = await prisma.portfolio.update({
+        where: { id: param(req, "id") },
+        data: { published: !current.published },
+      });
+      res.json({ success: true, data: item });
+      return;
+    }
+    const item = await prisma.portfolio.update({
+      where: { id: param(req, "id") },
+      data: { published },
     });
     res.json({ success: true, data: item });
   })

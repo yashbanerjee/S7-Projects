@@ -16,7 +16,9 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
-    "railway:release": "prisma db push --skip-generate && tsx prisma/seed.ts"
+    "railway:release": "prisma db push --skip-generate && tsx prisma/seed.ts",
+    "smoke": "node scripts/smoke-test.mjs",
+    "smoke:prod": "node scripts/smoke-test.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

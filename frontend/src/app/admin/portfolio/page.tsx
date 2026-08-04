@@ -1,17 +1,7 @@
 "use client";
-import AdminResourcePage from "@/components/admin/resource-table";
+
+import { PortfolioAdmin } from "@/components/admin/portfolio-admin";
 
 export default function Page() {
-  return (
-    <AdminResourcePage
-      title="Portfolio"
-      endpoint="/portfolio?all=true"
-      columns={[
-        { key: "title", label: "Title" },
-        { key: "category", label: "Category" },
-        { key: "location", label: "Location" },
-        { key: "year", label: "Year" },
-      ]}
-    />
-  );
+  return <PortfolioAdmin />;
 }
