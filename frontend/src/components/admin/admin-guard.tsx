@@ -1,32 +1,40 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { siteConfig } from "@/lib/brand";
+import { adminFetch, getToken, clearToken } from "@/lib/admin-api";
 
 export function AdminGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [ready, setReady] = useState(pathname === "/admin/login");
 
   useEffect(() => {
-    if (pathname === "/admin/login") return;
-    const token = localStorage.getItem("s7_token");
+    if (pathname === "/admin/login") {
+      setReady(true);
+      return;
+    }
+    const token = getToken();
     if (!token) {
       router.replace("/admin/login");
       return;
     }
-    fetch(`${siteConfig.apiUrl}/auth/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error("unauth");
-      })
+    adminFetch("/auth/me")
+      .then(() => setReady(true))
       .catch(() => {
-        localStorage.removeItem("s7_token");
+        clearToken();
         router.replace("/admin/login");
       });
   }, [pathname, router]);
+
+  if (!ready && pathname !== "/admin/login") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-soft text-sm text-muted">
+        Checking session…
+      </div>
+    );
+  }
 
   return <AdminShell>{children}</AdminShell>;
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { siteConfig } from "@/lib/brand";
 import Link from "next/link";
+import { adminFetch } from "@/lib/admin-api";
 
 type Dash = {
   stats: Record<string, number>;
@@ -12,15 +12,12 @@ type Dash = {
 
 export default function AdminDashboard() {
   const [data, setData] = useState<Dash | null>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("s7_token");
-    fetch(`${siteConfig.apiUrl}/content/dashboard`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((r) => r.json())
+    adminFetch<{ data: Dash }>("/content/dashboard")
       .then((j) => setData(j.data))
-      .catch(() => setData(null));
+      .catch((e) => setError(e instanceof Error ? e.message : "Failed to load dashboard"));
   }, []);
 
   const stats = data?.stats || {
@@ -38,6 +35,11 @@ export default function AdminDashboard() {
     <div>
       <h1 className="font-display text-3xl tracking-tight">Dashboard</h1>
       <p className="mt-2 text-muted">Overview of Project S7 website content and enquiries.</p>
+      {error && (
+        <p className="mt-4 rounded border border-pink/30 bg-pink-muted px-4 py-3 text-sm text-pink">
+          {error}
+        </p>
+      )}
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Object.entries(stats).map(([key, value]) => (
@@ -66,7 +68,7 @@ export default function AdminDashboard() {
               </li>
             ))}
             {!data?.recentQuotes?.length && (
-              <li className="py-6 text-sm text-muted">No quotes yet. Connect the API and seed the database.</li>
+              <li className="py-6 text-sm text-muted">No quotes yet.</li>
             )}
           </ul>
         </div>

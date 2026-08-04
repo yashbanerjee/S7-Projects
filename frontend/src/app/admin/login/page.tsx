@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { siteConfig } from "@/lib/brand";
+import { setToken } from "@/lib/admin-api";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
@@ -21,14 +22,25 @@ export default function AdminLoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          email: data.email.trim().toLowerCase(),
+          password: data.password,
+        }),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message || "Login failed");
-      localStorage.setItem("s7_token", json.token);
-      router.push("/admin");
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(json.message || `Login failed (${res.status})`);
+      }
+      if (!json.token) throw new Error("No token returned from API");
+      setToken(json.token);
+      router.replace("/admin");
+      router.refresh();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Login failed");
+      setError(
+        e instanceof Error
+          ? e.message
+          : "Login failed. Check API URL and that the backend is online."
+      );
     } finally {
       setLoading(false);
     }
@@ -52,6 +64,7 @@ export default function AdminLoginPage() {
             <input
               type="email"
               required
+              autoComplete="username"
               className="w-full border-b border-line py-3 outline-none focus:border-pink"
               defaultValue="admin@projects7.com"
               {...register("email")}
@@ -64,14 +77,22 @@ export default function AdminLoginPage() {
             <input
               type="password"
               required
+              autoComplete="current-password"
               className="w-full border-b border-line py-3 outline-none focus:border-pink"
               {...register("password")}
             />
           </label>
-          {error && <p className="text-sm text-pink">{error}</p>}
+          {error && (
+            <p className="rounded border border-pink/30 bg-pink-muted px-3 py-2 text-sm text-pink">
+              {error}
+            </p>
+          )}
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in…" : "Sign in"}
           </Button>
+          <p className="text-center text-xs text-muted">
+            API: {siteConfig.apiUrl}
+          </p>
         </form>
       </div>
     </div>

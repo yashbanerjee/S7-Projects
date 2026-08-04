@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { asyncHandler, AppError } from "../middleware/error.js";
 import { requireAuth, signToken, type AuthRequest } from "../middleware/auth.js";
+import { env } from "../config/env.js";
 
 const router = Router();
 
@@ -11,14 +12,42 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const schema = z.object({
-      email: z.string().email(),
-      password: z.string().min(6),
+      email: z.string().email().transform((v) => v.toLowerCase().trim()),
+      password: z.string().min(1, "Password is required"),
     });
-    const { email, password } = schema.parse(req.body);
+
+    const parsed = schema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new AppError(parsed.error.issues[0]?.message || "Invalid login payload", 400);
+    }
+
+    const { email, password } = parsed.data;
+
+    const adminCount = await prisma.admin.count();
+    if (adminCount === 0) {
+      // Last-chance create if bootstrap failed earlier
+      const hash = await bcrypt.hash(env.adminPassword, 12);
+      await prisma.admin.create({
+        data: {
+          email: env.adminEmail.toLowerCase().trim(),
+          name: env.adminName,
+          password: hash,
+          role: "ADMIN",
+          active: true,
+        },
+      });
+      console.log("[auth] emergency admin bootstrap on login");
+    }
+
     const admin = await prisma.admin.findUnique({ where: { email } });
-    if (!admin || !admin.active) throw new AppError("Invalid credentials", 401);
+    if (!admin || !admin.active) {
+      throw new AppError("Invalid email or password", 401);
+    }
+
     const ok = await bcrypt.compare(password, admin.password);
-    if (!ok) throw new AppError("Invalid credentials", 401);
+    if (!ok) {
+      throw new AppError("Invalid email or password", 401);
+    }
 
     const token = signToken({
       id: admin.id,
@@ -26,10 +55,11 @@ router.post(
       role: admin.role,
     });
 
+    // Cross-site cookie for different frontend/API hostnames on Railway
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: env.nodeEnv === "production" ? "none" : "lax",
+      secure: env.nodeEnv === "production",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -50,7 +80,10 @@ router.post(
 router.post(
   "/logout",
   asyncHandler(async (_req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      sameSite: env.nodeEnv === "production" ? "none" : "lax",
+      secure: env.nodeEnv === "production",
+    });
     res.json({ success: true });
   })
 );
