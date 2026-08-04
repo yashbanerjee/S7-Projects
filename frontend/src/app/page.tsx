@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { AboutTeaser } from "@/components/home/about-teaser";
+import { EventMoments } from "@/components/home/event-moments";
 import { ServicesShowcase } from "@/components/home/services-showcase";
 import { WhyChooseUs } from "@/components/home/why-choose";
 import { PortfolioPreview } from "@/components/home/portfolio-preview";
@@ -78,6 +79,7 @@ export default async function HomePage() {
       />
       <Hero />
       <AboutTeaser />
+      <EventMoments />
       <ServicesShowcase services={data.services} />
       <WhyChooseUs />
       <PortfolioPreview items={data.portfolio} />

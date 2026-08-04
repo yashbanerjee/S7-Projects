@@ -7,7 +7,7 @@ import type { fallbackPortfolio } from "@/lib/content";
 type Item = (typeof fallbackPortfolio)[number];
 
 export function PortfolioPreview({ items }: { items: Item[] }) {
-  const list = items.slice(0, 4);
+  const list = items.slice(0, 6);
 
   return (
     <section className="section-pad bg-soft">

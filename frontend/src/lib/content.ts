@@ -1,32 +1,124 @@
 /**
- * Curated premium Unsplash imagery for Project S7.
- * Easy to replace — ids map to cinematic event / exhibition photography.
+ * Curated premium Unsplash imagery for Project S7 —
+ * cinematic event, exhibition, stage, and hospitality photography.
  */
 const u = (id: string, w = 1920, h = 1080) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=85`;
 
 export const images = {
-  hero: u("photo-1540575467063-178a50c2df87", 2400, 1600),
-  heroAlt: u("photo-1492684223066-81342ee5ff30", 2400, 1600),
+  /** Full theatre / keynote — modern main visual */
+  hero: u("photo-1591115765373-5207764f72e7", 2400, 1600),
+  /** High-energy crowd / live atmosphere */
+  heroAlt: u("photo-1429962714451-bb934ecdc4ec", 2400, 1600),
+  /** Evening reception / hosting mood */
   about: u("photo-1511578314322-379afb476865", 1600, 2000),
-  aboutWide: u("photo-1505373877841-8d25f7d46678", 2000, 1200),
+  /** Wide conference auditorium */
+  aboutWide: u("photo-1587825140708-dfaf72ae4b04", 2000, 1200),
+  /** Strategy workshop table */
   process: u("photo-1552664730-d307ca884978", 1800, 1200),
-  cta: u("photo-1470229722913-7c0e2dbbafd3", 2400, 1400),
-  contact: u("photo-1497366216548-37526070297c", 1800, 1200),
+  /** Dramatic stage lighting production */
+  cta: u("photo-1558008258-3256797b43f3", 2400, 1400),
+  /** Contemporary venue / lounge architecture */
+  contact: u("photo-1497366754035-f200968a6e72", 1800, 1200),
+  /** Creative team collaboration */
   careers: u("photo-1522071820081-009f0129c71c", 1800, 1200),
-  culture: u("photo-1600880292203-757bb62b4baf", 1600, 1200),
-  leadership: u("photo-1560250097-0b93528c311a", 1200, 1500),
-  networking: u("photo-1511632765486-a01980e01a18", 1800, 1200),
+  /** Team moment / celebration culture */
+  culture: u("photo-1517457373958-b7bdd4587205", 1600, 1200),
+  /** Keynote speaker on stage */
+  leadership: u("photo-1475721027785-f74eccf877e2", 1200, 1500),
+  /** Networking & hospitality floor */
+  networking: u("photo-1515187029135-18ee286d815b", 1800, 1200),
+  /** Live stage / concert production */
   stage: u("photo-1514525253161-7a46d19cd819", 1800, 1200),
-  booth: u("photo-1558618666-fcd25c85cd64", 1800, 1200),
+  /** Trade-show stand / exhibition aisle */
+  booth: u("photo-1560439514-4e9645039924", 1800, 1200),
+  /** Build craftsmanship / install */
   build: u("photo-1503387762-592deb58ef4e", 1800, 1200),
+  /** Fine dining & event catering */
   hospitality: u("photo-1414235077428-338989a2e8c0", 1800, 1200),
+  /** Awards / ceremony aisle */
   awards: u("photo-1464366400600-7168b8af9bc3", 1800, 1200),
-  expo: u("photo-1505373877841-8d25f7d46678", 1800, 1200),
+  /** Dense audience — expo energy */
+  expo: u("photo-1540575467063-178a50c2df87", 1800, 1200),
+  /** Landmark venue architecture */
   architecture: u("photo-1486406146926-c627a92ad1ab", 1800, 1200),
+  /** Delivery team in workshop */
   team: u("photo-1556761175-b413da4baf72", 1800, 1200),
+  /** Stage lights wash */
   lighting: u("photo-1470229722913-7c0e2dbbafd3", 1800, 1200),
+  /** Empty modern stage set */
+  conference: u("photo-1505373877841-8d25f7d46678", 1800, 1200),
+  /** Gala banquet tables */
+  gala: u("photo-1511795409834-ef04bbd61622", 1800, 1200),
+  /** Festival confetti energy */
+  celebration: u("photo-1533174072545-7a4b6ad7a6c3", 1800, 1200),
+  /** Dinner networking */
+  dinner: u("photo-1528605248644-14dd04022da1", 1800, 1200),
+  /** Laser lights / concert atmosphere */
+  lightsCrowd: u("photo-1505236858219-8359eb29e329", 1800, 1200),
+  /** Boardroom briefings */
+  briefing: u("photo-1542744173-8e7e53415bb0", 1800, 1200),
+  /** Speakers panel / tech forum */
+  panel: u("photo-1573164713714-d95e436ab8d6", 1800, 1200),
+  /** Product launch vibe */
+  launch: u("photo-1561489396-888724a1543d", 1800, 1200),
+  /** City landmark for international */
+  skyline: u("photo-1486406146926-c627a92ad1ab", 1800, 1200),
+  /** Automotive show presence */
+  automotive: u("photo-1492144534655-ae79c964c9d7", 1800, 1200),
+  /** Retail experiential */
+  retail: u("photo-1441986300917-64674bd600d8", 1800, 1200),
+  /** Education campus / learning expo */
+  education: u("photo-1528605248644-14dd04022da1", 1800, 1200),
+  /** Healthcare congress dialogue */
+  healthcare: u("photo-1573164713714-d95e436ab8d6", 1800, 1200),
+  /** Technology demo / innovation lab */
+  technology: u("photo-1504384308090-c894fdcc538d", 1800, 1200),
 };
+
+/** Scroll-stopping event stills used in homepage gallery */
+export const eventMoments = [
+  {
+    src: images.expo,
+    alt: "Audience packed into a flagship exhibition keynote",
+    label: "Exhibition keynotes",
+  },
+  {
+    src: images.booth,
+    alt: "Branded trade-show stand on an exhibition floor",
+    label: "Stand architecture",
+  },
+  {
+    src: images.stage,
+    alt: "Live stage production with concert lighting",
+    label: "Stage production",
+  },
+  {
+    src: images.networking,
+    alt: "Guests networking at a premium corporate reception",
+    label: "Hosted networking",
+  },
+  {
+    src: images.gala,
+    alt: "Elegant banquet styling for a gala dinner",
+    label: "Gala dining",
+  },
+  {
+    src: images.lightsCrowd,
+    alt: "Crowd immersed in show lighting and atmosphere",
+    label: "Show atmosphere",
+  },
+  {
+    src: images.awards,
+    alt: "Ceremony setting for awards and recognition moments",
+    label: "Awards nights",
+  },
+  {
+    src: images.celebration,
+    alt: "High-energy celebration with confetti and lights",
+    label: "Live celebrations",
+  },
+];
 
 /** Cinematic hero background video — replace `public/videos/hero.mp4` with your own shoot */
 export const heroVideo = "/videos/hero.mp4";
@@ -35,12 +127,12 @@ export const serviceImages: Record<string, string> = {
   "exhibition-management": images.expo,
   "exhibition-stand-design": images.booth,
   "exhibition-stand-build": images.build,
-  "project-management": images.process,
+  "project-management": images.briefing,
   "event-staffing": images.networking,
   "event-production": images.stage,
-  "creative-branding": u("photo-1561070791-2526d30994b5"),
+  "creative-branding": images.launch,
   capabilities: images.architecture,
-  "future-services": u("photo-1633356122544-f134324a6cee"),
+  "future-services": images.technology,
 };
 
 /** Fallback content when API is offline — mirrors seed data */
@@ -102,7 +194,7 @@ export const fallbackServices = [
     tagline: "Clarity under complexity",
     description:
       "Dedicated project directors who hold the entire programme together — budgets, timelines, stakeholders, and creative delivery.",
-    image: images.process,
+    image: images.briefing,
   },
   {
     title: "Event Staffing",
@@ -156,7 +248,7 @@ export const fallbackPortfolio = [
     year: "2025",
     description:
       "A monumental pavilion experience integrating interactive product stories, VIP lounges, and broadcast-ready stages for a flagship national infrastructure showcase.",
-    coverImage: images.hero,
+    coverImage: images.conference,
     tags: ["Pavilion", "Government", "Interactive"],
     featured: true,
   },
@@ -169,7 +261,7 @@ export const fallbackPortfolio = [
     year: "2025",
     description:
       "Sculptural stand design with kinetic lighting, precision vehicle staging, and invitation-only hospitality suites.",
-    coverImage: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=85",
+    coverImage: images.automotive,
     tags: ["Automotive", "Hospitality"],
     featured: true,
   },
@@ -182,7 +274,7 @@ export const fallbackPortfolio = [
     year: "2024",
     description:
       "Three-day executive summit with main stage production, breakout architecture, and seamless hybrid streaming.",
-    coverImage: images.networking,
+    coverImage: images.hero,
     tags: ["Summit", "Hybrid"],
     featured: true,
   },
@@ -195,7 +287,7 @@ export const fallbackPortfolio = [
     year: "2024",
     description:
       "Clinical-grade exhibition environments with private consultation rooms and scientific content theatres.",
-    coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1800&q=85",
+    coverImage: images.panel,
     tags: ["Healthcare"],
     featured: true,
   },
@@ -208,7 +300,7 @@ export const fallbackPortfolio = [
     year: "2024",
     description:
       "A temporary retail cathedral — modular architecture, layered merchandising, and influencer-ready moments.",
-    coverImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
+    coverImage: images.launch,
     tags: ["Retail"],
     featured: false,
   },
@@ -221,7 +313,7 @@ export const fallbackPortfolio = [
     year: "2023",
     description:
       "Campus-style exhibition district with wayfinding, student journey narratives, and institutional lounges.",
-    coverImage: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85",
+    coverImage: images.networking,
     tags: ["Education"],
     featured: false,
   },
@@ -314,14 +406,62 @@ export const fallbackFaqs = [
 ];
 
 export const fallbackIndustries = [
-  { title: "Government", slug: "government", description: "National pavilions, ministerial programmes, protocol-sensitive hosting, and public-sector showcases delivered with discretion and precision.", image: images.architecture },
-  { title: "Corporate", slug: "corporate", description: "Brand experiences, AGMs, leadership summits, product launches, and internal culture events with executive polish.", image: images.contact },
-  { title: "International", slug: "international", description: "Cross-border trade exhibitions, multi-city roadshows, and market-entry experiences with global logistics mastery.", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=85" },
-  { title: "Healthcare", slug: "healthcare", description: "Scientific congresses, medical device expos, and clinical brand environments that balance rigour with hospitality.", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=85" },
-  { title: "Education", slug: "education", description: "Institutional expos, campus forums, and student-facing experiences that inspire and inform.", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=85" },
-  { title: "Technology", slug: "technology", description: "Demo theatres, innovation labs, and product storytelling platforms for software and hardware leaders.", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=85" },
-  { title: "Automotive", slug: "automotive", description: "Vehicle launches, motorsport hospitality, and sculptural stand architecture for premium mobility brands.", image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=85" },
-  { title: "Retail", slug: "retail", description: "Pop-up cathedrals, experiential store formats, and seasonal exhibition commerce worlds.", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=85" },
+  {
+    title: "Government",
+    slug: "government",
+    description:
+      "National pavilions, ministerial programmes, protocol-sensitive hosting, and public-sector showcases delivered with discretion and precision.",
+    image: images.architecture,
+  },
+  {
+    title: "Corporate",
+    slug: "corporate",
+    description:
+      "Brand experiences, AGMs, leadership summits, product launches, and internal culture events with executive polish.",
+    image: images.briefing,
+  },
+  {
+    title: "International",
+    slug: "international",
+    description:
+      "Cross-border trade exhibitions, multi-city roadshows, and market-entry experiences with global logistics mastery.",
+    image: images.expo,
+  },
+  {
+    title: "Healthcare",
+    slug: "healthcare",
+    description:
+      "Scientific congresses, medical device expos, and clinical brand environments that balance rigour with hospitality.",
+    image: images.healthcare,
+  },
+  {
+    title: "Education",
+    slug: "education",
+    description:
+      "Institutional expos, campus forums, and student-facing experiences that inspire and inform.",
+    image: images.education,
+  },
+  {
+    title: "Technology",
+    slug: "technology",
+    description:
+      "Demo theatres, innovation labs, and product storytelling platforms for software and hardware leaders.",
+    image: images.technology,
+  },
+  {
+    title: "Automotive",
+    slug: "automotive",
+    description:
+      "Vehicle launches, motorsport hospitality, and sculptural stand architecture for premium mobility brands.",
+    image: images.automotive,
+  },
+  {
+    title: "Retail",
+    slug: "retail",
+    description:
+      "Pop-up cathedrals, experiential store formats, and seasonal exhibition commerce worlds.",
+    image: images.retail,
+  },
 ];
 
 export const fallbackJobs = [
