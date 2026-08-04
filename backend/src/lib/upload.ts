@@ -43,8 +43,10 @@ export async function uploadToCloudinary(
   folder = "project-s7"
 ) {
   if (!env.cloudinary.enabled) {
+    // API_URL may be https://host or https://host/api — strip trailing /api for static files
+    const base = (env.apiUrl || "http://localhost:5000").replace(/\/api\/?$/, "");
     return {
-      url: `${env.apiUrl}/uploads/${path.basename(filePath)}`,
+      url: `${base}/uploads/${path.basename(filePath)}`,
       publicId: null as string | null,
     };
   }

@@ -6,61 +6,57 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { GalleryUrlOrUpload, ImageUrlOrUpload } from "@/components/admin/image-field";
 
-export type PortfolioItem = {
+export type ServiceItem = {
   id: string;
   title: string;
   slug: string;
-  category: string;
-  client?: string | null;
-  location?: string | null;
-  year?: string | null;
+  tagline?: string | null;
   description: string;
+  overview?: string | null;
   content?: string | null;
-  coverImage: string;
+  image?: string | null;
   gallery?: string[];
-  tags?: string[];
+  icon?: string | null;
+  order?: number;
   featured: boolean;
   published: boolean;
-  order?: number;
-  metaTitle?: string | null;
-  metaDesc?: string | null;
+  benefits?: string[] | null;
+  features?: string[] | null;
 };
 
 type FormState = {
   title: string;
   slug: string;
-  category: string;
-  client: string;
-  location: string;
-  year: string;
+  tagline: string;
   description: string;
+  overview: string;
   content: string;
-  coverImage: string;
-  tags: string;
+  image: string;
   gallery: string[];
+  icon: string;
+  order: string;
   featured: boolean;
   published: boolean;
-  order: string;
+  benefits: string;
+  features: string;
 };
 
 const emptyForm = (): FormState => ({
   title: "",
   slug: "",
-  category: "Exhibitions",
-  client: "",
-  location: "",
-  year: new Date().getFullYear().toString(),
+  tagline: "",
   description: "",
+  overview: "",
   content: "",
-  coverImage: "",
-  tags: "",
+  image: "",
   gallery: [],
+  icon: "",
+  order: "0",
   featured: false,
   published: true,
-  order: "0",
+  benefits: "",
+  features: "",
 });
-
-const CATEGORIES = ["Exhibitions", "Events", "Corporate", "Booths"];
 
 function slugify(value: string) {
   return value
@@ -71,22 +67,35 @@ function slugify(value: string) {
     .replace(/-+/g, "-");
 }
 
-function toForm(item: PortfolioItem): FormState {
+function linesToArray(value: string) {
+  return value
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function arrayToLines(value: unknown): string {
+  if (!value) return "";
+  if (Array.isArray(value)) return value.map(String).join("\n");
+  return "";
+}
+
+function toForm(item: ServiceItem): FormState {
   return {
     title: item.title || "",
     slug: item.slug || "",
-    category: item.category || "Exhibitions",
-    client: item.client || "",
-    location: item.location || "",
-    year: item.year || "",
+    tagline: item.tagline || "",
     description: item.description || "",
+    overview: item.overview || "",
     content: item.content || "",
-    coverImage: item.coverImage || "",
-    tags: (item.tags || []).join(", "),
+    image: item.image || "",
     gallery: item.gallery || [],
+    icon: item.icon || "",
+    order: String(item.order ?? 0),
     featured: !!item.featured,
     published: item.published !== false,
-    order: String(item.order ?? 0),
+    benefits: arrayToLines(item.benefits),
+    features: arrayToLines(item.features),
   };
 }
 
@@ -94,26 +103,23 @@ function fromForm(form: FormState) {
   return {
     title: form.title.trim(),
     slug: form.slug.trim() || slugify(form.title),
-    category: form.category,
-    client: form.client.trim() || undefined,
-    location: form.location.trim() || undefined,
-    year: form.year.trim() || undefined,
+    tagline: form.tagline.trim() || undefined,
     description: form.description.trim(),
+    overview: form.overview.trim() || undefined,
     content: form.content.trim() || undefined,
-    coverImage: form.coverImage.trim(),
-    tags: form.tags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean),
+    image: form.image.trim() || undefined,
     gallery: form.gallery.map((u) => u.trim()).filter(Boolean),
+    icon: form.icon.trim() || undefined,
+    order: Number(form.order) || 0,
     featured: form.featured,
     published: form.published,
-    order: Number(form.order) || 0,
+    benefits: linesToArray(form.benefits),
+    features: linesToArray(form.features),
   };
 }
 
-export function PortfolioAdmin() {
-  const [items, setItems] = useState<PortfolioItem[]>([]);
+export function ServicesAdmin() {
+  const [items, setItems] = useState<ServiceItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -126,10 +132,10 @@ export function PortfolioAdmin() {
     setError("");
     setLoading(true);
     try {
-      const res = await adminFetch<{ data: PortfolioItem[] }>("/portfolio?all=true");
+      const res = await adminFetch<{ data: ServiceItem[] }>("/services?all=true");
       setItems(Array.isArray(res.data) ? res.data : []);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load portfolio");
+      setError(e instanceof Error ? e.message : "Failed to load services");
     } finally {
       setLoading(false);
     }
@@ -146,7 +152,7 @@ export function PortfolioAdmin() {
     setMessage("");
   };
 
-  const openEdit = (item: PortfolioItem) => {
+  const openEdit = (item: ServiceItem) => {
     setMode("edit");
     setEditingId(item.id);
     setForm(toForm(item));
@@ -171,8 +177,8 @@ export function PortfolioAdmin() {
 
   const save = async () => {
     const payload = fromForm(form);
-    if (!payload.title || !payload.description || !payload.coverImage || !payload.slug) {
-      setError("Title, slug, description and cover image are required.");
+    if (!payload.title || !payload.slug || !payload.description || payload.description.length < 10) {
+      setError("Title, slug and description (min 10 characters) are required.");
       return;
     }
     setSaving(true);
@@ -180,17 +186,17 @@ export function PortfolioAdmin() {
     setMessage("");
     try {
       if (mode === "create") {
-        await adminFetch("/portfolio", {
+        await adminFetch("/services", {
           method: "POST",
           body: JSON.stringify(payload),
         });
-        setMessage("Portfolio item created.");
+        setMessage("Service created.");
       } else if (editingId) {
-        await adminFetch(`/portfolio/${editingId}`, {
+        await adminFetch(`/services/${editingId}`, {
           method: "PUT",
           body: JSON.stringify(payload),
         });
-        setMessage("Portfolio item updated.");
+        setMessage("Service updated.");
       }
       closeForm();
       await load();
@@ -201,10 +207,10 @@ export function PortfolioAdmin() {
     }
   };
 
-  const togglePublished = async (item: PortfolioItem) => {
+  const toggleActive = async (item: ServiceItem) => {
     setError("");
     try {
-      await adminFetch(`/portfolio/${item.id}`, {
+      await adminFetch(`/services/${item.id}`, {
         method: "PUT",
         body: JSON.stringify({ published: !item.published }),
       });
@@ -215,20 +221,20 @@ export function PortfolioAdmin() {
       );
       setMessage(
         !item.published
-          ? `"${item.title}" is now ON (published).`
-          : `"${item.title}" is now OFF (hidden).`
+          ? `"${item.title}" is now Active.`
+          : `"${item.title}" is now Inactive.`
       );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Toggle failed");
     }
   };
 
-  const remove = async (item: PortfolioItem) => {
+  const remove = async (item: ServiceItem) => {
     if (!confirm(`Delete “${item.title}”? This cannot be undone.`)) return;
     setError("");
     try {
-      await adminFetch(`/portfolio/${item.id}`, { method: "DELETE" });
-      setMessage("Item deleted.");
+      await adminFetch(`/services/${item.id}`, { method: "DELETE" });
+      setMessage("Service deleted.");
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Delete failed");
@@ -241,10 +247,12 @@ export function PortfolioAdmin() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="font-display text-3xl tracking-tight">
-              {mode === "create" ? "Add portfolio project" : "Edit portfolio project"}
+              {mode === "create" ? "Add service" : "Edit service"}
             </h1>
             <p className="mt-2 text-sm text-muted">
-              {mode === "create" ? "Create a new case study." : `Editing · ${editingId}`}
+              {mode === "create"
+                ? "Create a new service offering."
+                : `Editing · ${editingId}`}
             </p>
           </div>
           <button
@@ -277,38 +285,19 @@ export function PortfolioAdmin() {
               onChange={(e) => setField("slug", e.target.value)}
             />
           </Field>
-          <Field label="Category">
-            <select
-              className={inputCls}
-              value={form.category}
-              onChange={(e) => setField("category", e.target.value)}
-            >
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Client">
+          <Field label="Tagline">
             <input
               className={inputCls}
-              value={form.client}
-              onChange={(e) => setField("client", e.target.value)}
+              value={form.tagline}
+              onChange={(e) => setField("tagline", e.target.value)}
             />
           </Field>
-          <Field label="Location">
+          <Field label="Icon name (optional)">
             <input
               className={inputCls}
-              value={form.location}
-              onChange={(e) => setField("location", e.target.value)}
-            />
-          </Field>
-          <Field label="Year">
-            <input
-              className={inputCls}
-              value={form.year}
-              onChange={(e) => setField("year", e.target.value)}
+              value={form.icon}
+              onChange={(e) => setField("icon", e.target.value)}
+              placeholder="Layers, PenTool, Users…"
             />
           </Field>
           <Field label="Order">
@@ -321,15 +310,14 @@ export function PortfolioAdmin() {
           </Field>
           <div className="md:col-span-2">
             <ImageUrlOrUpload
-              label="Cover image"
-              required
-              folder="portfolio"
-              value={form.coverImage}
-              onChange={(url) => setField("coverImage", url)}
+              label="Service image"
+              folder="services"
+              value={form.image}
+              onChange={(url) => setField("image", url)}
             />
           </div>
           <div className="md:col-span-2">
-            <Field label="Description *">
+            <Field label="Description * (min 10 characters)">
               <textarea
                 rows={4}
                 className={inputCls}
@@ -339,27 +327,44 @@ export function PortfolioAdmin() {
             </Field>
           </div>
           <div className="md:col-span-2">
+            <Field label="Overview">
+              <textarea
+                rows={3}
+                className={inputCls}
+                value={form.overview}
+                onChange={(e) => setField("overview", e.target.value)}
+              />
+            </Field>
+          </div>
+          <div className="md:col-span-2">
             <Field label="Long content (optional)">
               <textarea
-                rows={4}
+                rows={3}
                 className={inputCls}
                 value={form.content}
                 onChange={(e) => setField("content", e.target.value)}
               />
             </Field>
           </div>
-          <Field label="Tags (comma separated)">
-            <input
+          <Field label="Benefits (one per line)">
+            <textarea
+              rows={4}
               className={inputCls}
-              value={form.tags}
-              onChange={(e) => setField("tags", e.target.value)}
-              placeholder="Pavilion, Government, Interactive"
+              value={form.benefits}
+              onChange={(e) => setField("benefits", e.target.value)}
             />
           </Field>
-          <div className="hidden md:block" />
+          <Field label="Features (one per line)">
+            <textarea
+              rows={4}
+              className={inputCls}
+              value={form.features}
+              onChange={(e) => setField("features", e.target.value)}
+            />
+          </Field>
           <GalleryUrlOrUpload
             label="Gallery images"
-            folder="portfolio"
+            folder="services"
             urls={form.gallery}
             onChange={(urls) => setField("gallery", urls)}
           />
@@ -370,7 +375,7 @@ export function PortfolioAdmin() {
               onChange={(e) => setField("featured", e.target.checked)}
               className="h-4 w-4 accent-[var(--pink)]"
             />
-            Featured on homepage
+            Featured
           </label>
           <label className="flex items-center gap-3 text-sm">
             <input
@@ -379,13 +384,13 @@ export function PortfolioAdmin() {
               onChange={(e) => setField("published", e.target.checked)}
               className="h-4 w-4 accent-[var(--pink)]"
             />
-            Published (visible on public site)
+            Active (visible on public site)
           </label>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Button type="button" onClick={save} disabled={saving}>
-            {saving ? "Saving…" : mode === "create" ? "Create project" : "Save changes"}
+            {saving ? "Saving…" : mode === "create" ? "Create service" : "Save changes"}
           </Button>
           <Button type="button" variant="outline" onClick={closeForm}>
             Cancel
@@ -399,13 +404,13 @@ export function PortfolioAdmin() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl tracking-tight">Portfolio</h1>
+          <h1 className="font-display text-3xl tracking-tight">Services</h1>
           <p className="mt-2 text-sm text-muted">
-            Add, edit, publish or hide case studies. Managed via REST API.
+            Add, edit, activate or deactivate services. Managed via REST API.
           </p>
         </div>
         <Button type="button" onClick={openCreate}>
-          + Add project
+          + Add service
         </Button>
       </div>
 
@@ -425,9 +430,8 @@ export function PortfolioAdmin() {
           <thead className="border-b border-line bg-soft text-xs uppercase tracking-wider text-muted">
             <tr>
               <th className="px-4 py-3 font-semibold">Title</th>
-              <th className="px-4 py-3 font-semibold">Category</th>
-              <th className="px-4 py-3 font-semibold">Location</th>
-              <th className="px-4 py-3 font-semibold">Year</th>
+              <th className="px-4 py-3 font-semibold">Slug</th>
+              <th className="px-4 py-3 font-semibold">Featured</th>
               <th className="px-4 py-3 font-semibold">Status</th>
               <th className="px-4 py-3 font-semibold">Actions</th>
             </tr>
@@ -435,7 +439,7 @@ export function PortfolioAdmin() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-muted">
+                <td colSpan={5} className="px-4 py-10 text-center text-muted">
                   Loading…
                 </td>
               </tr>
@@ -445,25 +449,30 @@ export function PortfolioAdmin() {
                 <tr key={item.id} className="border-b border-line last:border-0">
                   <td className="max-w-xs px-4 py-3">
                     <p className="font-medium">{item.title}</p>
-                    <p className="text-xs text-muted">{item.slug}</p>
+                    {item.tagline && (
+                      <p className="text-xs text-muted">{item.tagline}</p>
+                    )}
                   </td>
-                  <td className="px-4 py-3">{item.category}</td>
-                  <td className="px-4 py-3">{item.location || "—"}</td>
-                  <td className="px-4 py-3">{item.year || "—"}</td>
+                  <td className="px-4 py-3 text-muted">{item.slug}</td>
+                  <td className="px-4 py-3">{item.featured ? "Yes" : "No"}</td>
                   <td className="px-4 py-3">
                     <button
                       type="button"
-                      onClick={() => togglePublished(item)}
+                      onClick={() => toggleActive(item)}
                       className={cn(
-                        "inline-flex min-w-[72px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider transition",
+                        "inline-flex min-w-[88px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider transition",
                         item.published
                           ? "bg-pink text-white"
                           : "border border-line bg-soft text-muted"
                       )}
                       aria-pressed={item.published}
-                      title={item.published ? "Click to turn OFF (hide)" : "Click to turn ON (publish)"}
+                      title={
+                        item.published
+                          ? "Click to set Inactive (hide on site)"
+                          : "Click to set Active (show on site)"
+                      }
                     >
-                      {item.published ? "ON" : "OFF"}
+                      {item.published ? "Active" : "Inactive"}
                     </button>
                   </td>
                   <td className="px-4 py-3">
@@ -488,8 +497,8 @@ export function PortfolioAdmin() {
               ))}
             {!loading && !items.length && !error && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-muted">
-                  No portfolio items yet. Click “Add project” to create one.
+                <td colSpan={5} className="px-4 py-10 text-center text-muted">
+                  No services yet. Click “Add service” to create one.
                 </td>
               </tr>
             )}

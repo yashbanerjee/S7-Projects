@@ -7,6 +7,26 @@ import { param } from "../lib/params.js";
 
 const router = Router();
 
+const serviceBodySchema = z.object({
+  title: z.string().min(2).optional(),
+  slug: z.string().min(2).optional(),
+  tagline: z.string().nullable().optional(),
+  description: z.string().min(10).optional(),
+  overview: z.string().nullable().optional(),
+  content: z.string().nullable().optional(),
+  image: z.string().nullable().optional(),
+  gallery: z.array(z.string()).optional(),
+  process: z.any().optional(),
+  benefits: z.any().optional(),
+  features: z.any().optional(),
+  icon: z.string().nullable().optional(),
+  order: z.number().optional(),
+  featured: z.boolean().optional(),
+  published: z.boolean().optional(),
+  metaTitle: z.string().nullable().optional(),
+  metaDesc: z.string().nullable().optional(),
+});
+
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -65,9 +85,31 @@ router.put(
   "/:id",
   requireAuth,
   asyncHandler(async (req, res) => {
+    const data = serviceBodySchema.parse(req.body);
     const service = await prisma.service.update({
       where: { id: param(req, "id") },
-      data: req.body,
+      data,
+    });
+    res.json({ success: true, data: service });
+  })
+);
+
+router.patch(
+  "/:id/publish",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const published =
+      typeof req.body?.published === "boolean" ? req.body.published : undefined;
+    const current = await prisma.service.findUnique({
+      where: { id: param(req, "id") },
+    });
+    if (!current) throw new AppError("Service not found", 404);
+
+    const service = await prisma.service.update({
+      where: { id: param(req, "id") },
+      data: {
+        published: published === undefined ? !current.published : published,
+      },
     });
     res.json({ success: true, data: service });
   })
