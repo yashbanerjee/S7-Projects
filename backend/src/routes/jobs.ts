@@ -62,7 +62,21 @@ router.post(
   "/",
   requireAuth,
   asyncHandler(async (req, res) => {
-    const data = await prisma.job.create({ data: req.body });
+    const schema = z.object({
+      title: z.string().min(2),
+      slug: z.string().min(2),
+      department: z.string().optional().nullable(),
+      location: z.string().min(2),
+      type: z.string().optional(),
+      description: z.string().min(10),
+      requirements: z.string().optional().nullable(),
+      benefits: z.string().optional().nullable(),
+      salary: z.string().optional().nullable(),
+      active: z.boolean().optional(),
+      published: z.boolean().optional(),
+    });
+    const body = schema.parse(req.body);
+    const data = await prisma.job.create({ data: body });
     res.status(201).json({ success: true, data });
   })
 );
@@ -71,9 +85,25 @@ router.put(
   "/:id",
   requireAuth,
   asyncHandler(async (req, res) => {
+    const schema = z
+      .object({
+        title: z.string().min(2).optional(),
+        slug: z.string().min(2).optional(),
+        department: z.string().optional().nullable(),
+        location: z.string().min(2).optional(),
+        type: z.string().optional(),
+        description: z.string().min(10).optional(),
+        requirements: z.string().optional().nullable(),
+        benefits: z.string().optional().nullable(),
+        salary: z.string().optional().nullable(),
+        active: z.boolean().optional(),
+        published: z.boolean().optional(),
+      })
+      .strict();
+    const body = schema.parse(req.body);
     const data = await prisma.job.update({
       where: { id: param(req, "id") },
-      data: req.body,
+      data: body,
     });
     res.json({ success: true, data });
   })

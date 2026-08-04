@@ -2,8 +2,14 @@ import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
 import { asyncHandler } from "../middleware/error.js";
 import { requireAuth } from "../middleware/auth.js";
-import { upload, uploadToCloudinary, deleteFromCloudinary } from "../lib/upload.js";
+import {
+  upload,
+  uploadToCloudinary,
+  deleteFromCloudinary,
+} from "../lib/upload.js";
 import { param } from "../lib/params.js";
+import fs from "fs";
+import path from "path";
 
 const router = Router();
 
@@ -30,7 +36,10 @@ router.post(
       return;
     }
     const folder = (req.body.folder as string) || "general";
-    const { url, publicId } = await uploadToCloudinary(req.file.path, `project-s7/${folder}`);
+    const { url, publicId } = await uploadToCloudinary(
+      req.file.path,
+      `project-s7/${folder}`
+    );
     const type = req.file.mimetype.startsWith("video")
       ? "VIDEO"
       : req.file.mimetype.startsWith("image")
@@ -57,8 +66,21 @@ router.delete(
   "/:id",
   requireAuth,
   asyncHandler(async (req, res) => {
-    const media = await prisma.media.findUnique({ where: { id: param(req, "id") } });
-    if (media?.publicId) await deleteFromCloudinary(media.publicId);
+    const media = await prisma.media.findUnique({
+      where: { id: param(req, "id") },
+    });
+    if (!media) {
+      res.status(404).json({ success: false, message: "Media not found" });
+      return;
+    }
+    if (media.publicId) await deleteFromCloudinary(media.publicId);
+    if (!media.publicId && media.url.includes("/uploads/")) {
+      const name = media.url.split("/uploads/").pop();
+      if (name) {
+        const filePath = path.join(process.cwd(), "uploads", name);
+        fs.unlink(filePath, () => undefined);
+      }
+    }
     await prisma.media.delete({ where: { id: param(req, "id") } });
     res.json({ success: true });
   })

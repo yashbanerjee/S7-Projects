@@ -1,15 +1,6 @@
 "use client";
-import AdminResourcePage from "@/components/admin/resource-table";
+import { FaqsAdmin } from "@/components/admin/faqs-admin";
 
 export default function Page() {
-  return (
-    <AdminResourcePage
-      title="FAQ"
-      endpoint="/content/faqs?all=true"
-      columns={[
-        { key: "question", label: "Question" },
-        { key: "category", label: "Category" },
-      ]}
-    />
-  );
+  return <FaqsAdmin />;
 }
