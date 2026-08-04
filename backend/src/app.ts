@@ -21,7 +21,18 @@ const app = express();
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(
   cors({
-    origin: [env.frontendUrl, "http://localhost:3000"],
+    origin(origin, callback) {
+      // Allow same-origin / server-to-server / curl (no Origin header)
+      if (!origin) return callback(null, true);
+      if (env.corsOrigins.includes(origin) || env.corsOrigins.includes("*")) {
+        return callback(null, true);
+      }
+      // Allow Railway preview domains for the frontend
+      if (/\.up\.railway\.app$/.test(origin) || /\.railway\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   })
 );

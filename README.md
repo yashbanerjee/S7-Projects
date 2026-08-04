@@ -140,12 +140,14 @@ The public site uses curated fallback content when the API is offline, so the fr
 
 ## Production notes
 
+See **[RAILWAY.md](./RAILWAY.md)** for full Railway deploy steps (backend + frontend + Postgres).
+
 1. Set strong `JWT_SECRET` and rotate admin password.
 2. Configure SMTP for quote/contact notifications.
 3. Enable Cloudinary for durable media, or serve `backend/uploads` behind your CDN.
-4. Deploy frontend (Vercel / Node) and backend (Railway / Render / VPS) independently.
+4. Deploy frontend and backend as separate Railway services (root dirs `frontend` / `backend`).
 5. Point `NEXT_PUBLIC_API_URL` and `FRONTEND_URL` to production hosts.
-6. Run `npx prisma migrate deploy` (or `db push`) and `db:seed` on first deploy.
+6. Backend `start:prod` runs `prisma db push` + seed automatically on each deploy.
 
 ### Build
 

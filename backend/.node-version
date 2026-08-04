@@ -1,0 +1,3 @@
+# Engine requirements for Railway / production hosts
+engines:
+  node: ">=20"

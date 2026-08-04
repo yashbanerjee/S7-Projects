@@ -5,14 +5,17 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/index.js",
+    "start:prod": "prisma db push --skip-generate && tsx prisma/seed.ts && node dist/index.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "railway:release": "prisma db push --skip-generate && tsx prisma/seed.ts"
   },
   "keywords": [
     "project-s7",
@@ -36,6 +39,8 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
+    "prisma": "^6.5.0",
+    "tsx": "^4.19.3",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -48,8 +53,6 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.13.10",
     "@types/nodemailer": "^6.4.17",
-    "prisma": "^6.5.0",
-    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "prisma": {
