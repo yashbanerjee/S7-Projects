@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { ComponentProps } from "react";
 
 type ButtonProps = {
-  variant?: "primary" | "secondary" | "ghost" | "outline" | "white";
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "white" | "outlineLight";
   size?: "sm" | "md" | "lg";
   className?: string;
   children: React.ReactNode;
@@ -23,10 +23,15 @@ export function Button({
     "ripple inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-wide transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink disabled:opacity-50";
 
   const variants = {
-    primary: "bg-pink text-white hover:bg-pink-soft shadow-lg shadow-pink/15",
-    secondary: "bg-ink text-white hover:bg-pink",
+    // Always force white label on brand pink
+    primary:
+      "btn-pink bg-pink text-white hover:bg-pink-soft hover:text-white shadow-lg shadow-pink/15 !text-white",
+    secondary: "bg-ink text-white hover:bg-pink hover:text-white !text-white",
     ghost: "bg-transparent text-ink hover:text-pink",
     outline: "border border-ink/15 text-ink hover:border-pink hover:text-pink",
+    // For dark surfaces (hero)
+    outlineLight:
+      "border-2 border-white bg-transparent text-white hover:bg-white hover:text-ink !text-white",
     white: "bg-white text-ink hover:bg-pink hover:text-white",
   };
 

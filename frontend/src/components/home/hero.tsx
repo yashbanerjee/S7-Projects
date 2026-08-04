@@ -1,25 +1,40 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
-import { ParallaxImage } from "@/components/ui/media";
-import { images } from "@/lib/content";
+import { images, heroVideo } from "@/lib/content";
 import { ArrowDownRight } from "lucide-react";
 
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
-      <ParallaxImage
-        src={images.hero}
-        alt="Luxury corporate exhibition with cinematic lighting"
-        className="absolute inset-0 h-full w-full"
-        priority
-        overlay="hero"
-        sizes="100vw"
-      />
+      {/* Video background with still poster fallback */}
+      <div className="absolute inset-0">
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={images.hero}
+          aria-hidden
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        {/* Stronger gradient so white type/buttons stay readable */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(105deg, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.45) 48%, rgba(17,17,17,0.35) 100%), linear-gradient(to top, rgba(17,17,17,0.55), transparent 42%)",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-end pb-16 pt-36 md:pb-24 md:pt-40">
         <div className="container-premium">
           <FadeUp>
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
               Project S7 · Events & Exhibitions
             </p>
           </FadeUp>
@@ -29,23 +44,29 @@ export function Hero() {
             </h1>
           </FadeUp>
           <FadeUp delay={0.18}>
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
               Exhibition management, stand architecture, and event production for organisations that expect luxury craftsmanship and flawless delivery.
             </p>
           </FadeUp>
           <FadeUp delay={0.26}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button href="/quote" variant="white" size="lg">
+              <Link
+                href="/quote"
+                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-ink transition hover:bg-pink hover:text-white"
+              >
                 Get a Quote
-              </Button>
-              <Button href="/contact" variant="outline" size="lg" className="border-white/30 text-white hover:border-white hover:bg-white hover:text-ink">
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full border-2 border-white bg-transparent px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-ink"
+              >
                 Request Consultation
-              </Button>
+              </Link>
             </div>
           </FadeUp>
         </div>
 
-        <div className="container-premium mt-16 flex items-center justify-between border-t border-white/15 pt-6 text-white/60">
+        <div className="container-premium mt-16 flex items-center justify-between border-t border-white/20 pt-6 text-white/70">
           <p className="text-xs uppercase tracking-[0.25em]">Scroll to explore</p>
           <ArrowDownRight className="h-5 w-5" />
         </div>

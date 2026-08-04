@@ -28,6 +28,9 @@ export const images = {
   lighting: u("photo-1470229722913-7c0e2dbbafd3", 1800, 1200),
 };
 
+/** Cinematic hero background video — replace `public/videos/hero.mp4` with your own shoot */
+export const heroVideo = "/videos/hero.mp4";
+
 export const serviceImages: Record<string, string> = {
   "exhibition-management": images.expo,
   "exhibition-stand-design": images.booth,

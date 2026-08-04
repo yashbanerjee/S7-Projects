@@ -141,8 +141,15 @@ img {
 
 .nav-blur {
   backdrop-filter: blur(16px);
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid rgba(232, 232, 232, 0.9);
+}
+
+/* Brand pink CTAs use white labels (outline buttons keep their own colors) */
+a.bg-pink,
+button.bg-pink,
+.btn-pink {
+  color: #ffffff !important;
 }
 
 .progress-bar {

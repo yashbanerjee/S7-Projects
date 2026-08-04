@@ -17,11 +17,11 @@ export function FloatingCta() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.2, duration: 0.6 }}
-      className="fixed bottom-6 right-6 z-50 flex flex-col gap-3"
+      className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end"
     >
       <Link
         href="/quote"
-        className="hidden sm:inline-flex items-center justify-center rounded-full bg-pink px-5 py-3 text-sm font-medium text-white shadow-lg shadow-pink/25 transition hover:bg-pink-soft"
+        className="btn-pink hidden sm:inline-flex items-center justify-center rounded-full bg-pink px-5 py-3 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-pink/25 transition hover:bg-pink-soft hover:text-white"
       >
         Get a Quote
       </Link>
@@ -30,7 +30,7 @@ export function FloatingCta() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white transition hover:bg-pink"
+        className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white transition hover:bg-pink hover:text-white"
       >
         <MessageCircle className="h-5 w-5" />
       </a>

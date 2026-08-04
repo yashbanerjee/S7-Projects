@@ -16,7 +16,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -36,14 +36,24 @@ export function Navbar() {
   if (isAdmin) return null;
 
   const isHome = pathname === "/";
+  // Light solid bar whenever scrolled, on inner pages, or mobile menu open
   const solid = scrolled || !isHome || open;
+  // Dark hero: white chrome; solid bar: dark chrome
+  const light = !solid;
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname?.startsWith(`${href}/`);
+  };
 
   return (
     <>
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          solid ? "nav-blur py-3" : "bg-transparent py-5"
+          solid
+            ? "border-b border-black/5 bg-white/95 py-3 shadow-sm backdrop-blur-md"
+            : "bg-gradient-to-b from-black/55 via-black/25 to-transparent py-5"
         )}
       >
         <div className="container-premium flex items-center justify-between gap-6">
@@ -59,27 +69,43 @@ export function Navbar() {
             <span
               className={cn(
                 "font-display text-sm font-semibold tracking-[0.22em] uppercase transition-colors",
-                solid || open ? "text-ink" : "text-white"
+                light ? "text-white" : "text-ink"
               )}
             >
               Project S7
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-            {siteConfig.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-[13px] tracking-wide transition-colors",
-                  solid ? "text-muted hover:text-pink" : "text-white/85 hover:text-white",
-                  pathname === item.href && (solid ? "text-pink" : "text-white")
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            {siteConfig.nav.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative px-3 py-2 text-[13px] tracking-wide transition-colors",
+                    light
+                      ? active
+                        ? "text-white"
+                        : "text-white/80 hover:text-white"
+                      : active
+                        ? "text-pink"
+                        : "text-ink/70 hover:text-pink"
+                  )}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {item.label}
+                  <span
+                    className={cn(
+                      "absolute bottom-0 left-3 right-3 h-0.5 origin-left rounded-full transition-transform duration-300",
+                      light ? "bg-white" : "bg-pink",
+                      active ? "scale-x-100" : "scale-x-0"
+                    )}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">
@@ -87,9 +113,9 @@ export function Navbar() {
               href="/quote"
               className={cn(
                 "hidden sm:inline-flex items-center rounded-full px-5 py-2.5 text-xs font-semibold tracking-wider uppercase transition",
-                solid
-                  ? "bg-pink text-white hover:bg-pink-soft"
-                  : "bg-white text-ink hover:bg-pink hover:text-white"
+                light
+                  ? "bg-white text-ink hover:bg-pink hover:text-white"
+                  : "btn-pink bg-pink text-white hover:bg-pink-soft hover:text-white"
               )}
             >
               Get a Quote
@@ -98,9 +124,7 @@ export function Navbar() {
               type="button"
               className={cn(
                 "inline-flex h-11 w-11 items-center justify-center rounded-full border transition lg:hidden",
-                solid || open
-                  ? "border-line text-ink"
-                  : "border-white/30 text-white"
+                light ? "border-white/40 text-white" : "border-line text-ink"
               )}
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -122,21 +146,30 @@ export function Navbar() {
           >
             <div className="flex h-full flex-col justify-between px-8 pb-12 pt-28">
               <nav className="flex flex-col gap-1" aria-label="Mobile">
-                {siteConfig.nav.map((item, i) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * i, duration: 0.45 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="font-display block py-3 text-4xl tracking-tight text-ink transition hover:text-pink sm:text-5xl"
+                {siteConfig.nav.map((item, i) => {
+                  const active = isActive(item.href);
+                  return (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 * i, duration: 0.45 }}
                     >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "font-display block border-l-2 py-3 pl-4 text-4xl tracking-tight transition sm:text-5xl",
+                          active
+                            ? "border-pink text-pink"
+                            : "border-transparent text-ink hover:text-pink"
+                        )}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </nav>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -146,7 +179,7 @@ export function Navbar() {
               >
                 <Link
                   href="/quote"
-                  className="inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white"
+                  className="btn-pink inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white hover:bg-pink-soft hover:text-white"
                 >
                   Request Consultation
                 </Link>
