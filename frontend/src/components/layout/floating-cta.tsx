@@ -23,7 +23,7 @@ export function FloatingCta() {
         href="/quote"
         className="btn-pink hidden sm:inline-flex items-center justify-center rounded-full bg-pink px-5 py-3 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-pink/25 transition hover:bg-pink-soft hover:text-white"
       >
-        Get a Quote
+        Make an Enquiry
       </Link>
       <a
         href={wa}

@@ -32,7 +32,7 @@ export function CtaBand() {
           <FadeUp delay={0.22}>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button href="/quote" variant="white" size="lg">
-                Get a Quote
+                Make an Enquiry
               </Button>
               <Button
                 href="/contact"

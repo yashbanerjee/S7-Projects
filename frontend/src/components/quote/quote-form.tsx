@@ -127,7 +127,7 @@ export function QuoteForm() {
             </div>
             <div className="sm:col-span-2 flex flex-wrap items-center gap-4 pt-4">
               <Button type="submit" size="lg" disabled={status === "loading"}>
-                {status === "loading" ? "Submitting…" : "Submit Quote Request"}
+                {status === "loading" ? "Submitting…" : "Submit Enquiry"}
               </Button>
               {status === "success" && (
                 <p className="text-sm text-pink">

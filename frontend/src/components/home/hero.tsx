@@ -54,7 +54,7 @@ export function Hero() {
                 href="/quote"
                 className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-ink transition hover:bg-pink hover:text-white"
               >
-                Get a Quote
+                Make an Enquiry
               </Link>
               <Link
                 href="/contact"

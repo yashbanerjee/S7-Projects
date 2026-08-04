@@ -76,7 +76,13 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          <nav
+            className={cn(
+              "hidden items-center gap-1 lg:flex",
+              light ? "text-white" : "text-ink"
+            )}
+            aria-label="Primary"
+          >
             {siteConfig.nav.map((item) => {
               const active = isActive(item.href);
               return (
@@ -84,15 +90,16 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative px-3 py-2 text-[13px] tracking-wide transition-colors",
+                    "relative px-3 py-2 text-[13px] font-medium tracking-wide transition-colors",
                     light
                       ? active
-                        ? "text-white"
-                        : "text-white/80 hover:text-white"
+                        ? "text-white drop-shadow-sm"
+                        : "text-white/90 hover:text-white"
                       : active
                         ? "text-pink"
-                        : "text-ink/70 hover:text-pink"
+                        : "text-ink/75 hover:text-pink"
                   )}
+                  style={light ? { color: active ? "#ffffff" : "rgba(255,255,255,0.9)" } : undefined}
                   aria-current={active ? "page" : undefined}
                 >
                   {item.label}
@@ -118,7 +125,7 @@ export function Navbar() {
                   : "btn-pink bg-pink text-white hover:bg-pink-soft hover:text-white"
               )}
             >
-              Get a Quote
+              Make an Enquiry
             </Link>
             <button
               type="button"
@@ -181,7 +188,7 @@ export function Navbar() {
                   href="/quote"
                   className="btn-pink inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white hover:bg-pink-soft hover:text-white"
                 >
-                  Request Consultation
+                  Make an Enquiry
                 </Link>
                 <p className="text-sm text-muted">{siteConfig.email}</p>
               </motion.div>
