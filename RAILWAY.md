@@ -1,143 +1,86 @@
-# Railway deployment – Project S7
+# Railway – Project S7 (two separate services)
 
-This monorepo deploys as **two services** + one **Postgres** database.
+Do **not** deploy the monorepo root. Create **two services** from the same GitHub repo.
 
-## Services to create
-
-1. **Postgres** (you already have this)
-2. **backend** – Root Directory: `backend`
-3. **frontend** – Root Directory: `frontend`
-
-### Frontend service (required settings)
+## 1. Backend service (API)
 
 | Setting | Value |
 |---------|--------|
-| **Root Directory** | `frontend` (not empty / not monorepo root) |
-| Node | 22 (set via `nixpacks.toml`) |
-| Vars | `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_API_URL` must exist at **build** time |
+| **Root Directory** | `backend` |
+| Start | `npm run start:prod` (from `backend/railway.toml`) |
+| Healthcheck | `/api/health` |
 
-If Root Directory is empty, Nixpacks runs at repo root → `npm run build` fails in ~1s with no real compile logs.
-
-Also settle the Railway **past-due subscription** banner if deploys still abort unexpectedly.
-
-Connect both to the same Railway project. Link **backend** to the Postgres plugin so `DATABASE_URL` is injected (or paste it manually).
-
----
-
-## Important: Internal vs public DATABASE_URL
-
-| URL host | Where it works |
-|----------|----------------|
-| `postgres.railway.internal` | **Only inside Railway** (backend container ↔ DB) |
-| `*.proxy.rlwy.net` (public) | Local machine + tools (Prisma Studio, local migrate) |
-
-You shared the **internal** URL. Schema push/seed runs automatically when the **backend** service starts (`start:prod`).
-
-To migrate from your laptop, use the **public** TCP proxy URL from Railway → Postgres → **Connect** → **Public Network**.
-
----
-
-## Backend service – Variables
-
-Set these in Railway → backend → Variables:
-
+### Variables
 ```env
 NODE_ENV=production
-PORT=5000
 DATABASE_URL=${{Postgres.DATABASE_URL}}
-# or paste: postgresql://postgres:...@postgres.railway.internal:5432/railway
-
-JWT_SECRET=<long-random-string>
+JWT_SECRET=<long-random-secret>
 JWT_EXPIRES_IN=7d
-
 ADMIN_EMAIL=admin@projects7.com
 ADMIN_PASSWORD=<strong-password>
-ADMIN_NAME=Project S7 Admin
-
-# After frontend is live, set its public URL:
-FRONTEND_URL=https://your-frontend.up.railway.app
-CORS_ORIGINS=https://your-frontend.up.railway.app
-API_URL=https://your-backend.up.railway.app
-
-# Optional email
-SMTP_HOST=
-SMTP_PORT=587
-SMTP_USER=
-SMTP_PASS=
-MAIL_FROM="Project S7 <noreply@projects7.com>"
-NOTIFY_EMAIL=admin@projects7.com
-
-# Optional media
-USE_CLOUDINARY=false
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
+FRONTEND_URL=https://YOUR-FRONTEND.up.railway.app
+CORS_ORIGINS=https://YOUR-FRONTEND.up.railway.app
+API_URL=https://YOUR-BACKEND.up.railway.app
 ```
 
-**Settings**
-- Root Directory: `backend`
-- Start command (default from `railway.toml`): `npm run start:prod`  
-  → runs `prisma db push` + seed + API
-
-Generate a domain for the backend (e.g. `project-s7-api.up.railway.app`).
-
----
-
-## Frontend service – Variables
-
-```env
-NODE_ENV=production
-PORT=3000
-NEXT_PUBLIC_SITE_URL=https://your-frontend.up.railway.app
-NEXT_PUBLIC_API_URL=https://your-backend.up.railway.app/api
-```
-
-**Build-time note:** `NEXT_PUBLIC_*` must be present at **build** time on Railway (set them before first deploy, then redeploy if URLs change).
-
-**Settings**
-- Root Directory: `frontend`
-- Generate a public domain
-
----
-
-## Railway frontend notes
-
-### Critical service settings
-1. **Root Directory** must be `frontend` (Settings → Root Directory).  
-   If left empty, `npm run build` runs at the monorepo root and fails (no build script).
-2. Generate a public domain after deploy.
-3. Set variables **before** build:
-   - `NEXT_PUBLIC_SITE_URL=https://your-frontend.up.railway.app`
-   - `NEXT_PUBLIC_API_URL=https://your-backend.up.railway.app/api`
-4. Node is pinned to **22** via `frontend/nixpacks.toml` (Next.js 16 needs Node ≥ 20.9).
-
-### Clear billing
-Railway may block builds if the subscription is past due — settle the balance if deploys still fail after a clean config.
-
----
-
-## Manual migrate from local (public URL only)
-
+### Seed data once (after first deploy)
+Railway → backend service → shell / one-off:
 ```bash
-cd backend
-# Use PUBLIC Railway Postgres URL, not .internal
-$env:DATABASE_URL="postgresql://postgres:PASSWORD@HOST.proxy.rlwy.net:PORT/railway"
-npx prisma db push
 npm run db:seed
 ```
+Or temporarily set start to `npm run start:seed` once, then switch back to `start:prod`.
 
 ---
 
-## Default admin after seed
+## 2. Frontend service (Next.js)
 
-- Email: value of `ADMIN_EMAIL` (default `admin@projects7.com`)
-- Password: value of `ADMIN_PASSWORD`
+| Setting | Value |
+|---------|--------|
+| **Root Directory** | `frontend` |
+| Start | `npm run start` |
+| Healthcheck | `/` |
 
-CMS: `https://your-frontend.up.railway.app/admin`
+### Variables (set **before** first build)
+```env
+NEXT_PUBLIC_SITE_URL=https://YOUR-FRONTEND.up.railway.app
+NEXT_PUBLIC_API_URL=https://YOUR-BACKEND.up.railway.app/api
+```
 
 ---
 
-## Health checks
+## Why previous builds failed
 
-- Backend: `GET /api/health`
-- Frontend: `GET /`
+Your logs showed a **mixed** plan:
+- install → `frontend`
+- build → Next.js (`next build`)
+- start → `start:prod` (**backend**)
+
+That happens when **Root Directory is empty** and monorepo configs conflict.
+
+Nixpacks plan for **backend only** should look like:
+```
+install  npm install --include=dev
+build    prisma generate + tsc
+start    npm run start:prod
+```
+
+Nixpacks plan for **frontend only** should look like:
+```
+install  npm install --include=dev
+build    next build
+start    npm run start
+```
+
+No `frontend` paths in a backend deploy.
+
+---
+
+## Deploy order
+
+1. Postgres online  
+2. Backend (Root Directory = `backend`) → open `/api/health`  
+3. Seed once  
+4. Frontend (Root Directory = `frontend`) with public API URL  
+5. Update backend `FRONTEND_URL` / `CORS_ORIGINS`  
+
+Also settle Railway billing if you see “subscription past due”.

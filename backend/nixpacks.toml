@@ -1,12 +1,16 @@
-# Use this if you set Railway root directory to `backend`
+# Root Directory on Railway for this service: backend
+
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
 [phases.setup]
-nixPkgs = ["openssl"]
+nixPkgs = ["nodejs_22", "npm-9_x", "openssl"]
 
 [phases.install]
-cmds = ["npm ci"]
+cmds = ["npm install --include=dev"]
 
 [phases.build]
-cmds = ["npx prisma generate", "npm run build"]
+cmds = ["npx prisma generate", "npx tsc"]
 
 [start]
 cmd = "npm run start:prod"

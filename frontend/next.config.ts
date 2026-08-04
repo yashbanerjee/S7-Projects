@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const appRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  // Prefer standard Next server start on Railway (not Docker-only standalone path)
+  // Prevent monorepo root from becoming the workspace root on Railway
+  turbopack: {
+    root: appRoot,
+  },
+  outputFileTracingRoot: appRoot,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

@@ -2,20 +2,12 @@
   "name": "project-s7",
   "private": true,
   "version": "1.0.0",
-  "description": "Project S7 – Luxury Corporate Events & Exhibition Website",
+  "description": "Project S7 monorepo – deploy frontend and backend as SEPARATE Railway services with Root Directory set.",
   "scripts": {
-    "dev": "npm run dev --prefix frontend",
-    "build": "npm install --prefix frontend --include=dev && npm run build --prefix frontend",
-    "start": "npm run start --prefix frontend",
     "dev:frontend": "npm run dev --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",
     "build:frontend": "npm run build --prefix frontend",
-    "build:backend": "npm run build --prefix backend",
-    "start:frontend": "npm run start --prefix frontend",
-    "start:backend": "npm run start:prod --prefix backend",
-    "db:up": "docker compose up -d postgres",
-    "db:push": "npm run db:push --prefix backend",
-    "db:seed": "npm run db:seed --prefix backend"
+    "build:backend": "npm run build --prefix backend"
   },
   "engines": {
     "node": ">=20.9.0"

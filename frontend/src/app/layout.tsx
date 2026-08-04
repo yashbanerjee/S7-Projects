@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/brand";
-import { SmoothScroll } from "@/components/providers/smooth-scroll";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { FloatingCta } from "@/components/layout/floating-cta";
-import { ScrollProgress } from "@/components/layout/scroll-progress";
+import { SiteChrome } from "@/components/layout/site-chrome";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -20,8 +16,16 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+function getSiteUrl() {
+  try {
+    return new URL(siteConfig.url);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: getSiteUrl(),
   title: {
     default: `${siteConfig.name} | ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
@@ -71,13 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${jakarta.variable}`}>
       <body className="min-h-screen bg-white text-ink antialiased">
-        <SmoothScroll>
-          <ScrollProgress />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <FloatingCta />
-        </SmoothScroll>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

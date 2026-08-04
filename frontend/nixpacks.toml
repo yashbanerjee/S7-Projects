@@ -1,4 +1,5 @@
-# Pin Node 20+ (Next.js 16 requires >= 20.9)
+# Root Directory on Railway for this service: frontend
+
 [variables]
 NIXPACKS_NODE_VERSION = "22"
 
@@ -9,7 +10,8 @@ nixPkgs = ["nodejs_22", "npm-9_x"]
 cmds = ["npm install --include=dev"]
 
 [phases.build]
-cmds = ["npm run build"]
+# Force production Next build (Railway sometimes sets non-standard NODE_ENV)
+cmds = ["NODE_ENV=production npm run build"]
 
 [start]
 cmd = "npm run start"
