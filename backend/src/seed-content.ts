@@ -19,7 +19,7 @@ const S = {
   network: px(2422290), // hosted networking
   seminar: px(7648047), // engaged attendees
   workshop: px(2608517), // live host workshop
-  production: px(2608519), // camera / production craft
+  production: px(12712474), // Volvo car show exhibition stand (Pexels)
   gala: px(2306281), // banquet tables
   celebration: px(3171837), // toast + confetti
   dining: px(587741), // catering display

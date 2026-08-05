@@ -54,7 +54,7 @@ export function ServicesShowcase({ services }: { services: Service[] }) {
                   </p>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-ink transition hover:text-pink"
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-pink transition hover:text-pink-soft"
                   >
                     Explore service <ArrowUpRight className="h-4 w-4" />
                   </Link>

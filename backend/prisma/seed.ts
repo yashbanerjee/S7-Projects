@@ -93,11 +93,11 @@ async function main() {
         "Our build teams turn approved designs into immaculate physical environments — on time, on brand, and engineered for multi-day operations.",
       overview:
         "Fabrication, logistics, installation, live show support, and deconstruction. We coordinate unions, venues, and schedules across domestic and international markets.",
-      image: img("3184306"),
+      image: img("12712474"),
       gallery: [
-        img("3184306"),
-        img("3184296"),
+        img("12712474"),
         img("1540406"),
+        img("2263436"),
       ],
       icon: "Hammer",
       order: 3,

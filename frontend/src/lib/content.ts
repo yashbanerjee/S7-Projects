@@ -33,8 +33,8 @@ export const images = {
   stage: px(2263436, 1800),
   /** Spatial event architecture / stand-like structure */
   booth: px(1540406, 1800),
-  /** Production craftsmanship (cinema / show build) */
-  build: px(2608519, 1800),
+  /** Exhibition stand / auto pavilion on a show floor (Pexels 12712474) */
+  build: px(12712474, 1800),
   /** Outdoor hospitality catering display */
   hospitality: px(587741, 1800),
   /** Theatre stage curtains - awards / ceremony mood */
