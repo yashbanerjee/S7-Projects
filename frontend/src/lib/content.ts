@@ -137,6 +137,24 @@ export const serviceImages: Record<string, string> = {
   "future-services": images.technology,
 };
 
+/**
+ * Prefer curated stock images for known service slugs so the public site
+ * always matches theme (API/DB may lag behind deploy).
+ */
+export function applyServiceStockImages<T extends { slug: string; image?: string | null }>(
+  services: T[]
+): T[] {
+  return services.map((s) => {
+    const stock = serviceImages[s.slug];
+    if (!stock) return s;
+    return { ...s, image: stock };
+  });
+}
+
+export function resolveServiceImage(slug: string, fallback?: string | null) {
+  return serviceImages[slug] || fallback || images.expo;
+}
+
 /** Fallback content when API is offline — mirrors seed data */
 export const fallbackServices = [
   {

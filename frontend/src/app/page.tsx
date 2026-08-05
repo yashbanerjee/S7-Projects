@@ -15,6 +15,7 @@ import {
   fallbackTestimonials,
   fallbackFaqs,
   fallbackIndustries,
+  applyServiceStockImages,
 } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import type { Metadata } from "next";
@@ -36,7 +37,7 @@ async function getData() {
       fetch(`${base}/content/industries`, { next: { revalidate: 60 } }).then((r) => r.json()),
     ]);
     return {
-      services: services.data?.length ? services.data : fallbackServices,
+      services: applyServiceStockImages(services.data?.length ? services.data : fallbackServices),
       portfolio: portfolio.data?.length ? portfolio.data : fallbackPortfolio,
       testimonials: testimonials.data?.length ? testimonials.data : fallbackTestimonials,
       faqs: faqs.data?.length ? faqs.data : fallbackFaqs,
@@ -44,7 +45,7 @@ async function getData() {
     };
   } catch {
     return {
-      services: fallbackServices,
+      services: applyServiceStockImages(fallbackServices),
       portfolio: fallbackPortfolio,
       testimonials: fallbackTestimonials,
       faqs: fallbackFaqs,

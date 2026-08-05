@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackServices, images } from "@/lib/content";
+import { fallbackServices, images, applyServiceStockImages, resolveServiceImage } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import { ArrowUpRight } from "lucide-react";
 
@@ -17,11 +17,12 @@ export const metadata: Metadata = {
 
 async function getServices() {
   try {
-    const res = await fetch(`${siteConfig.apiUrl}/services`, { next: { revalidate: 60 } });
+    const res = await fetch(`${siteConfig.apiUrl}/services`, { next: { revalidate: 0 } });
     const json = await res.json();
-    return json.data?.length ? json.data : fallbackServices;
+    const list = json.data?.length ? json.data : fallbackServices;
+    return applyServiceStockImages(list);
   } catch {
-    return fallbackServices;
+    return applyServiceStockImages(fallbackServices);
   }
 }
 
@@ -49,7 +50,13 @@ export default async function ServicesPage() {
               <FadeUp key={s.slug}>
                 <article className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                   <div className={`relative aspect-[16/11] overflow-hidden image-zoom ${i % 2 ? "lg:order-2" : ""}`}>
-                    <Image src={s.image} alt={s.title} fill sizes="50vw" className="object-cover" />
+                    <Image
+                      src={resolveServiceImage(s.slug, s.image)}
+                      alt={s.title}
+                      fill
+                      sizes="50vw"
+                      className="object-cover"
+                    />
                   </div>
                   <div className={i % 2 ? "lg:order-1" : ""}>
                     <p className="text-xs font-semibold uppercase tracking-[0.28em] text-pink">
@@ -62,7 +69,7 @@ export default async function ServicesPage() {
                     <p className="mt-6 text-base leading-relaxed text-muted md:text-lg">{s.description}</p>
                     <Link
                       href={`/services/${s.slug}`}
-                      className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-ink hover:text-pink"
+                      className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-pink transition hover:text-pink-soft"
                     >
                       View service <ArrowUpRight className="h-4 w-4" />
                     </Link>

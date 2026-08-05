@@ -5,7 +5,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackServices } from "@/lib/content";
+import { fallbackServices, resolveServiceImage } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import { Check } from "lucide-react";
 
@@ -18,18 +18,32 @@ type Service = (typeof fallbackServices)[number] & {
 };
 
 async function getService(slug: string): Promise<Service | null> {
+  let service: Service | null = null;
   try {
     const res = await fetch(`${siteConfig.apiUrl}/services/${slug}`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 0 },
     });
     if (res.ok) {
       const json = await res.json();
-      if (json.data) return json.data;
+      if (json.data) service = json.data;
     }
   } catch {
     /* fallback */
   }
-  return fallbackServices.find((s) => s.slug === slug) || null;
+  if (!service) {
+    service = fallbackServices.find((s) => s.slug === slug) || null;
+  }
+  if (!service) return null;
+
+  const image = resolveServiceImage(service.slug, service.image);
+  // Keep custom uploads; replace stock/CDN gallery frames so stale API photos never stick.
+  const galleryRaw = service.gallery?.length ? service.gallery : [image, image, image];
+  const gallery = galleryRaw.map((g) => {
+    if (!g || /pexels\.com|unsplash\.com/i.test(g)) return image;
+    return g;
+  });
+
+  return { ...service, image, gallery };
 }
 
 export async function generateStaticParams() {
