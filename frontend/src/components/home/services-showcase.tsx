@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading, FadeUp } from "@/components/ui/motion";
 import { ArrowUpRight } from "lucide-react";
-import type { fallbackServices } from "@/lib/content";
+import type { PublicService } from "@/lib/content";
 
-type Service = (typeof fallbackServices)[number];
-
-export function ServicesShowcase({ services }: { services: Service[] }) {
+export function ServicesShowcase({ services }: { services: PublicService[] }) {
   return (
     <section className="section-pad bg-soft">
       <div className="container-premium">

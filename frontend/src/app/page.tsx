@@ -16,6 +16,7 @@ import {
   fallbackFaqs,
   fallbackIndustries,
   applyServiceStockImages,
+  type PublicService,
 } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import type { Metadata } from "next";
@@ -36,8 +37,11 @@ async function getData() {
       fetch(`${base}/content/faqs`, { next: { revalidate: 60 } }).then((r) => r.json()),
       fetch(`${base}/content/industries`, { next: { revalidate: 60 } }).then((r) => r.json()),
     ]);
+    const serviceList = (
+      services.data?.length ? services.data : fallbackServices
+    ) as PublicService[];
     return {
-      services: applyServiceStockImages(services.data?.length ? services.data : fallbackServices),
+      services: applyServiceStockImages(serviceList),
       portfolio: portfolio.data?.length ? portfolio.data : fallbackPortfolio,
       testimonials: testimonials.data?.length ? testimonials.data : fallbackTestimonials,
       faqs: faqs.data?.length ? faqs.data : fallbackFaqs,
@@ -45,7 +49,7 @@ async function getData() {
     };
   } catch {
     return {
-      services: applyServiceStockImages(fallbackServices),
+      services: applyServiceStockImages([...fallbackServices] as PublicService[]),
       portfolio: fallbackPortfolio,
       testimonials: fallbackTestimonials,
       faqs: fallbackFaqs,

@@ -137,17 +137,29 @@ export const serviceImages: Record<string, string> = {
   "future-services": images.technology,
 };
 
+/** Public service card shape used on home / services listing */
+export type PublicService = {
+  title: string;
+  slug: string;
+  tagline?: string | null;
+  description: string;
+  image: string;
+  overview?: string;
+  process?: { step: string; title: string; text: string }[];
+  benefits?: string[];
+  features?: string[];
+  gallery?: string[];
+};
+
 /**
  * Prefer curated stock images for known service slugs so the public site
  * always matches theme (API/DB may lag behind deploy).
  */
-export function applyServiceStockImages<T extends { slug: string; image?: string | null }>(
-  services: T[]
-): T[] {
+export function applyServiceStockImages<T extends PublicService>(services: T[]): T[] {
   return services.map((s) => {
     const stock = serviceImages[s.slug];
     if (!stock) return s;
-    return { ...s, image: stock };
+    return { ...s, image: stock } as T;
   });
 }
 

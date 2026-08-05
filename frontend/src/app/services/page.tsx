@@ -4,7 +4,13 @@ import Link from "next/link";
 import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackServices, images, applyServiceStockImages, resolveServiceImage } from "@/lib/content";
+import {
+  fallbackServices,
+  images,
+  applyServiceStockImages,
+  resolveServiceImage,
+  type PublicService,
+} from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import { ArrowUpRight } from "lucide-react";
 
@@ -15,14 +21,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-async function getServices() {
+async function getServices(): Promise<PublicService[]> {
   try {
     const res = await fetch(`${siteConfig.apiUrl}/services`, { next: { revalidate: 0 } });
     const json = await res.json();
-    const list = json.data?.length ? json.data : fallbackServices;
+    const list = (json.data?.length ? json.data : fallbackServices) as PublicService[];
     return applyServiceStockImages(list);
   } catch {
-    return applyServiceStockImages(fallbackServices);
+    return applyServiceStockImages([...fallbackServices] as PublicService[]);
   }
 }
 
@@ -46,7 +52,7 @@ export default async function ServicesPage() {
             description="Each service page details overview, process, benefits, and galleries — all ready for production-quality delivery."
           />
           <div className="mt-16 space-y-20">
-            {services.map((s: (typeof fallbackServices)[number], i: number) => (
+            {services.map((s, i) => (
               <FadeUp key={s.slug}>
                 <article className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                   <div className={`relative aspect-[16/11] overflow-hidden image-zoom ${i % 2 ? "lg:order-2" : ""}`}>
