@@ -1,5 +1,5 @@
 /**
- * Curated Pexels imagery for Project S7 —
+ * Curated Pexels imagery for Project S7 -
  * Visually verified event / exhibition / stage / hospitality photography.
  * Source: https://www.pexels.com (royalty-free)
  */
@@ -37,7 +37,7 @@ export const images = {
   build: px(2608519, 1800),
   /** Outdoor hospitality catering display */
   hospitality: px(587741, 1800),
-  /** Theatre stage curtains — awards / ceremony mood */
+  /** Theatre stage curtains - awards / ceremony mood */
   awards: px(713149, 1800),
   /** Blue-lit exhibition keynote audience */
   expo: px(2774556, 1800),
