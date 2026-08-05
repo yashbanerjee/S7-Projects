@@ -8,25 +8,26 @@ import { ArrowDownRight } from "lucide-react";
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
-      {/* Video background with still poster fallback */}
+      {/* Cinematic event-stage video (Pexels: illuminated venue / production) */}
       <div className="absolute inset-0">
         <video
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full scale-105 object-cover"
           autoPlay
           muted
           loop
           playsInline
-          poster={images.hero}
+          preload="auto"
+          poster={images.stage}
           aria-hidden
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
-        {/* Stronger gradient so white type/buttons stay readable */}
+        {/* Brand-readable overlays — keep luxury depth without killing the video */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(105deg, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.45) 48%, rgba(17,17,17,0.35) 100%), linear-gradient(to top, rgba(17,17,17,0.55), transparent 42%)",
+              "linear-gradient(105deg, rgba(17,17,17,0.78) 0%, rgba(17,17,17,0.42) 45%, rgba(196,32,94,0.18) 100%), linear-gradient(to top, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.2) 45%, transparent 70%)",
           }}
         />
       </div>

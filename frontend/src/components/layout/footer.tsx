@@ -24,9 +24,18 @@ export function Footer() {
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex items-center gap-3">
-              <Image src="/logo.png" alt="Project S7" width={64} height={64} className="h-14 w-14 object-contain" />
+              <Image
+                src="/logo.png"
+                alt="S7"
+                width={64}
+                height={64}
+                className="h-14 w-14 object-contain"
+              />
               <div>
-                <p className="font-display text-xl tracking-tight">Project S7</p>
+                <p className="font-display text-2xl font-semibold tracking-tight">
+                  <span className="inline-block -skew-x-6 italic text-pink">S</span>
+                  <span>7</span>
+                </p>
                 <p className="text-sm text-muted">{siteConfig.tagline}</p>
               </div>
             </Link>

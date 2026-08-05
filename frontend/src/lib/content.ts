@@ -121,7 +121,7 @@ export const eventMoments = [
   },
 ];
 
-/** Cinematic hero background video — replace `public/videos/hero.mp4` with your own shoot */
+/** Cinematic hero background — illuminated event stage (Pexels). Replace `public/videos/hero.mp4` to swap. */
 export const heroVideo = "/videos/hero.mp4";
 
 export const serviceImages: Record<string, string> = {
