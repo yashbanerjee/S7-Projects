@@ -1,81 +1,82 @@
 /**
- * Curated Pexels imagery for Project S7 â€”
- * event, exhibition, stage, and hospitality photography (premium / cinematic).
+ * Curated Pexels imagery for Project S7 —
+ * Visually verified event / exhibition / stage / hospitality photography.
  * Source: https://www.pexels.com (royalty-free)
  */
 const px = (id: number | string, w = 1600) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 export const images = {
-  /** Conference audience / keynote energy */
-  hero: px(2774556, 2400),
-  /** Crowd + atmospheric show lighting */
+  /** Arena-scale production with LED wall & stage architecture */
+  hero: px(2263436, 2400),
+  /** Outdoor festival stage with pyrotechnic atmosphere */
   heroAlt: px(1190297, 2400),
-  /** Elegant reception / dinner tables */
-  about: px(2341830, 1600),
-  /** Wide conference / auditorium moment */
-  aboutWide: px(2774570, 2000),
-  /** Strategy workshop / planning table */
-  process: px(3184296, 1800),
-  /** Dramatic stage lighting (brand pink-friendly) */
+  /** Formal banquet / reception table styling */
+  about: px(2306281, 1600),
+  /** Purple-lit auditorium audience */
+  aboutWide: px(2774557, 2000),
+  /** Creative workshop / live host presentation */
+  process: px(2608517, 1800),
+  /** Concert stage beams */
   cta: px(2747449, 2400),
-  /** Modern professional venue / workspace */
-  contact: px(3183153, 1800),
-  /** Creative collaboration team */
-  careers: px(3183197, 1800),
-  /** Studio culture / team energy */
-  culture: px(3184465, 1600),
-  /** Speaker on stage / keynote leadership */
-  leadership: px(1181406, 1400),
-  /** Networking floor / guests connecting */
-  networking: px(3184360, 1800),
-  /** Live stage production */
-  stage: px(1540406, 1800),
-  /** Exhibition hall / stand environment */
-  booth: px(5439383, 1800),
-  /** Build / fabrication craftsmanship */
-  build: px(3184306, 1800),
-  /** Hospitality dining */
+  /** Professional seminar / conference attendees */
+  contact: px(7648047, 1800),
+  /** Behind-the-scenes creative gathering */
+  careers: px(2608517, 1800),
+  /** Champagne toast & celebration energy */
+  culture: px(3171837, 1600),
+  /** Intimate keynote speaker on stage */
+  leadership: px(3321793, 1400),
+  /** Casual hospitality networking moment */
+  networking: px(2422290, 1800),
+  /** Large-scale stage production */
+  stage: px(2263436, 1800),
+  /** Spatial event architecture / stand-like structure */
+  booth: px(1540406, 1800),
+  /** Production craftsmanship (cinema / show build) */
+  build: px(2608519, 1800),
+  /** Outdoor hospitality catering display */
   hospitality: px(587741, 1800),
-  /** Theatre / ceremony seating */
-  awards: px(1047442, 1800),
-  /** Dense expo / conference audience */
+  /** Theatre stage curtains — awards / ceremony mood */
+  awards: px(713149, 1800),
+  /** Blue-lit exhibition keynote audience */
   expo: px(2774556, 1800),
-  /** Landmark modern architecture */
-  architecture: px(261510, 1800),
-  /** Delivery / project team */
-  team: px(3183198, 1800),
-  /** Stage lights wash */
-  lighting: px(976866, 1800),
-  /** Conference hall / empty stage set */
-  conference: px(2774557, 1800),
-  /** Gala banquet styling */
-  gala: px(2341830, 1800),
-  /** Celebration / live show energy */
+  /** Monumental live-event structure */
+  architecture: px(2263436, 1800),
+  /** People-forward event culture */
+  team: px(2422290, 1800),
+  /** Dramatic stage lighting wash */
+  lighting: px(2747449, 1800),
+  /** Conference hall audience (education / forums) */
+  conference: px(1708988, 1800),
+  /** Gala dining setup */
+  gala: px(2306281, 1800),
+  /** Confetti toast celebration */
   celebration: px(3171837, 1800),
-  /** Dinner networking */
-  dinner: px(587741, 1800),
-  /** Laser / atmospheric crowd lights */
-  lightsCrowd: px(1105666, 1800),
-  /** Executive briefing / boardroom */
-  briefing: px(3184291, 1800),
-  /** Speakers / panel presentation */
-  panel: px(1181406, 1800),
-  /** Product launch / creative unveiling */
-  launch: px(3184339, 1800),
-  /** International / city scale */
-  skyline: px(1029243, 1800),
-  /** Premium automotive presence */
-  automotive: px(3321793, 1800),
-  /** Retail / experiential commerce */
-  retail: px(713149, 1800),
-  /** Education / learning forum */
-  education: px(3184416, 1800),
-  /** Healthcare congress dialogue */
-  healthcare: px(3184338, 1800),
-  /** Technology / innovation lab */
-  technology: px(1181533, 1800),
+  /** Formal dinner atmosphere */
+  dinner: px(2306281, 1800),
+  /** High-energy show atmosphere */
+  lightsCrowd: px(1190297, 1800),
+  /** Briefing room at a hosted programme */
+  briefing: px(7648047, 1800),
+  /** Panel / speaker forum */
+  panel: px(3321793, 1800),
+  /** Product-reveal / launch show energy */
+  launch: px(1763075, 1800),
+  /** International scale live events */
+  skyline: px(1540406, 1800),
+  /** Live show intensity */
+  automotive: px(167636, 1800),
+  /** Retail / experiential hospitality */
+  retail: px(587741, 1800),
+  /** Education forum audience */
+  education: px(1708988, 1800),
+  /** Healthcare-style professional congress */
+  healthcare: px(7648047, 1800),
+  /** Technology stage / innovator keynote */
+  technology: px(3321793, 1800),
 };
+
 
 /** Scroll-stopping event stills used in homepage gallery */
 export const eventMoments = [
@@ -86,12 +87,12 @@ export const eventMoments = [
   },
   {
     src: images.booth,
-    alt: "Branded trade-show stand on an exhibition floor",
+    alt: "Dramatic event stage structure and theatrical lighting",
     label: "Stand architecture",
   },
   {
     src: images.stage,
-    alt: "Live stage production with concert lighting",
+    alt: "Arena-scale live show production with LED screens",
     label: "Stage production",
   },
   {
@@ -101,22 +102,22 @@ export const eventMoments = [
   },
   {
     src: images.gala,
-    alt: "Elegant banquet styling for a gala dinner",
+    alt: "Elegant banquet tables ready for a gala dinner",
     label: "Gala dining",
   },
   {
     src: images.lightsCrowd,
-    alt: "Crowd immersed in show lighting and atmosphere",
+    alt: "Crowd at a festival show under dramatic lights",
     label: "Show atmosphere",
   },
   {
     src: images.awards,
-    alt: "Ceremony setting for awards and recognition moments",
+    alt: "Theatre stage curtains before a ceremony begins",
     label: "Awards nights",
   },
   {
     src: images.celebration,
-    alt: "High-energy celebration with confetti and lights",
+    alt: "Champagne toast with confetti at a celebration",
     label: "Live celebrations",
   },
 ];

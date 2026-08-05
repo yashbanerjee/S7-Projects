@@ -1,7 +1,7 @@
 /**
  * Lightweight CMS seed — upserts refresh stock Pexels imagery on boot.
- * Full seed: npm run db:seed
- * Images: https://www.pexels.com (event / exhibition focused)
+ * All IDs visually verified for event / exhibition / production / hospitality themes.
+ * Source: https://www.pexels.com
  */
 import type { PrismaClient } from "@prisma/client";
 
@@ -10,31 +10,23 @@ const px = (id: number | string, w = 1600) =>
 
 /** Event-themed stills used across CMS rows */
 const S = {
-  expo: px(2774556),
-  conference: px(2774557),
-  booth: px(5439383),
-  stage: px(1540406),
-  lights: px(2747449),
-  speaker: px(1181406),
-  network: px(3184360),
-  meeting: px(3184291),
-  plan: px(3184296),
-  team: px(3183197),
-  gala: px(2341830),
-  celebration: px(3171837),
-  dining: px(587741),
-  build: px(3184306),
-  launch: px(3184339),
-  tech: px(1181533),
-  architecture: px(261510),
-  city: px(1029243),
-  automotive: px(3321793),
-  retail: px(713149),
-  education: px(3184416),
-  healthcare: px(3184338),
-  culture: px(3184465),
-  heroAlt: px(1190297),
-  hall: px(7648047),
+  expo: px(2774556), // blue-lit keynote audience
+  conference: px(1708988), // professional conference seating
+  booth: px(1540406), // stage structure / spatial event design
+  stage: px(2263436), // arena production LED
+  lights: px(2747449), // concert beams
+  speaker: px(3321793), // on-stage keynote
+  network: px(2422290), // hosted networking
+  seminar: px(7648047), // engaged attendees
+  workshop: px(2608517), // live host workshop
+  production: px(2608519), // camera / production craft
+  gala: px(2306281), // banquet tables
+  celebration: px(3171837), // toast + confetti
+  dining: px(587741), // catering display
+  festival: px(1190297), // outdoor show atmosphere
+  launch: px(1763075), // show launch energy
+  awards: px(713149), // theatre curtains
+  show: px(167636), // band stage silhouette
 };
 
 export async function seedContent(prisma: PrismaClient) {
@@ -68,7 +60,7 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Precision craftsmanship at show pace",
       description:
         "Our build teams turn approved designs into immaculate physical environments — on time and on brand.",
-      image: S.build,
+      image: S.production,
       icon: "Hammer",
       order: 3,
       featured: true,
@@ -79,7 +71,7 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Clarity under complexity",
       description:
         "Dedicated project directors who hold budgets, timelines, stakeholders, and creative delivery together.",
-      image: S.meeting,
+      image: S.seminar,
       icon: "Kanban",
       order: 4,
       featured: true,
@@ -123,7 +115,7 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "A full production ecosystem",
       description:
         "An integrated suite covering design, build, AV, logistics, hospitality, and measurement.",
-      image: S.architecture,
+      image: S.lights,
       icon: "Orbit",
       order: 8,
       featured: false,
@@ -134,7 +126,7 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Next-generation event experiences",
       description:
         "Immersive XR, data-driven experience design, sustainable builds, and AI-assisted engagement.",
-      image: S.tech,
+      image: S.speaker,
       icon: "Rocket",
       order: 9,
       featured: false,
@@ -192,56 +184,56 @@ export async function seedContent(prisma: PrismaClient) {
       title: "Government",
       slug: "government",
       description: "National pavilions and protocol-sensitive programmes.",
-      image: S.architecture,
+      image: S.conference,
       order: 1,
     },
     {
       title: "Corporate",
       slug: "corporate",
       description: "Brand experiences, summits, and product launches.",
-      image: S.meeting,
+      image: S.seminar,
       order: 2,
     },
     {
       title: "Healthcare",
       slug: "healthcare",
       description: "Scientific congresses and clinical brand environments.",
-      image: S.healthcare,
+      image: S.speaker,
       order: 3,
     },
     {
       title: "Technology",
       slug: "technology",
       description: "Demo theatres and innovation lab experiences.",
-      image: S.tech,
+      image: S.stage,
       order: 4,
     },
     {
       title: "Automotive",
       slug: "automotive",
       description: "Vehicle launches and sculptural stand architecture.",
-      image: S.automotive,
+      image: S.show,
       order: 5,
     },
     {
       title: "Retail",
       slug: "retail",
       description: "Pop-up and experiential retail formats.",
-      image: S.retail,
+      image: S.dining,
       order: 6,
     },
     {
       title: "Education",
       slug: "education",
       description: "Institutional expos and campus forums.",
-      image: S.education,
+      image: S.workshop,
       order: 7,
     },
     {
       title: "International",
       slug: "international",
       description: "Cross-border trade exhibitions and roadshows.",
-      image: S.expo,
+      image: S.festival,
       order: 8,
     },
   ];
@@ -263,7 +255,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2025",
       description:
         "A monumental pavilion experience integrating interactive product stories and broadcast-ready stages.",
-      coverImage: S.conference,
+      coverImage: S.expo,
       tags: ["Pavilion", "Government"],
       featured: true,
       order: 1,
@@ -277,7 +269,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2025",
       description:
         "Sculptural stand design with kinetic lighting and invitation-only hospitality suites.",
-      coverImage: S.automotive,
+      coverImage: S.booth,
       tags: ["Automotive", "Hospitality"],
       featured: true,
       order: 2,
@@ -291,7 +283,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2024",
       description:
         "Three-day executive summit with main stage production and seamless hybrid streaming.",
-      coverImage: S.speaker,
+      coverImage: S.stage,
       tags: ["Summit", "Hybrid"],
       featured: true,
       order: 3,
@@ -305,7 +297,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2024",
       description:
         "Scientific content theatres with private consultation suites and brand hospitality.",
-      coverImage: S.healthcare,
+      coverImage: S.speaker,
       tags: ["Healthcare"],
       featured: true,
       order: 4,
@@ -319,7 +311,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2024",
       description:
         "A temporary retail cathedral — modular architecture and influencer-ready moments.",
-      coverImage: S.launch,
+      coverImage: S.gala,
       tags: ["Retail"],
       featured: true,
       order: 5,
@@ -333,7 +325,7 @@ export async function seedContent(prisma: PrismaClient) {
       year: "2023",
       description:
         "Campus-style exhibition district with student journey narratives and institutional lounges.",
-      coverImage: S.education,
+      coverImage: S.workshop,
       tags: ["Education"],
       featured: true,
       order: 6,
