@@ -151,7 +151,7 @@ async function main() {
         year: "2026",
         description: "Created by automated smoke test — safe to delete.",
         coverImage:
-          "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+          "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=800",
         tags: ["smoke", "test"],
         gallery: [],
         featured: false,

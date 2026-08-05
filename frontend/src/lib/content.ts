@@ -1,79 +1,80 @@
 /**
- * Curated premium Unsplash imagery for Project S7 —
- * cinematic event, exhibition, stage, and hospitality photography.
+ * Curated Pexels imagery for Project S7 —
+ * event, exhibition, stage, and hospitality photography (premium / cinematic).
+ * Source: https://www.pexels.com (royalty-free)
  */
-const u = (id: string, w = 1920, h = 1080) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=85`;
+const px = (id: number | string, w = 1600) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 export const images = {
-  /** Full theatre / keynote — modern main visual */
-  hero: u("photo-1591115765373-5207764f72e7", 2400, 1600),
-  /** High-energy crowd / live atmosphere */
-  heroAlt: u("photo-1429962714451-bb934ecdc4ec", 2400, 1600),
-  /** Evening reception / hosting mood */
-  about: u("photo-1511578314322-379afb476865", 1600, 2000),
-  /** Wide conference auditorium */
-  aboutWide: u("photo-1587825140708-dfaf72ae4b04", 2000, 1200),
-  /** Strategy workshop table */
-  process: u("photo-1552664730-d307ca884978", 1800, 1200),
-  /** Dramatic stage lighting production */
-  cta: u("photo-1558008258-3256797b43f3", 2400, 1400),
-  /** Contemporary venue / lounge architecture */
-  contact: u("photo-1497366754035-f200968a6e72", 1800, 1200),
-  /** Creative team collaboration */
-  careers: u("photo-1522071820081-009f0129c71c", 1800, 1200),
-  /** Team moment / celebration culture */
-  culture: u("photo-1517457373958-b7bdd4587205", 1600, 1200),
-  /** Keynote speaker on stage */
-  leadership: u("photo-1475721027785-f74eccf877e2", 1200, 1500),
-  /** Networking & hospitality floor */
-  networking: u("photo-1515187029135-18ee286d815b", 1800, 1200),
-  /** Live stage / concert production */
-  stage: u("photo-1514525253161-7a46d19cd819", 1800, 1200),
-  /** Trade-show stand / exhibition aisle */
-  booth: u("photo-1560439514-4e9645039924", 1800, 1200),
-  /** Build craftsmanship / install */
-  build: u("photo-1503387762-592deb58ef4e", 1800, 1200),
-  /** Fine dining & event catering */
-  hospitality: u("photo-1414235077428-338989a2e8c0", 1800, 1200),
-  /** Awards / ceremony aisle */
-  awards: u("photo-1464366400600-7168b8af9bc3", 1800, 1200),
-  /** Dense audience — expo energy */
-  expo: u("photo-1540575467063-178a50c2df87", 1800, 1200),
-  /** Landmark venue architecture */
-  architecture: u("photo-1486406146926-c627a92ad1ab", 1800, 1200),
-  /** Delivery team in workshop */
-  team: u("photo-1556761175-b413da4baf72", 1800, 1200),
+  /** Conference audience / keynote energy */
+  hero: px(2774556, 2400),
+  /** Crowd + atmospheric show lighting */
+  heroAlt: px(1190297, 2400),
+  /** Elegant reception / dinner tables */
+  about: px(2341830, 1600),
+  /** Wide conference / auditorium moment */
+  aboutWide: px(2774570, 2000),
+  /** Strategy workshop / planning table */
+  process: px(3184296, 1800),
+  /** Dramatic stage lighting (brand pink-friendly) */
+  cta: px(2747449, 2400),
+  /** Modern professional venue / workspace */
+  contact: px(3183153, 1800),
+  /** Creative collaboration team */
+  careers: px(3183197, 1800),
+  /** Studio culture / team energy */
+  culture: px(3184465, 1600),
+  /** Speaker on stage / keynote leadership */
+  leadership: px(1181406, 1400),
+  /** Networking floor / guests connecting */
+  networking: px(3184360, 1800),
+  /** Live stage production */
+  stage: px(1540406, 1800),
+  /** Exhibition hall / stand environment */
+  booth: px(5439383, 1800),
+  /** Build / fabrication craftsmanship */
+  build: px(3184306, 1800),
+  /** Hospitality dining */
+  hospitality: px(587741, 1800),
+  /** Theatre / ceremony seating */
+  awards: px(1047442, 1800),
+  /** Dense expo / conference audience */
+  expo: px(2774556, 1800),
+  /** Landmark modern architecture */
+  architecture: px(261510, 1800),
+  /** Delivery / project team */
+  team: px(3183198, 1800),
   /** Stage lights wash */
-  lighting: u("photo-1470229722913-7c0e2dbbafd3", 1800, 1200),
-  /** Empty modern stage set */
-  conference: u("photo-1505373877841-8d25f7d46678", 1800, 1200),
-  /** Gala banquet tables */
-  gala: u("photo-1511795409834-ef04bbd61622", 1800, 1200),
-  /** Festival confetti energy */
-  celebration: u("photo-1533174072545-7a4b6ad7a6c3", 1800, 1200),
+  lighting: px(976866, 1800),
+  /** Conference hall / empty stage set */
+  conference: px(2774557, 1800),
+  /** Gala banquet styling */
+  gala: px(2341830, 1800),
+  /** Celebration / live show energy */
+  celebration: px(3171837, 1800),
   /** Dinner networking */
-  dinner: u("photo-1528605248644-14dd04022da1", 1800, 1200),
-  /** Laser lights / concert atmosphere */
-  lightsCrowd: u("photo-1505236858219-8359eb29e329", 1800, 1200),
-  /** Boardroom briefings */
-  briefing: u("photo-1542744173-8e7e53415bb0", 1800, 1200),
-  /** Speakers panel / tech forum */
-  panel: u("photo-1573164713714-d95e436ab8d6", 1800, 1200),
-  /** Product launch vibe */
-  launch: u("photo-1561489396-888724a1543d", 1800, 1200),
-  /** City landmark for international */
-  skyline: u("photo-1486406146926-c627a92ad1ab", 1800, 1200),
-  /** Automotive show presence */
-  automotive: u("photo-1492144534655-ae79c964c9d7", 1800, 1200),
-  /** Retail experiential */
-  retail: u("photo-1441986300917-64674bd600d8", 1800, 1200),
-  /** Education campus / learning expo */
-  education: u("photo-1528605248644-14dd04022da1", 1800, 1200),
+  dinner: px(587741, 1800),
+  /** Laser / atmospheric crowd lights */
+  lightsCrowd: px(1105666, 1800),
+  /** Executive briefing / boardroom */
+  briefing: px(3184291, 1800),
+  /** Speakers / panel presentation */
+  panel: px(1181406, 1800),
+  /** Product launch / creative unveiling */
+  launch: px(3184339, 1800),
+  /** International / city scale */
+  skyline: px(1029243, 1800),
+  /** Premium automotive presence */
+  automotive: px(3321793, 1800),
+  /** Retail / experiential commerce */
+  retail: px(713149, 1800),
+  /** Education / learning forum */
+  education: px(3184416, 1800),
   /** Healthcare congress dialogue */
-  healthcare: u("photo-1573164713714-d95e436ab8d6", 1800, 1200),
-  /** Technology demo / innovation lab */
-  technology: u("photo-1504384308090-c894fdcc538d", 1800, 1200),
+  healthcare: px(3184338, 1800),
+  /** Technology / innovation lab */
+  technology: px(1181533, 1800),
 };
 
 /** Scroll-stopping event stills used in homepage gallery */

@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const img = (id: string, w = 1600, h = 1000) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+const img = (id: string, w = 1600) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 async function main() {
   const email = process.env.ADMIN_EMAIL || "admin@projects7.com";
@@ -31,11 +31,11 @@ async function main() {
         "From concept to closing night, Project S7 orchestrates seamless exhibition programmes that captivate audiences and deliver measurable brand impact. We manage logistics, stakeholder coordination, vendor networks, and on-site execution so your team can focus on results.",
       overview:
         "Our exhibition management service covers the full lifecycle: strategy, planning, exhibitorm operations, audience experience, VIP hosting, and post-event analytics. We specialise in international expos, national trade shows, and private brand showcases.",
-      image: img("photo-1540575467063-178a50c2df87"),
+      image: img("2774556"),
       gallery: [
-        img("photo-1511578314322-379afb476865"),
-        img("photo-1505373877841-8d25f7d46678"),
-        img("photo-1492684223066-81342ee5ff30"),
+        img("2341830"),
+        img("2774557"),
+        img("1190297"),
       ],
       icon: "Layers",
       order: 1,
@@ -67,11 +67,11 @@ async function main() {
         "We design exhibition stands as architectural brand statements — cinematic form, intelligent flow, and materials that photograph beautifully and perform under show pressure.",
       overview:
         "Concept development, 3D visualisation, materials specification, and technical drawings. Every design balances amenity spaces, product storytelling, lead capture, and hospitality.",
-      image: img("photo-1558618666-fcd25c85cd64"),
+      image: img("5439383"),
       gallery: [
-        img("photo-1497366216548-37526070297c"),
-        img("photo-1497366811353-6870744d04b2"),
-        img("photo-1486406146926-c627a92ad1ab"),
+        img("3183153"),
+        img("3184360"),
+        img("261510"),
       ],
       icon: "PenTool",
       order: 2,
@@ -93,11 +93,11 @@ async function main() {
         "Our build teams turn approved designs into immaculate physical environments — on time, on brand, and engineered for multi-day operations.",
       overview:
         "Fabrication, logistics, installation, live show support, and deconstruction. We coordinate unions, venues, and schedules across domestic and international markets.",
-      image: img("photo-1503387762-592deb58ef4e"),
+      image: img("3184306"),
       gallery: [
-        img("photo-1504307651254-35680f356dfd"),
-        img("photo-1581094794329-c8112a89af12"),
-        img("photo-1598488035139-bdbb2231ce04"),
+        img("3184306"),
+        img("3184296"),
+        img("1540406"),
       ],
       icon: "Hammer",
       order: 3,
@@ -119,8 +119,8 @@ async function main() {
         "Dedicated project directors who hold the entire programme together — budgets, timelines, stakeholders, and creative delivery.",
       overview:
         "Governance frameworks, risk registers, cost control, and transparent reporting. Ideal for multi-city roadshows, multi-stand campaigns, and hybrid programmes.",
-      image: img("photo-1552664730-d307ca884978"),
-      gallery: [img("photo-1600880292203-757bb62b4baf"), img("photo-1556761175-b413da4baf72")],
+      image: img("3184291"),
+      gallery: [img("3184465"), img("3183198")],
       icon: "Kanban",
       order: 4,
       featured: true,
@@ -141,8 +141,8 @@ async function main() {
         "Trained hosts, brand ambassadors, technical crew, and VIP stewards who represent your brand with polish and warmth.",
       overview:
         "Recruitment, briefing, uniforming, and onsite management of front-of-house and production teams for expos, launches, and conferences.",
-      image: img("photo-1511632765486-a01980e01a18"),
-      gallery: [img("photo-1528605248644-14dd04022da1"), img("photo-1475721027785-f74eccf877e2")],
+      image: img("3184360"),
+      gallery: [img("587741"), img("1181406")],
       icon: "Users",
       order: 5,
       featured: false,
@@ -163,8 +163,8 @@ async function main() {
         "Full technical production for conferences, award nights, product launches, and hybrid experiences.",
       overview:
         "Stage design, lighting direction, sound engineering, LED environments, streaming, and show-calling for flawless live runs.",
-      image: img("photo-1470229722913-7c0e2dbbafd3"),
-      gallery: [img("photo-1492684223066-81342ee5ff30"), img("photo-1514525253161-7a46d19cd819")],
+      image: img("2747449"),
+      gallery: [img("1190297"), img("1540406")],
       icon: "Clapperboard",
       order: 6,
       featured: true,
@@ -185,8 +185,8 @@ async function main() {
         "Visual identity, spatial graphics, content systems, and campaign assets that make exhibitions unforgettable.",
       overview:
         "From brand toolkits to motion graphics and environmental wayfinding — creative that performs in real space and on camera.",
-      image: img("photo-1561070791-2526d30994b5"),
-      gallery: [img("photo-1558655146-d09347e92766"), img("photo-1626785774573-4b7993143465")],
+      image: img("3184339"),
+      gallery: [img("3184339"), img("3184296")],
       icon: "Sparkles",
       order: 7,
       featured: false,
@@ -207,8 +207,8 @@ async function main() {
         "An integrated suite of specialist partners and internal teams covering design, build, AV, logistics, hospitality, and measurement.",
       overview:
         "One relationship unlocks a complete exhibition and events ecosystem — designed for brands that expect clarity, quality, and speed.",
-      image: img("photo-1486406146926-c627a92ad1ab"),
-      gallery: [img("photo-1497366754035-f200968a6e72"), img("photo-1497366216548-37526070297c")],
+      image: img("261510"),
+      gallery: [img("3183153"), img("3183153")],
       icon: "Orbit",
       order: 8,
       featured: false,
@@ -229,8 +229,8 @@ async function main() {
         "Emerging formats: immersive XR booths, data-driven experience design, sustainable builds, and AI-assisted engagement.",
       overview:
         "We invest in future-ready formats so forward-looking brands can lead the conversation on the exhibition floor.",
-      image: img("photo-1633356122544-f134324a6cee"),
-      gallery: [img("photo-1550751827-4bd374c3f58b"), img("photo-1485827404703-89b55fcc595e")],
+      image: img("1181533"),
+      gallery: [img("1181533"), img("1181533")],
       icon: "Rocket",
       order: 9,
       featured: false,
@@ -263,11 +263,11 @@ async function main() {
       year: "2025",
       description:
         "A monumental pavilion experience integrating interactive product stories, VIP lounges, and broadcast-ready stages for a flagship national infrastructure showcase.",
-      coverImage: img("photo-1540575467063-178a50c2df87", 1800, 1200),
+      coverImage: img("2774556", 1800),
       gallery: [
-        img("photo-1511578314322-379afb476865"),
-        img("photo-1505373877841-8d25f7d46678"),
-        img("photo-1492684223066-81342ee5ff30"),
+        img("2341830"),
+        img("2774557"),
+        img("1190297"),
       ],
       tags: ["Pavilion", "Government", "Interactive"],
       featured: true,
@@ -282,8 +282,8 @@ async function main() {
       year: "2025",
       description:
         "Sculptural stand design with kinetic lighting, precision vehicle staging, and invitation-only hospitality suites.",
-      coverImage: img("photo-1492144534655-ae79c964c9d7", 1800, 1200),
-      gallery: [img("photo-1503376780353-7e6692767b70"), img("photo-1549317661-bd32c8ce0db2")],
+      coverImage: img("3321793", 1800),
+      gallery: [img("3321793"), img("3321793")],
       tags: ["Automotive", "Hospitality", "Lighting"],
       featured: true,
       order: 2,
@@ -297,8 +297,8 @@ async function main() {
       year: "2024",
       description:
         "Three-day executive summit with main stage production, breakout architecture, and seamless hybrid streaming.",
-      coverImage: img("photo-1475721027785-f74eccf877e2", 1800, 1200),
-      gallery: [img("photo-1505373877841-8d25f7d46678"), img("photo-1544531585-9847b68c8c86")],
+      coverImage: img("1181406", 1800),
+      gallery: [img("2774557"), img("1181406")],
       tags: ["Summit", "Hybrid", "AV"],
       featured: true,
       order: 3,
@@ -312,8 +312,8 @@ async function main() {
       year: "2024",
       description:
         "Clinical-grade exhibition environments with private consultation rooms and scientific content theatres.",
-      coverImage: img("photo-1576091160399-112ba8d25d1d", 1800, 1200),
-      gallery: [img("photo-1519494026892-80bbd2d6fd0d"), img("photo-1631815588090-d4bfec5b1ccb")],
+      coverImage: img("3184338", 1800),
+      gallery: [img("3184338"), img("3184338")],
       tags: ["Healthcare", "Forum", "Experience"],
       featured: true,
       order: 4,
@@ -327,8 +327,8 @@ async function main() {
       year: "2024",
       description:
         "A temporary retail cathedral — modular architecture, layered merchandising, and influencer-ready moments.",
-      coverImage: img("photo-1441986300917-64674bd600d8", 1800, 1200),
-      gallery: [img("photo-1445205170230-053b83016050"), img("photo-1469334031218-e382a71b716b")],
+      coverImage: img("713149", 1800),
+      gallery: [img("713149"), img("2341830")],
       tags: ["Retail", "Pop-up", "Modular"],
       featured: false,
       order: 5,
@@ -342,8 +342,8 @@ async function main() {
       year: "2023",
       description:
         "Campus-style exhibition district with wayfinding, student journey narratives, and institutional lounges.",
-      coverImage: img("photo-1523050854058-8df90110c9f1", 1800, 1200),
-      gallery: [img("photo-1524178232363-1fb2b075b655"), img("photo-1427504494785-3a9ca7044f45")],
+      coverImage: img("3184416", 1800),
+      gallery: [img("3184416"), img("3184416")],
       tags: ["Education", "Campus", "Wayfinding"],
       featured: false,
       order: 6,
@@ -463,14 +463,14 @@ async function main() {
   await prisma.fAQ.createMany({ data: faqs });
 
   const industries = [
-    { title: "Government", slug: "government", description: "National pavilions, ministerial programmes, protocol-sensitive hosting, and public-sector showcases delivered with discretion and precision.", image: img("photo-1486406146926-c627a92ad1ab"), order: 1 },
-    { title: "Corporate", slug: "corporate", description: "Brand experiences, AGMs, leadership summits, product launches, and internal culture events with executive polish.", image: img("photo-1497366216548-37526070297c"), order: 2 },
-    { title: "International", slug: "international", description: "Cross-border trade exhibitions, multi-city roadshows, and market-entry experiences with global logistics mastery.", image: img("photo-1436491865332-7a61a109cc05"), order: 3 },
-    { title: "Healthcare", slug: "healthcare", description: "Scientific congresses, medical device expos, and clinical brand environments that balance rigour with hospitality.", image: img("photo-1576091160399-112ba8d25d1d"), order: 4 },
-    { title: "Education", slug: "education", description: "Institutional expos, campus forums, and student-facing experiences that inspire and inform.", image: img("photo-1523050854058-8df90110c9f1"), order: 5 },
-    { title: "Technology", slug: "technology", description: "Demo theatres, innovation labs, and product storytelling platforms for software and hardware leaders.", image: img("photo-1518770660439-4636190af475"), order: 6 },
-    { title: "Automotive", slug: "automotive", description: "Vehicle launches, motorsport hospitality, and sculptural stand architecture for premium mobility brands.", image: img("photo-1492144534655-ae79c964c9d7"), order: 7 },
-    { title: "Retail", slug: "retail", description: "Pop-up cathedrals, experiential store formats, and seasonal exhibition commerce worlds.", image: img("photo-1441986300917-64674bd600d8"), order: 8 },
+    { title: "Government", slug: "government", description: "National pavilions, ministerial programmes, protocol-sensitive hosting, and public-sector showcases delivered with discretion and precision.", image: img("261510"), order: 1 },
+    { title: "Corporate", slug: "corporate", description: "Brand experiences, AGMs, leadership summits, product launches, and internal culture events with executive polish.", image: img("3183153"), order: 2 },
+    { title: "International", slug: "international", description: "Cross-border trade exhibitions, multi-city roadshows, and market-entry experiences with global logistics mastery.", image: img("1029243"), order: 3 },
+    { title: "Healthcare", slug: "healthcare", description: "Scientific congresses, medical device expos, and clinical brand environments that balance rigour with hospitality.", image: img("3184338"), order: 4 },
+    { title: "Education", slug: "education", description: "Institutional expos, campus forums, and student-facing experiences that inspire and inform.", image: img("3184416"), order: 5 },
+    { title: "Technology", slug: "technology", description: "Demo theatres, innovation labs, and product storytelling platforms for software and hardware leaders.", image: img("1181533"), order: 6 },
+    { title: "Automotive", slug: "automotive", description: "Vehicle launches, motorsport hospitality, and sculptural stand architecture for premium mobility brands.", image: img("3321793"), order: 7 },
+    { title: "Retail", slug: "retail", description: "Pop-up cathedrals, experiential store formats, and seasonal exhibition commerce worlds.", image: img("713149"), order: 8 },
   ];
 
   for (const i of industries) {

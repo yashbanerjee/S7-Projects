@@ -62,18 +62,14 @@ export async function bootstrap() {
     console.log("[bootstrap] created default site settings");
   }
 
-  // Auto-seed CMS content once if completely empty (services only check)
-  const serviceCount = await prisma.service.count();
-  const forceSeed = process.env.RUN_SEED_ON_BOOT === "true";
-  if (serviceCount === 0 || forceSeed) {
-    console.log("[bootstrap] seeding CMS content…");
-    try {
-      const { seedContent } = await import("./seed-content.js");
-      await seedContent(prisma);
-      console.log("[bootstrap] content seed complete");
-    } catch (e) {
-      console.warn("[bootstrap] content seed skipped/failed:", e);
-    }
+  // Refresh stock Pexels imagery + ensure CMS rows exist (safe upserts)
+  try {
+    console.log("[bootstrap] syncing CMS content & imagery…");
+    const { seedContent } = await import("./seed-content.js");
+    await seedContent(prisma);
+    console.log("[bootstrap] content sync complete");
+  } catch (e) {
+    console.warn("[bootstrap] content seed skipped/failed:", e);
   }
 
   const adminCount = await prisma.admin.count();
