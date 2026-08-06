@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -58,36 +59,21 @@ export function Navbar() {
         <div className="container-premium flex items-center justify-between gap-6">
           <Link
             href="/"
-            className="group relative z-50 flex items-center gap-2.5"
-            aria-label="S7 Home"
+            className="group relative z-50 flex shrink-0 items-center"
+            aria-label={`${siteConfig.name} home`}
           >
-            {/* Creative monogram: script S + bold 7 with brand accent orbit */}
-            <span
+            <Image
+              src="/logo.png"
+              alt={siteConfig.name}
+              width={56}
+              height={56}
+              priority
               className={cn(
-                "relative inline-flex h-11 w-11 items-center justify-center md:h-12 md:w-12",
-                "rounded-full border transition duration-500",
-                light
-                  ? "border-white/35 bg-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] group-hover:border-pink group-hover:bg-pink/15"
-                  : "border-line bg-soft group-hover:border-pink group-hover:bg-pink-muted"
+                "h-11 w-11 object-contain transition duration-500 md:h-12 md:w-12",
+                "drop-shadow-sm group-hover:scale-[1.04]"
               )}
-            >
-              <span
-                className={cn(
-                  "font-display text-[1.35rem] leading-none tracking-tight md:text-[1.45rem]",
-                  light ? "text-white" : "text-ink"
-                )}
-              >
-                <span className="inline-block origin-bottom -skew-x-6 font-semibold italic text-pink">
-                  S
-                </span>
-                <span className="font-semibold">7</span>
-              </span>
-              <span
-                aria-hidden
-                className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-pink shadow-[0_0_10px_rgba(196,32,94,0.65)] transition group-hover:scale-125"
-              />
-            </span>
-            <span className="sr-only">S7</span>
+            />
+            <span className="sr-only">{siteConfig.name}</span>
           </Link>
 
           <nav

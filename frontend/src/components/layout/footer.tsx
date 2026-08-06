@@ -26,15 +26,14 @@ export function Footer() {
             <Link href="/" className="inline-flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="S7"
-                width={64}
-                height={64}
-                className="h-14 w-14 object-contain"
+                alt={siteConfig.name}
+                width={72}
+                height={72}
+                className="h-16 w-16 object-contain"
               />
               <div>
-                <p className="font-display text-2xl font-semibold tracking-tight">
-                  <span className="inline-block -skew-x-6 italic text-pink">S</span>
-                  <span>7</span>
+                <p className="font-display text-xl font-semibold tracking-tight text-ink md:text-2xl">
+                  {siteConfig.name}
                 </p>
                 <p className="text-sm text-muted">{siteConfig.tagline}</p>
               </div>
