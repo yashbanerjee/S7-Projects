@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
-import { images, heroVideo } from "@/lib/content";
+import { heroVideo, heroVideoPoster } from "@/lib/content";
 import { ArrowDownRight } from "lucide-react";
 
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
-      {/* Cinematic event-stage video (Pexels: illuminated venue / production) */}
+      {/* Pexels: spectacular fireworks over night carnival (video 29025244) */}
       <div className="absolute inset-0">
         <video
           className="absolute inset-0 h-full w-full scale-105 object-cover"
@@ -17,7 +17,7 @@ export function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={images.stage}
+          poster={heroVideoPoster}
           aria-hidden
         >
           <source src={heroVideo} type="video/mp4" />

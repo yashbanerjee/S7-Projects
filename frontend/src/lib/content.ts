@@ -137,8 +137,12 @@ export const eventMoments = [
   },
 ];
 
-/** Cinematic hero background — illuminated event stage (Pexels). Replace `public/videos/hero.mp4` to swap. */
-export const heroVideo = "/videos/hero.mp4";
+/** Hero video — Pexels 29025244: spectacular fireworks over night carnival */
+export const heroVideo =
+  "https://videos.pexels.com/video-files/29025244/12548877_3840_2160_30fps.mp4";
+
+/** Poster still while video loads (firework / carnival atmosphere) */
+export const heroVideoPoster = images.lightsCrowd;
 
 export const serviceImages: Record<string, string> = {
   "exhibition-management": images.expo,
