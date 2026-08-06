@@ -5,7 +5,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackServices, resolveServiceImage } from "@/lib/content";
+import { fallbackServices, resolveServiceImage, resolveServiceGallery } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import { Check } from "lucide-react";
 
@@ -36,12 +36,7 @@ async function getService(slug: string): Promise<Service | null> {
   if (!service) return null;
 
   const image = resolveServiceImage(service.slug, service.image);
-  // Keep custom uploads; replace stock/CDN gallery frames so stale API photos never stick.
-  const galleryRaw = service.gallery?.length ? service.gallery : [image, image, image];
-  const gallery = galleryRaw.map((g) => {
-    if (!g || /pexels\.com|unsplash\.com/i.test(g)) return image;
-    return g;
-  });
+  const gallery = resolveServiceGallery(service.slug, image, service.gallery);
 
   return { ...service, image, gallery };
 }
@@ -86,7 +81,7 @@ export default async function ServiceDetailPage({
     "Transparent commercial practice",
     "International delivery capability",
   ];
-  const gallery = service.gallery || [service.image, service.image, service.image];
+  const gallery = service.gallery || [];
 
   return (
     <>
@@ -113,12 +108,13 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
+      {gallery.length > 0 && (
       <section className="bg-soft section-pad">
         <div className="container-premium">
           <SectionHeading eyebrow="Gallery" title="Visual atmosphere" />
           <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {gallery.slice(0, 3).map((src, i) => (
-              <FadeUp key={i} delay={i * 0.06}>
+            {gallery.map((src, i) => (
+              <FadeUp key={`${src}-${i}`} delay={i * 0.06}>
                 <div className="relative aspect-[4/5] overflow-hidden image-zoom">
                   <Image src={src} alt={`${service.title} gallery ${i + 1}`} fill sizes="33vw" className="object-cover" />
                 </div>
@@ -127,6 +123,7 @@ export default async function ServiceDetailPage({
           </div>
         </div>
       </section>
+      )}
 
       <section className="section-pad bg-white">
         <div className="container-premium">

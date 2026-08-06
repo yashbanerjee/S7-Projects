@@ -10,7 +10,7 @@ export const images = {
   /** Arena-scale production with LED wall & stage architecture */
   hero: px(2263436, 2400),
   /** Outdoor festival stage with pyrotechnic atmosphere */
-  heroAlt: px(1190297, 2400),
+  heroAlt: px(1540406, 2400),
   /** Formal banquet / reception table styling */
   about: px(2306281, 1600),
   /** Purple-lit auditorium audience */
@@ -31,40 +31,40 @@ export const images = {
   networking: px(2422290, 1800),
   /** Large-scale stage production */
   stage: px(2263436, 1800),
-  /** Spatial event architecture / stand-like structure */
-  booth: px(1540406, 1800),
-  /** Exhibition stand / auto pavilion on a show floor (Pexels 12712474) */
+  /** Styled brand booth interior / spatial exhibit design */
+  booth: px(31311125, 1800),
+  /** Outdoor exhibition stand pavilion (Volvo show floor) */
   build: px(12712474, 1800),
   /** Outdoor hospitality catering display */
   hospitality: px(587741, 1800),
   /** Theatre stage curtains - awards / ceremony mood */
   awards: px(713149, 1800),
-  /** Blue-lit exhibition keynote audience */
-  expo: px(2774556, 1800),
-  /** Monumental live-event structure */
+  /** Busy indoor trade-show hall with booth grid */
+  expo: px(35138560, 1800),
+  /** Monumental live-event structure / LED arena */
   architecture: px(2263436, 1800),
   /** People-forward event culture */
   team: px(2422290, 1800),
   /** Dramatic stage lighting wash */
-  lighting: px(2747449, 1800),
-  /** Conference hall audience (education / forums) */
-  conference: px(1708988, 1800),
+  lighting: px(2747446, 1800),
+  /** Conference hall / board meeting */
+  conference: px(1181406, 1800),
   /** Gala dining setup */
   gala: px(2306281, 1800),
   /** Confetti toast celebration */
-  celebration: px(3171837, 1800),
+  celebration: px(3171837, 1600),
   /** Formal dinner atmosphere */
   dinner: px(2306281, 1800),
-  /** High-energy show atmosphere */
-  lightsCrowd: px(1190297, 1800),
-  /** Briefing room at a hosted programme */
+  /** High-energy outdoor show atmosphere */
+  lightsCrowd: px(1540406, 1800),
+  /** Briefing / seminar attendees */
   briefing: px(7648047, 1800),
   /** Panel / speaker forum */
   panel: px(3321793, 1800),
   /** Product-reveal / launch show energy */
   launch: px(1763075, 1800),
-  /** International scale live events */
-  skyline: px(1540406, 1800),
+  /** Exhibition-floor hospitality / networking lounge */
+  skyline: px(860227, 1800),
   /** Live show intensity */
   automotive: px(167636, 1800),
   /** Retail / experiential hospitality */
@@ -73,22 +73,37 @@ export const images = {
   education: px(1708988, 1800),
   /** Healthcare-style professional congress */
   healthcare: px(7648047, 1800),
-  /** Technology stage / innovator keynote */
-  technology: px(3321793, 1800),
+  /** Immersive tech / next-gen experience environment */
+  technology: px(19012064, 1800),
+  /** Blue-lit keynote auditorium */
+  keynoteHall: px(2774556, 1800),
+  /** Industrial machinery exhibit on a show floor */
+  tradeMachinery: px(36522033, 1800),
+  /** Designer studio — tablet + brand craft */
+  designStudio: px(4348401, 1800),
+  /** Creative desk with sketchbooks & brand tools */
+  brandCraft: px(4348374, 1800),
+  /** Stakeholder handshake / programme agreement */
+  dealClose: px(3184291, 1800),
+  /** Strategic presentation in a bright boardroom */
+  programmeBoard: px(1181395, 1800),
+  /** Host speaking to a live workshop audience */
+  hostCrew: px(2608517, 1800),
+  /** Concert crowd with raised hands (AV energy) */
+  productionCrowd: px(2747446, 1800),
 };
-
 
 /** Scroll-stopping event stills used in homepage gallery */
 export const eventMoments = [
   {
     src: images.expo,
-    alt: "Audience packed into a flagship exhibition keynote",
-    label: "Exhibition keynotes",
+    alt: "Busy modern trade-show hall with exhibition booths",
+    label: "Exhibition halls",
   },
   {
     src: images.booth,
-    alt: "Dramatic event stage structure and theatrical lighting",
-    label: "Stand architecture",
+    alt: "Styled modern brand booth with seating and product display",
+    label: "Stand design",
   },
   {
     src: images.stage,
@@ -107,13 +122,13 @@ export const eventMoments = [
   },
   {
     src: images.lightsCrowd,
-    alt: "Crowd at a festival show under dramatic lights",
+    alt: "Crowd at a festival show under dramatic stage lights",
     label: "Show atmosphere",
   },
   {
-    src: images.awards,
-    alt: "Theatre stage curtains before a ceremony begins",
-    label: "Awards nights",
+    src: images.build,
+    alt: "Outdoor branded exhibition pavilion on a show plaza",
+    label: "Stand build",
   },
   {
     src: images.celebration,
@@ -129,14 +144,13 @@ export const serviceImages: Record<string, string> = {
   "exhibition-management": images.expo,
   "exhibition-stand-design": images.booth,
   "exhibition-stand-build": images.build,
-  "project-management": images.briefing,
+  "project-management": images.conference,
   "event-staffing": images.networking,
   "event-production": images.stage,
-  "creative-branding": images.launch,
-  capabilities: images.architecture,
+  "creative-branding": images.designStudio,
+  capabilities: images.skyline,
   "future-services": images.technology,
 };
-
 /** Public service card shape used on home / services listing */
 export type PublicService = {
   title: string;
@@ -166,6 +180,124 @@ export function applyServiceStockImages<T extends PublicService>(services: T[]):
 export function resolveServiceImage(slug: string, fallback?: string | null) {
   return serviceImages[slug] || fallback || images.expo;
 }
+
+/** Stable identity for stock URLs (same photo with different query strings = same). */
+export function imageIdentity(url: string): string {
+  if (!url) return "";
+  const pexels = url.match(/\/photos\/(\d+)\//);
+  if (pexels) return `pexels:${pexels[1]}`;
+  const unsplash = url.match(/images\.unsplash\.com\/photo-([^?]+)/);
+  if (unsplash) return `unsplash:${unsplash[1]}`;
+  return url.split("?")[0];
+}
+
+/** Drop empty/duplicate URLs so galleries never render cloned tiles. */
+export function uniqueImageUrls(urls: Array<string | null | undefined>): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const url of urls) {
+    if (!url?.trim()) continue;
+    const key = imageIdentity(url);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(url.trim());
+  }
+  return out;
+}
+
+/** Diversified fill pool — each entry is a distinct Pexels photo id. */
+export const galleryStockPool = uniqueImageUrls([
+  images.expo,
+  images.booth,
+  images.build,
+  images.stage,
+  images.lighting,
+  images.networking,
+  images.conference,
+  images.keynoteHall,
+  images.designStudio,
+  images.brandCraft,
+  images.skyline,
+  images.tradeMachinery,
+  images.hostCrew,
+  images.launch,
+  images.gala,
+  images.awards,
+  images.technology,
+  images.dealClose,
+  images.programmeBoard,
+]);
+
+/**
+ * Theme-matched gallery stills per service (3 distinct photos each).
+ * Matched to what the service actually delivers — not generic office stock.
+ */
+export const serviceGalleries: Record<string, string[]> = {
+  // Show-floor orchestration: hall, hospitality lounges, keynote audience
+  "exhibition-management": [images.expo, images.skyline, images.keynoteHall],
+  // Spatial design: styled booth interior, pavilion form, brand pop-up detail
+  "exhibition-stand-design": [images.booth, images.build, images.designStudio],
+  // Physical builds: pavilion, industrial exhibit install, trade-floor density
+  "exhibition-stand-build": [images.build, images.tradeMachinery, images.expo],
+  // Programme control: board meetings, briefings, stakeholder close
+  "project-management": [images.conference, images.programmeBoard, images.dealClose],
+  // People on the floor: hosts, workshop crew, guest networks
+  "event-staffing": [images.networking, images.hostCrew, images.briefing],
+  // Live technical craft: arena LED, lighting wash, festival stage
+  "event-production": [images.stage, images.lighting, images.lightsCrowd],
+  // Brand worlds: design studio craft, spatial brand booth, awards moments
+  "creative-branding": [images.designStudio, images.brandCraft, images.booth],
+  // Full delivery stack: expo floor, pavilion, live production
+  capabilities: [images.skyline, images.build, images.stage],
+  // Next formats: immersive tech spaces, tech expo machinery, product launch energy
+  "future-services": [images.technology, images.tradeMachinery, images.launch],
+};
+
+/**
+ * Build a gallery of `count` unique images.
+ * Prefer custom CMS uploads; otherwise curated theme stock for the page.
+ */
+export function resolveGalleryImages(options: {
+  gallery?: Array<string | null | undefined> | null;
+  stock?: string[];
+  primary?: string | null;
+  count?: number;
+  preferStock?: boolean;
+}): string[] {
+  const count = options.count ?? 3;
+  const stock = uniqueImageUrls(options.stock || []);
+  const fromApi = uniqueImageUrls(options.gallery || []);
+
+  const customOnly = fromApi.filter(
+    (u) => !/images\.pexels\.com|images\.unsplash\.com/i.test(u)
+  );
+
+  // Custom uploads always win; theme stock beats stale CDN for known pages.
+  const preferred =
+    customOnly.length > 0
+      ? uniqueImageUrls([...customOnly, ...stock, options.primary])
+      : options.preferStock
+        ? uniqueImageUrls([...stock, options.primary, ...fromApi, ...galleryStockPool])
+        : uniqueImageUrls([...fromApi, ...stock, options.primary, ...galleryStockPool]);
+
+  const filled = uniqueImageUrls([...preferred, ...galleryStockPool]);
+  return filled.slice(0, count);
+}
+
+export function resolveServiceGallery(
+  slug: string,
+  primary?: string | null,
+  gallery?: Array<string | null | undefined> | null
+): string[] {
+  return resolveGalleryImages({
+    gallery,
+    stock: serviceGalleries[slug],
+    primary: primary || serviceImages[slug],
+    count: 3,
+    preferStock: true,
+  });
+}
+
 
 /** Fallback content when API is offline — mirrors seed data */
 export const fallbackServices = [
@@ -226,7 +358,7 @@ export const fallbackServices = [
     tagline: "Clarity under complexity",
     description:
       "Dedicated project directors who hold the entire programme together — budgets, timelines, stakeholders, and creative delivery.",
-    image: images.briefing,
+    image: images.conference,
   },
   {
     title: "Event Staffing",
@@ -258,7 +390,7 @@ export const fallbackServices = [
     tagline: "A full production ecosystem",
     description:
       "An integrated suite of specialist partners and internal teams covering design, build, AV, logistics, hospitality, and measurement.",
-    image: images.architecture,
+    image: serviceImages["capabilities"],
   },
   {
     title: "Future Services",

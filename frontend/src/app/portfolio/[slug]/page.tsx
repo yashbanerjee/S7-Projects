@@ -5,7 +5,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackPortfolio } from "@/lib/content";
+import { fallbackPortfolio, resolveGalleryImages, galleryStockPool } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 
 async function getItem(slug: string) {
@@ -51,9 +51,12 @@ export default async function PortfolioDetailPage({
   const item = await getItem(slug);
   if (!item) notFound();
 
-  const gallery = item.gallery?.length
-    ? item.gallery
-    : [item.coverImage, item.coverImage, item.coverImage];
+  const gallery = resolveGalleryImages({
+    gallery: item.gallery,
+    primary: item.coverImage,
+    stock: galleryStockPool,
+    count: 3,
+  });
 
   return (
     <>
@@ -108,10 +111,11 @@ export default async function PortfolioDetailPage({
         </div>
       </section>
 
+      {gallery.length > 0 && (
       <section className="bg-soft section-pad">
         <div className="container-premium grid gap-4 md:grid-cols-3">
           {gallery.map((src: string, i: number) => (
-            <FadeUp key={i} delay={i * 0.05}>
+            <FadeUp key={`${src}-${i}`} delay={i * 0.05}>
               <div className="relative aspect-[4/5] overflow-hidden image-zoom">
                 <Image src={src} alt={`${item.title} ${i + 1}`} fill sizes="33vw" className="object-cover" />
               </div>
@@ -119,6 +123,7 @@ export default async function PortfolioDetailPage({
           ))}
         </div>
       </section>
+      )}
 
       <CtaBand />
     </>

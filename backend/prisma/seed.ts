@@ -94,11 +94,7 @@ async function main() {
       overview:
         "Fabrication, logistics, installation, live show support, and deconstruction. We coordinate unions, venues, and schedules across domestic and international markets.",
       image: img("12712474"),
-      gallery: [
-        img("12712474"),
-        img("1540406"),
-        img("2263436"),
-      ],
+      gallery: [img("12712474"), img("1540406"), img("2263436")],
       icon: "Hammer",
       order: 3,
       featured: true,
@@ -120,7 +116,7 @@ async function main() {
       overview:
         "Governance frameworks, risk registers, cost control, and transparent reporting. Ideal for multi-city roadshows, multi-stand campaigns, and hybrid programmes.",
       image: img("3184291"),
-      gallery: [img("3184465"), img("3183198")],
+      gallery: [img("3184465"), img("3183198"), img("7648047")],
       icon: "Kanban",
       order: 4,
       featured: true,
@@ -142,7 +138,7 @@ async function main() {
       overview:
         "Recruitment, briefing, uniforming, and onsite management of front-of-house and production teams for expos, launches, and conferences.",
       image: img("3184360"),
-      gallery: [img("587741"), img("1181406")],
+      gallery: [img("587741"), img("1181406"), img("2422290")],
       icon: "Users",
       order: 5,
       featured: false,
@@ -164,7 +160,7 @@ async function main() {
       overview:
         "Stage design, lighting direction, sound engineering, LED environments, streaming, and show-calling for flawless live runs.",
       image: img("2747449"),
-      gallery: [img("1190297"), img("1540406")],
+      gallery: [img("1190297"), img("1540406"), img("2263436")],
       icon: "Clapperboard",
       order: 6,
       featured: true,
@@ -186,7 +182,7 @@ async function main() {
       overview:
         "From brand toolkits to motion graphics and environmental wayfinding — creative that performs in real space and on camera.",
       image: img("3184339"),
-      gallery: [img("3184339"), img("3184296")],
+      gallery: [img("3184339"), img("3184296"), img("1763075")],
       icon: "Sparkles",
       order: 7,
       featured: false,
@@ -208,7 +204,7 @@ async function main() {
       overview:
         "One relationship unlocks a complete exhibition and events ecosystem — designed for brands that expect clarity, quality, and speed.",
       image: img("261510"),
-      gallery: [img("3183153"), img("3183153")],
+      gallery: [img("261510"), img("3183153"), img("1540406")],
       icon: "Orbit",
       order: 8,
       featured: false,
@@ -230,7 +226,7 @@ async function main() {
       overview:
         "We invest in future-ready formats so forward-looking brands can lead the conversation on the exhibition floor.",
       image: img("1181533"),
-      gallery: [img("1181533"), img("1181533")],
+      gallery: [img("1181533"), img("1763075"), img("3321793")],
       icon: "Rocket",
       order: 9,
       featured: false,
@@ -283,7 +279,7 @@ async function main() {
       description:
         "Sculptural stand design with kinetic lighting, precision vehicle staging, and invitation-only hospitality suites.",
       coverImage: img("3321793", 1800),
-      gallery: [img("3321793"), img("3321793")],
+      gallery: [img("3321793"), img("12712474"), img("1540406")],
       tags: ["Automotive", "Hospitality", "Lighting"],
       featured: true,
       order: 2,
@@ -313,7 +309,7 @@ async function main() {
       description:
         "Clinical-grade exhibition environments with private consultation rooms and scientific content theatres.",
       coverImage: img("3184338", 1800),
-      gallery: [img("3184338"), img("3184338")],
+      gallery: [img("3184338"), img("7648047"), img("2306281")],
       tags: ["Healthcare", "Forum", "Experience"],
       featured: true,
       order: 4,
@@ -343,7 +339,7 @@ async function main() {
       description:
         "Campus-style exhibition district with wayfinding, student journey narratives, and institutional lounges.",
       coverImage: img("3184416", 1800),
-      gallery: [img("3184416"), img("3184416")],
+      gallery: [img("3184416"), img("1708988"), img("2422290")],
       tags: ["Education", "Campus", "Wayfinding"],
       featured: false,
       order: 6,

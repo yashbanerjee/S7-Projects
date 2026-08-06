@@ -10,25 +10,37 @@ const px = (id: number | string, w = 1600) =>
 
 /** Event-themed stills used across CMS rows */
 const S = {
-  expo: px(2774556), // blue-lit keynote audience
-  conference: px(1708988), // professional conference seating
-  booth: px(1540406), // stage structure / spatial event design
-  stage: px(2263436), // arena production LED
-  lights: px(2747449), // concert beams
-  speaker: px(3321793), // on-stage keynote
-  network: px(2422290), // hosted networking
-  seminar: px(7648047), // engaged attendees
-  workshop: px(2608517), // live host workshop
-  production: px(12712474), // Volvo car show exhibition stand (Pexels)
-  gala: px(2306281), // banquet tables
-  celebration: px(3171837), // toast + confetti
-  dining: px(587741), // catering display
-  festival: px(1190297), // outdoor show atmosphere
-  launch: px(1763075), // show launch energy
-  awards: px(713149), // theatre curtains
-  show: px(167636), // band stage silhouette
+  /** Busy indoor trade-show hall */
+  expo: px(35138560),
+  /** Exhibition floor networking lounge */
+  expoLounge: px(860227),
+  /** Blue-lit auditorium keynote */
+  keynote: px(2774556),
+  conference: px(1181406),
+  boardroom: px(1181395),
+  deal: px(3184291),
+  /** Styled modern brand booth interior */
+  booth: px(31311125),
+  stage: px(2263436),
+  lights: px(2747446),
+  festival: px(1540406),
+  speaker: px(3321793),
+  network: px(2422290),
+  seminar: px(7648047),
+  workshop: px(2608517),
+  /** Volvo outdoor exhibition pavilion */
+  production: px(12712474),
+  tradeInstall: px(36522033),
+  gala: px(2306281),
+  celebration: px(3171837),
+  dining: px(587741),
+  launch: px(1763075),
+  awards: px(713149),
+  show: px(167636),
+  designStudio: px(4348401),
+  brandCraft: px(4348374),
+  technology: px(19012064),
 };
-
 export async function seedContent(prisma: PrismaClient) {
   const services = [
     {
@@ -39,6 +51,7 @@ export async function seedContent(prisma: PrismaClient) {
         "From concept to closing night, Project S7 orchestrates seamless exhibition programmes that captivate audiences and deliver measurable brand impact.",
       overview: "Full lifecycle exhibition management for expos, trade shows, and brand showcases.",
       image: S.expo,
+      gallery: [S.expo, S.expoLounge, S.keynote],
       icon: "Layers",
       order: 1,
       featured: true,
@@ -50,6 +63,7 @@ export async function seedContent(prisma: PrismaClient) {
       description:
         "We design exhibition stands as architectural brand statements — cinematic form, intelligent flow, and materials that photograph beautifully.",
       image: S.booth,
+      gallery: [S.booth, S.production, S.designStudio],
       icon: "PenTool",
       order: 2,
       featured: true,
@@ -61,6 +75,7 @@ export async function seedContent(prisma: PrismaClient) {
       description:
         "Our build teams turn approved designs into immaculate physical environments — on time and on brand.",
       image: S.production,
+      gallery: [S.production, S.tradeInstall, S.expo],
       icon: "Hammer",
       order: 3,
       featured: true,
@@ -71,7 +86,8 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Clarity under complexity",
       description:
         "Dedicated project directors who hold budgets, timelines, stakeholders, and creative delivery together.",
-      image: S.seminar,
+      image: S.conference,
+      gallery: [S.conference, S.boardroom, S.deal],
       icon: "Kanban",
       order: 4,
       featured: true,
@@ -83,6 +99,7 @@ export async function seedContent(prisma: PrismaClient) {
       description:
         "Trained hosts, brand ambassadors, technical crew, and VIP stewards with polish and warmth.",
       image: S.network,
+      gallery: [S.network, S.workshop, S.seminar],
       icon: "Users",
       order: 5,
       featured: false,
@@ -94,6 +111,7 @@ export async function seedContent(prisma: PrismaClient) {
       description:
         "Full technical production for conferences, award nights, product launches, and hybrid experiences.",
       image: S.stage,
+      gallery: [S.stage, S.lights, S.festival],
       icon: "Clapperboard",
       order: 6,
       featured: true,
@@ -104,7 +122,8 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Identity systems for live brand worlds",
       description:
         "Visual identity, spatial graphics, and campaign assets that make exhibitions unforgettable.",
-      image: S.launch,
+      image: S.designStudio,
+      gallery: [S.designStudio, S.brandCraft, S.booth],
       icon: "Sparkles",
       order: 7,
       featured: false,
@@ -115,7 +134,8 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "A full production ecosystem",
       description:
         "An integrated suite covering design, build, AV, logistics, hospitality, and measurement.",
-      image: S.lights,
+      image: S.expoLounge,
+      gallery: [S.expoLounge, S.production, S.stage],
       icon: "Orbit",
       order: 8,
       featured: false,
@@ -126,7 +146,8 @@ export async function seedContent(prisma: PrismaClient) {
       tagline: "Next-generation event experiences",
       description:
         "Immersive XR, data-driven experience design, sustainable builds, and AI-assisted engagement.",
-      image: S.speaker,
+      image: S.technology,
+      gallery: [S.technology, S.tradeInstall, S.launch],
       icon: "Rocket",
       order: 9,
       featured: false,
@@ -138,6 +159,7 @@ export async function seedContent(prisma: PrismaClient) {
       where: { slug: s.slug },
       update: {
         image: s.image,
+        gallery: s.gallery,
         title: s.title,
         tagline: s.tagline,
         description: s.description,
@@ -333,10 +355,16 @@ export async function seedContent(prisma: PrismaClient) {
   ];
 
   for (const p of portfolioItems) {
+    // Distinct gallery tiles — never three copies of the cover
+    const gallery = [p.coverImage, S.stage, S.gala, S.network, S.festival, S.lights].filter(
+      (url, i, arr) => arr.findIndex((u) => u.split("?")[0] === url.split("?")[0]) === i
+    );
+
     await prisma.portfolio.upsert({
       where: { slug: p.slug },
       update: {
         coverImage: p.coverImage,
+        gallery: gallery.slice(0, 4),
         description: p.description,
         featured: p.featured,
         order: p.order,
@@ -345,7 +373,7 @@ export async function seedContent(prisma: PrismaClient) {
       },
       create: {
         ...p,
-        gallery: [p.coverImage, S.stage, S.gala, S.network],
+        gallery: gallery.slice(0, 4),
       },
     });
   }
