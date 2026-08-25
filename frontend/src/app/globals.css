@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --pink: #c4205e;
-  --pink-soft: #e84a7f;
-  --pink-muted: #f7e6ed;
+  --pink: #f52d71;
+  --pink-soft: #ff5a8f;
+  --pink-muted: #fff0f5;
+  --pink-deep: #d91f5c;
   --white: #ffffff;
-  --soft: #fafafa;
+  --soft: #fff5f9;
   --ink: #111111;
-  --muted: #5c5c5c;
-  --line: #e8e8e8;
-  --background: #ffffff;
+  --muted: #6b5560;
+  --line: #f3d4e0;
+  --background: #fff5f9;
   --foreground: #111111;
 }
 
@@ -19,6 +20,7 @@
   --color-pink: var(--pink);
   --color-pink-soft: var(--pink-soft);
   --color-pink-muted: var(--pink-muted);
+  --color-pink-deep: var(--pink-deep);
   --color-soft: var(--soft);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
@@ -136,14 +138,21 @@ img {
 
 .overlay-hero {
   background:
-    linear-gradient(105deg, rgba(17, 17, 17, 0.72) 0%, rgba(17, 17, 17, 0.35) 48%, rgba(17, 17, 17, 0.2) 100%),
-    linear-gradient(to top, rgba(17, 17, 17, 0.45), transparent 40%);
+    linear-gradient(105deg, rgba(17, 17, 17, 0.68) 0%, rgba(17, 17, 17, 0.32) 48%, rgba(245, 45, 113, 0.28) 100%),
+    linear-gradient(to top, rgba(17, 17, 17, 0.42), transparent 42%);
 }
 
 .nav-blur {
   backdrop-filter: blur(16px);
-  background: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(232, 232, 232, 0.9);
+  background: rgba(255, 245, 249, 0.92);
+  border-bottom: 1px solid rgba(243, 212, 224, 0.95);
+}
+
+.section-pink-wash {
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(245, 45, 113, 0.08), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 0% 100%, rgba(255, 90, 143, 0.06), transparent 50%),
+    var(--soft);
 }
 
 /* Brand pink CTAs use white labels (outline buttons keep their own colors) */

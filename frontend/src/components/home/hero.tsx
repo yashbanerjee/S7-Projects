@@ -27,7 +27,7 @@ export function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(105deg, rgba(17,17,17,0.78) 0%, rgba(17,17,17,0.42) 45%, rgba(196,32,94,0.18) 100%), linear-gradient(to top, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.2) 45%, transparent 70%)",
+              "linear-gradient(105deg, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.38) 42%, rgba(245,45,113,0.32) 100%), linear-gradient(to top, rgba(17,17,17,0.65) 0%, rgba(245,45,113,0.12) 50%, transparent 72%)",
           }}
         />
       </div>
@@ -35,7 +35,7 @@ export function Hero() {
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-end pb-16 pt-36 md:pb-24 md:pt-40">
         <div className="container-premium">
           <FadeUp>
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-pink-soft">
               Project S7 · Events & Exhibitions
             </p>
           </FadeUp>
@@ -53,7 +53,7 @@ export function Hero() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-ink transition hover:bg-pink hover:text-white"
+                className="inline-flex items-center justify-center rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-pink/30 transition hover:bg-pink-soft"
               >
                 Make an Enquiry
               </Link>

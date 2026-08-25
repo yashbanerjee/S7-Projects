@@ -52,8 +52,8 @@ export function Navbar() {
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
           solid
-            ? "border-b border-black/5 bg-white/95 py-3 shadow-sm backdrop-blur-md"
-            : "bg-gradient-to-b from-black/55 via-black/25 to-transparent py-5"
+            ? "border-b border-pink/15 bg-pink-muted/75 py-3 shadow-sm shadow-pink/5 backdrop-blur-md"
+            : "bg-gradient-to-b from-black/55 via-pink/10 to-transparent py-5"
         )}
       >
         <div className="container-premium flex items-center justify-between gap-6">
@@ -65,12 +65,13 @@ export function Navbar() {
             <Image
               src="/logo.png"
               alt={siteConfig.name}
-              width={56}
-              height={56}
+              width={64}
+              height={64}
               priority
               className={cn(
-                "h-11 w-11 object-contain transition duration-500 md:h-12 md:w-12",
-                "drop-shadow-sm group-hover:scale-[1.04]"
+                "h-12 w-auto object-contain transition duration-500 md:h-14",
+                light ? "drop-shadow-[0_2px_12px_rgba(245,45,113,0.35)]" : "",
+                "group-hover:scale-[1.04]"
               )}
             />
             <span className="sr-only">{siteConfig.name}</span>
@@ -149,7 +150,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-white lg:hidden"
+            className="fixed inset-0 z-40 bg-pink-muted lg:hidden"
           >
             <div className="flex h-full flex-col justify-between px-8 pb-12 pt-28">
               <nav className="flex flex-col gap-1" aria-label="Mobile">

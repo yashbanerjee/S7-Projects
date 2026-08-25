@@ -74,7 +74,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${jakarta.variable}`}>
-      <body className="min-h-screen bg-white text-ink antialiased">
+      <body className="min-h-screen bg-soft text-ink antialiased">
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

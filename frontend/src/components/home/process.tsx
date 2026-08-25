@@ -117,7 +117,7 @@ export function Process() {
                         )}
                         animate={
                           isActive
-                            ? { scale: [1, 1.12, 1], boxShadow: "0 10px 30px rgba(196,32,94,0.28)" }
+                            ? { scale: [1, 1.12, 1], boxShadow: "0 10px 30px rgba(245,45,113,0.32)" }
                             : { scale: 1 }
                         }
                         transition={

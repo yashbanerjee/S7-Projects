@@ -19,7 +19,7 @@ export function Footer() {
   });
 
   return (
-    <footer className="border-t border-line bg-soft">
+    <footer className="border-t border-pink/20 bg-pink-muted/60">
       <div className="container-premium section-pad">
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -27,12 +27,12 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt={siteConfig.name}
-                width={72}
-                height={72}
-                className="h-16 w-16 object-contain"
+                width={80}
+                height={80}
+                className="h-16 w-auto object-contain md:h-[4.5rem]"
               />
               <div>
-                <p className="font-display text-xl font-semibold tracking-tight text-ink md:text-2xl">
+                <p className="font-display text-xl font-semibold tracking-tight text-pink md:text-2xl">
                   {siteConfig.name}
                 </p>
                 <p className="text-sm text-muted">{siteConfig.tagline}</p>

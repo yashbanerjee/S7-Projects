@@ -1,15 +1,14 @@
-/** Project S7 Brand Tokens
- * Logo pink extracted from brand mark (primary magenta-pink accent)
- */
+/** Project S7 Brand Tokens — matched to the S7 wordmark pink */
 export const brand = {
-  pink: "#C4205E",
-  pinkSoft: "#E84A7F",
-  pinkMuted: "#F7E6ED",
+  pink: "#F52D71",
+  pinkSoft: "#FF5A8F",
+  pinkMuted: "#FFF0F5",
+  pinkDeep: "#D91F5C",
   white: "#FFFFFF",
-  soft: "#FAFAFA",
+  soft: "#FFF5F9",
   ink: "#111111",
-  muted: "#5C5C5C",
-  line: "#E8E8E8",
+  muted: "#6B5560",
+  line: "#F3D4E0",
 } as const;
 
 export const siteConfig = {

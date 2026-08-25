@@ -30,7 +30,7 @@ export function FloatingCta() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white transition hover:bg-pink hover:text-white"
+        className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-pink text-white shadow-lg shadow-pink/25 transition hover:bg-pink-soft hover:text-white"
       >
         <MessageCircle className="h-5 w-5" />
       </a>
