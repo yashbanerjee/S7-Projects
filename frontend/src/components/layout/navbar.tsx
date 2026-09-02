@@ -126,7 +126,7 @@ export function Navbar() {
                   : "btn-pink bg-pink text-white hover:bg-pink-soft hover:text-white"
               )}
             >
-              Make an Enquiry
+              Get a Quote
             </Link>
             <button
               type="button"
@@ -189,7 +189,7 @@ export function Navbar() {
                   href="/quote"
                   className="btn-pink inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white hover:bg-pink-soft hover:text-white"
                 >
-                  Make an Enquiry
+                  Get a Quote
                 </Link>
                 <p className="text-sm text-muted">{siteConfig.email}</p>
               </motion.div>

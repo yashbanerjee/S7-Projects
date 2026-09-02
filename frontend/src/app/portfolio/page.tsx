@@ -2,38 +2,25 @@ import type { Metadata } from "next";
 import { PortfolioClient } from "@/components/portfolio/portfolio-client";
 import { PageHero } from "@/components/ui/page-hero";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackPortfolio, images } from "@/lib/content";
-import { siteConfig } from "@/lib/brand";
+import { portfolioPlaceholder } from "@/lib/brief-content";
+import { images } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Portfolio",
-  description:
-    "Explore Project S7 portfolio — exhibitions, corporate events, booths, and case studies spanning government, technology, automotive, healthcare, and more.",
+  description: portfolioPlaceholder.description,
   alternates: { canonical: "/portfolio" },
 };
 
-async function getPortfolio() {
-  try {
-    const res = await fetch(`${siteConfig.apiUrl}/portfolio`, { next: { revalidate: 60 } });
-    const json = await res.json();
-    return json.data?.length ? json.data : fallbackPortfolio;
-  } catch {
-    return fallbackPortfolio;
-  }
-}
-
-export default async function PortfolioPage() {
-  const items = await getPortfolio();
-
+export default function PortfolioPage() {
   return (
     <>
       <PageHero
         eyebrow="Portfolio"
-        title="Work that commands attention"
-        description="A curated selection of exhibition and event environments — designed, produced, and delivered with Project S7 standards."
-        image={images.heroAlt}
+        title={portfolioPlaceholder.title}
+        description={portfolioPlaceholder.description}
+        image={images.expo}
       />
-      <PortfolioClient items={items} />
+      <PortfolioClient items={[]} />
       <CtaBand />
     </>
   );

@@ -5,7 +5,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackPortfolio, resolveGalleryImages, galleryStockPool } from "@/lib/content";
+import { resolveGalleryImages, galleryStockPool } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 
 async function getItem(slug: string) {
@@ -15,16 +15,16 @@ async function getItem(slug: string) {
     });
     if (res.ok) {
       const json = await res.json();
-      if (json.data) return json.data;
+      if (json.data?.published !== false) return json.data;
     }
   } catch {
-    /* fallback */
+    /* no fallback — real projects only via API */
   }
-  return fallbackPortfolio.find((p) => p.slug === slug) || null;
+  return null;
 }
 
 export async function generateStaticParams() {
-  return fallbackPortfolio.map((p) => ({ slug: p.slug }));
+  return [];
 }
 
 export async function generateMetadata({

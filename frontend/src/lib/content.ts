@@ -372,120 +372,21 @@ export const fallbackServices = [
       "Trained hosts, brand ambassadors, technical crew, and VIP stewards who represent your brand with polish and warmth.",
     image: images.networking,
   },
-  {
-    title: "Event Production",
-    slug: "event-production",
-    tagline: "Stage, light, sound — cinematic delivery",
-    description:
-      "Full technical production for conferences, award nights, product launches, and hybrid experiences.",
-    image: images.stage,
-  },
-  {
-    title: "Creative & Branding",
-    slug: "creative-branding",
-    tagline: "Identity systems for live brand worlds",
-    description:
-      "Visual identity, spatial graphics, content systems, and campaign assets that make exhibitions unforgettable.",
-    image: serviceImages["creative-branding"],
-  },
-  {
-    title: "Capabilities",
-    slug: "capabilities",
-    tagline: "A full production ecosystem",
-    description:
-      "An integrated suite of specialist partners and internal teams covering design, build, AV, logistics, hospitality, and measurement.",
-    image: serviceImages["capabilities"],
-  },
-  {
-    title: "Future Services",
-    slug: "future-services",
-    tagline: "Next-generation event experiences",
-    description:
-      "Emerging formats: immersive XR booths, data-driven experience design, sustainable builds, and AI-assisted engagement.",
-    image: serviceImages["future-services"],
-  },
 ];
 
-export const fallbackPortfolio = [
-  {
-    title: "National Infrastructure Expo Pavilion",
-    slug: "national-infrastructure-expo",
-    category: "Exhibitions",
-    client: "Government Client",
-    location: "Riyadh",
-    year: "2025",
-    description:
-      "A monumental pavilion experience integrating interactive product stories, VIP lounges, and broadcast-ready stages for a flagship national infrastructure showcase.",
-    coverImage: images.conference,
-    tags: ["Pavilion", "Government", "Interactive"],
-    featured: true,
-  },
-  {
-    title: "Luxury Automotive Brand Experience",
-    slug: "luxury-automotive-brand-experience",
-    category: "Booths",
-    client: "Global Auto Brand",
-    location: "Dubai",
-    year: "2025",
-    description:
-      "Sculptural stand design with kinetic lighting, precision vehicle staging, and invitation-only hospitality suites.",
-    coverImage: images.automotive,
-    tags: ["Automotive", "Hospitality"],
-    featured: true,
-  },
-  {
-    title: "Global Tech Leadership Summit",
-    slug: "global-tech-leadership-summit",
-    category: "Corporate",
-    client: "Fortune 500 Technology",
-    location: "Singapore",
-    year: "2024",
-    description:
-      "Three-day executive summit with main stage production, breakout architecture, and seamless hybrid streaming.",
-    coverImage: images.hero,
-    tags: ["Summit", "Hybrid"],
-    featured: true,
-  },
-  {
-    title: "Healthcare Innovation Forum",
-    slug: "healthcare-innovation-forum",
-    category: "Events",
-    client: "Healthcare Consortium",
-    location: "London",
-    year: "2024",
-    description:
-      "Clinical-grade exhibition environments with private consultation rooms and scientific content theatres.",
-    coverImage: images.panel,
-    tags: ["Healthcare"],
-    featured: true,
-  },
-  {
-    title: "Retail Flagship Pop-Up Pavilion",
-    slug: "retail-flagship-popup",
-    category: "Booths",
-    client: "Premium Retail Brand",
-    location: "Paris",
-    year: "2024",
-    description:
-      "A temporary retail cathedral — modular architecture, layered merchandising, and influencer-ready moments.",
-    coverImage: images.launch,
-    tags: ["Retail"],
-    featured: false,
-  },
-  {
-    title: "Education Expo Campus",
-    slug: "education-expo-campus",
-    category: "Exhibitions",
-    client: "Education Alliance",
-    location: "Abu Dhabi",
-    year: "2023",
-    description:
-      "Campus-style exhibition district with wayfinding, student journey narratives, and institutional lounges.",
-    coverImage: images.networking,
-    tags: ["Education"],
-    featured: false,
-  },
-];
+/** Placeholder — real projects added when approved for public release */
+export const fallbackPortfolio: Array<{
+  title: string;
+  slug: string;
+  category: string;
+  client?: string;
+  location?: string;
+  year?: string;
+  description: string;
+  coverImage: string;
+  tags?: string[];
+  featured?: boolean;
+}> = [];
 
 export const fallbackTestimonials = [
   {

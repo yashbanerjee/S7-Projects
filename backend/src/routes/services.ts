@@ -27,12 +27,22 @@ const serviceBodySchema = z.object({
   metaDesc: z.string().nullable().optional(),
 });
 
+const APPROVED_SERVICE_SLUGS = [
+  "exhibition-management",
+  "exhibition-stand-design",
+  "exhibition-stand-build",
+  "project-management",
+  "event-staffing",
+];
+
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     const published = req.query.all !== "true";
     const services = await prisma.service.findMany({
-      where: published ? { published: true } : undefined,
+      where: published
+        ? { published: true, slug: { in: APPROVED_SERVICE_SLUGS } }
+        : undefined,
       orderBy: { order: "asc" },
     });
     res.json({ success: true, data: services });
@@ -42,9 +52,13 @@ router.get(
 router.get(
   "/:slug",
   asyncHandler(async (req, res) => {
+    const slug = param(req, "slug");
+    if (!APPROVED_SERVICE_SLUGS.includes(slug)) {
+      throw new AppError("Service not found", 404);
+    }
     const service = await prisma.service.findFirst({
       where: {
-        OR: [{ slug: param(req, "slug") }, { id: param(req, "slug") }],
+        OR: [{ slug }, { id: slug }],
       },
     });
     if (!service) throw new AppError("Service not found", 404);

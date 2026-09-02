@@ -1,54 +1,71 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
-import { cn } from "@/lib/utils";
 import type { fallbackPortfolio } from "@/lib/content";
+import { images } from "@/lib/content";
 
 type Item = (typeof fallbackPortfolio)[number];
 
-const filters = ["All", "Events", "Exhibitions", "Corporate", "Booths"] as const;
-
 export function PortfolioClient({ items }: { items: Item[] }) {
-  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
-
-  const filtered = useMemo(() => {
-    if (filter === "All") return items;
-    return items.filter((i) => i.category.toLowerCase() === filter.toLowerCase());
-  }, [filter, items]);
+  if (items.length === 0) {
+    return (
+      <section className="section-pad bg-white">
+        <div className="container-premium">
+          <FadeUp>
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div className="relative aspect-[16/11] overflow-hidden image-zoom">
+                <Image
+                  src={images.expo}
+                  alt="Premium exhibition environment placeholder"
+                  fill
+                  sizes="50vw"
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-pink">Coming soon</p>
+                <h2 className="font-display mt-4 text-3xl tracking-tight md:text-4xl">
+                  Project showcase in preparation
+                </h2>
+                <p className="mt-6 text-lg leading-relaxed text-muted">
+                  Our portfolio of exhibitions, stands, and corporate events will be published here as projects
+                  are approved for public release. In the meantime, speak with our team about your programme.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Link
+                    href="/quote"
+                    className="inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-pink-soft"
+                  >
+                    Get a Quote
+                  </Link>
+                  <Link
+                    href="/contact?intent=consultation"
+                    className="inline-flex rounded-full border border-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-pink transition hover:bg-pink hover:text-white"
+                  >
+                    Request a Consultation
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="section-pad bg-white">
       <div className="container-premium">
-        <div className="mb-12 flex flex-wrap gap-3">
-          {filters.map((f) => (
-            <button
-              key={f}
-              type="button"
-              onClick={() => setFilter(f)}
-              className={cn(
-                "rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-wider transition",
-                filter === f
-                  ? "border-pink bg-pink text-white"
-                  : "border-line text-muted hover:border-pink hover:text-pink"
-              )}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-
         <div className="columns-1 gap-6 md:columns-2 xl:columns-3">
-          {filtered.map((item, i) => (
+          {items.map((item, i) => (
             <FadeUp key={item.slug} delay={(i % 3) * 0.05} className="mb-6 break-inside-avoid">
               <Link href={`/portfolio/${item.slug}`} className="group block">
                 <div
-                  className={cn(
-                    "relative overflow-hidden image-zoom",
+                  className={`relative overflow-hidden image-zoom ${
                     i % 4 === 0 ? "aspect-[4/5]" : i % 4 === 1 ? "aspect-[16/11]" : "aspect-[3/4]"
-                  )}
+                  }`}
                 >
                   <Image
                     src={item.coverImage}
@@ -67,10 +84,6 @@ export function PortfolioClient({ items }: { items: Item[] }) {
             </FadeUp>
           ))}
         </div>
-
-        {filtered.length === 0 && (
-          <p className="py-20 text-center text-muted">No projects in this category yet.</p>
-        )}
       </div>
     </section>
   );

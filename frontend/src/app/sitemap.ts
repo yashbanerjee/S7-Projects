@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/brand";
-import { fallbackServices, fallbackPortfolio } from "@/lib/content";
+import { fallbackServices } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
@@ -9,9 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/services",
     "/portfolio",
-    "/industries",
-    "/careers",
-    "/faq",
     "/contact",
     "/quote",
     "/privacy",
@@ -30,12 +27,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const portfolio = fallbackPortfolio.map((p) => ({
-    url: `${base}/portfolio/${p.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  return [...staticRoutes, ...services, ...portfolio];
+  return [...staticRoutes, ...services];
 }

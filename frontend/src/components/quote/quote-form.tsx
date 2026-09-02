@@ -3,21 +3,20 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { PhoneInput, phoneRequiredSchema } from "@/components/ui/phone-input";
 import { siteConfig } from "@/lib/brand";
-import { fallbackServices } from "@/lib/content";
+import { approvedServices } from "@/lib/brief-content";
 
 const schema = z.object({
-  company: z.string().min(2),
-  name: z.string().min(2),
-  email: z.string().email(),
+  company: z.string().min(2, "Company is required"),
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Valid email required"),
   phone: phoneRequiredSchema,
-  country: z.string().optional(),
   service: z.string().optional(),
-  budget: z.string().optional(),
+  projectType: z.string().optional(),
   eventDate: z.string().optional(),
   location: z.string().optional(),
   message: z.string().optional(),
@@ -25,33 +24,70 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export function QuoteForm() {
+const projectTypes = [
+  "Exhibition",
+  "Conference",
+  "Corporate Event",
+  "Exhibition Stand",
+  "Multi-Service Programme",
+  "Other",
+];
+
+type QuoteIntent = "design" | "quote" | "consultation";
+
+export function QuoteForm({ intent = "quote" }: { intent?: QuoteIntent }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [file, setFile] = useState<File | null>(null);
+
+  const isDesign = intent === "design";
+  const heading = isDesign ? "Start designing your stand" : "Request a quote";
+  const description = isDesign
+    ? "Share your brand, space, and objectives — our design team will respond with creative direction."
+    : "Tell us about your event or exhibition project. We respond with clarity and a structured proposal.";
+  const submitLabel = isDesign ? "Start Designing" : "Get a Quote";
+
   const {
     register,
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { phone: "" },
+    defaultValues: {
+      phone: "",
+      service: isDesign ? "Exhibition Stand Design" : "",
+    },
   });
+
+  useEffect(() => {
+    if (isDesign) setValue("service", "Exhibition Stand Design");
+  }, [isDesign, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     setStatus("loading");
     try {
       const body = new FormData();
-      Object.entries(data).forEach(([k, v]) => v && body.append(k, v));
+      body.append("company", data.company);
+      body.append("name", data.name);
+      body.append("email", data.email);
+      body.append("phone", data.phone);
+      if (data.service) body.append("service", data.service);
+      if (data.projectType) body.append("budget", data.projectType);
+      if (data.eventDate) body.append("eventDate", data.eventDate);
+      if (data.location) body.append("location", data.location);
+      const intentNote = isDesign ? "[Design enquiry] " : "";
+      if (data.message || intentNote) body.append("message", `${intentNote}${data.message || ""}`.trim());
       if (file) body.append("file", file);
+
       const res = await fetch(`${siteConfig.apiUrl}/quotes`, {
         method: "POST",
         body,
       });
       if (!res.ok) throw new Error("fail");
       setStatus("success");
-      reset({ phone: "" });
+      reset({ phone: "", service: isDesign ? "Exhibition Stand Design" : "" });
       setFile(null);
     } catch {
       setStatus("error");
@@ -61,22 +97,18 @@ export function QuoteForm() {
   return (
     <section className="section-pad bg-white">
       <div className="container-premium max-w-4xl">
-        <SectionHeading
-          eyebrow="Brief"
-          title="Programme details"
-          description="Fields marked as required help us triage and assign the right project director immediately."
-        />
+        <SectionHeading eyebrow="Enquiry" title={heading} description={description} />
 
         <FadeUp delay={0.1}>
           <form onSubmit={onSubmit} className="mt-12 grid gap-6 sm:grid-cols-2">
-            <Field label="Company *" error={errors.company?.message}>
-              <input className={inputCls} {...register("company")} />
-            </Field>
             <Field label="Name *" error={errors.name?.message}>
-              <input className={inputCls} {...register("name")} />
+              <input className={inputCls} autoComplete="name" {...register("name")} />
+            </Field>
+            <Field label="Company *" error={errors.company?.message}>
+              <input className={inputCls} autoComplete="organization" {...register("company")} />
             </Field>
             <Field label="Email *" error={errors.email?.message}>
-              <input type="email" className={inputCls} {...register("email")} />
+              <input type="email" className={inputCls} autoComplete="email" {...register("email")} />
             </Field>
             <Field label="Phone *" error={errors.phone?.message}>
               <Controller
@@ -93,47 +125,45 @@ export function QuoteForm() {
                 )}
               />
             </Field>
-            <Field label="Country">
-              <input className={inputCls} {...register("country")} />
-            </Field>
             <Field label="Service">
               <select className={inputCls} defaultValue="" {...register("service")}>
-                <option value="" disabled>
-                  Select service
-                </option>
-                {fallbackServices.map((s) => (
+                <option value="">Select service</option>
+                {approvedServices.map((s) => (
                   <option key={s.slug} value={s.title}>
                     {s.title}
                   </option>
                 ))}
               </select>
             </Field>
-            <Field label="Budget">
-              <select className={inputCls} defaultValue="" {...register("budget")}>
-                <option value="" disabled>
-                  Select range
-                </option>
-                <option>Under $50k</option>
-                <option>$50k – $150k</option>
-                <option>$150k – $500k</option>
-                <option>$500k+</option>
-                <option>To be discussed</option>
+            <Field label="Event / Project Type">
+              <select className={inputCls} defaultValue="" {...register("projectType")}>
+                <option value="">Select type</option>
+                {projectTypes.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
               </select>
+            </Field>
+            <Field label="Location">
+              <input className={inputCls} placeholder="City / venue" {...register("location")} />
             </Field>
             <Field label="Event Date">
               <input type="date" className={inputCls} {...register("eventDate")} />
             </Field>
-            <Field label="Location">
-              <input className={inputCls} {...register("location")} />
-            </Field>
             <div className="sm:col-span-2">
               <Field label="Message">
-                <textarea rows={5} className={inputCls} {...register("message")} />
+                <textarea
+                  rows={5}
+                  className={inputCls}
+                  placeholder="Scope, objectives, audience, or any reference materials"
+                  {...register("message")}
+                />
               </Field>
             </div>
             <div className="sm:col-span-2">
               <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-                File upload (brief, floor plan, brand deck)
+                File upload (optional — brief, floor plan, brand deck)
               </label>
               <input
                 type="file"
@@ -144,7 +174,7 @@ export function QuoteForm() {
             </div>
             <div className="sm:col-span-2 flex flex-wrap items-center gap-4 pt-4">
               <Button type="submit" size="lg" disabled={status === "loading"}>
-                {status === "loading" ? "Submitting…" : "Submit Enquiry"}
+                {status === "loading" ? "Submitting…" : submitLabel}
               </Button>
               {status === "success" && (
                 <p className="text-sm text-pink">

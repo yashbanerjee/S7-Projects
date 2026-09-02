@@ -102,56 +102,15 @@ export async function seedContent(prisma: PrismaClient) {
       gallery: [S.network, S.workshop, S.seminar],
       icon: "Users",
       order: 5,
-      featured: false,
-    },
-    {
-      title: "Event Production",
-      slug: "event-production",
-      tagline: "Stage, light, sound — cinematic delivery",
-      description:
-        "Full technical production for conferences, award nights, product launches, and hybrid experiences.",
-      image: S.stage,
-      gallery: [S.stage, S.lights, S.festival],
-      icon: "Clapperboard",
-      order: 6,
       featured: true,
     },
-    {
-      title: "Creative & Branding",
-      slug: "creative-branding",
-      tagline: "Identity systems for live brand worlds",
-      description:
-        "Visual identity, spatial graphics, and campaign assets that make exhibitions unforgettable.",
-      image: S.designStudio,
-      gallery: [S.designStudio, S.brandCraft, S.booth],
-      icon: "Sparkles",
-      order: 7,
-      featured: false,
-    },
-    {
-      title: "Capabilities",
-      slug: "capabilities",
-      tagline: "A full production ecosystem",
-      description:
-        "An integrated suite covering design, build, AV, logistics, hospitality, and measurement.",
-      image: S.expoLounge,
-      gallery: [S.expoLounge, S.production, S.stage],
-      icon: "Orbit",
-      order: 8,
-      featured: false,
-    },
-    {
-      title: "Future Services",
-      slug: "future-services",
-      tagline: "Next-generation event experiences",
-      description:
-        "Immersive XR, data-driven experience design, sustainable builds, and AI-assisted engagement.",
-      image: S.technology,
-      gallery: [S.technology, S.tradeInstall, S.launch],
-      icon: "Rocket",
-      order: 9,
-      featured: false,
-    },
+  ];
+
+  const removedSlugs = [
+    "event-production",
+    "creative-branding",
+    "capabilities",
+    "future-services",
   ];
 
   for (const s of services) {
@@ -171,6 +130,10 @@ export async function seedContent(prisma: PrismaClient) {
       create: s,
     });
   }
+
+  await prisma.service.deleteMany({
+    where: { slug: { in: removedSlugs } },
+  });
 
   const existingFaqs = await prisma.fAQ.count();
   if (existingFaqs === 0) {
@@ -267,114 +230,5 @@ export async function seedContent(prisma: PrismaClient) {
     });
   }
 
-  const portfolioItems = [
-    {
-      title: "National Infrastructure Expo Pavilion",
-      slug: "national-infrastructure-expo",
-      category: "Exhibitions",
-      client: "Government Client",
-      location: "Riyadh",
-      year: "2025",
-      description:
-        "A monumental pavilion experience integrating interactive product stories and broadcast-ready stages.",
-      coverImage: S.expo,
-      tags: ["Pavilion", "Government"],
-      featured: true,
-      order: 1,
-    },
-    {
-      title: "Luxury Automotive Brand Experience",
-      slug: "luxury-automotive-brand-experience",
-      category: "Booths",
-      client: "Global Auto Brand",
-      location: "Dubai",
-      year: "2025",
-      description:
-        "Sculptural stand design with kinetic lighting and invitation-only hospitality suites.",
-      coverImage: S.booth,
-      tags: ["Automotive", "Hospitality"],
-      featured: true,
-      order: 2,
-    },
-    {
-      title: "Global Tech Leadership Summit",
-      slug: "global-tech-leadership-summit",
-      category: "Corporate",
-      client: "Fortune 500 Technology",
-      location: "Singapore",
-      year: "2024",
-      description:
-        "Three-day executive summit with main stage production and seamless hybrid streaming.",
-      coverImage: S.stage,
-      tags: ["Summit", "Hybrid"],
-      featured: true,
-      order: 3,
-    },
-    {
-      title: "Healthcare Innovation Forum",
-      slug: "healthcare-innovation-forum",
-      category: "Events",
-      client: "Healthcare Consortium",
-      location: "London",
-      year: "2024",
-      description:
-        "Scientific content theatres with private consultation suites and brand hospitality.",
-      coverImage: S.speaker,
-      tags: ["Healthcare"],
-      featured: true,
-      order: 4,
-    },
-    {
-      title: "Retail Flagship Pop-Up Pavilion",
-      slug: "retail-flagship-popup",
-      category: "Booths",
-      client: "Premium Retail Brand",
-      location: "Paris",
-      year: "2024",
-      description:
-        "A temporary retail cathedral — modular architecture and influencer-ready moments.",
-      coverImage: S.gala,
-      tags: ["Retail"],
-      featured: true,
-      order: 5,
-    },
-    {
-      title: "Education Expo Campus",
-      slug: "education-expo-campus",
-      category: "Exhibitions",
-      client: "Education Alliance",
-      location: "Abu Dhabi",
-      year: "2023",
-      description:
-        "Campus-style exhibition district with student journey narratives and institutional lounges.",
-      coverImage: S.workshop,
-      tags: ["Education"],
-      featured: true,
-      order: 6,
-    },
-  ];
-
-  for (const p of portfolioItems) {
-    // Distinct gallery tiles — never three copies of the cover
-    const gallery = [p.coverImage, S.stage, S.gala, S.network, S.festival, S.lights].filter(
-      (url, i, arr) => arr.findIndex((u) => u.split("?")[0] === url.split("?")[0]) === i
-    );
-
-    await prisma.portfolio.upsert({
-      where: { slug: p.slug },
-      update: {
-        coverImage: p.coverImage,
-        gallery: gallery.slice(0, 4),
-        description: p.description,
-        featured: p.featured,
-        order: p.order,
-        category: p.category,
-        title: p.title,
-      },
-      create: {
-        ...p,
-        gallery: gallery.slice(0, 4),
-      },
-    });
-  }
+  // Portfolio showcase populated via admin when projects are approved for release.
 }

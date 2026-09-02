@@ -1,48 +1,61 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
-import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/home/cta-band";
-import { fallbackServices, resolveServiceImage, resolveServiceGallery } from "@/lib/content";
+import {
+  approvedServices,
+  APPROVED_SERVICE_SLUGS,
+  isApprovedServiceSlug,
+} from "@/lib/brief-content";
+import { resolveServiceImage, resolveServiceGallery } from "@/lib/content";
 import { siteConfig } from "@/lib/brand";
 import { Check } from "lucide-react";
 
-type Service = (typeof fallbackServices)[number] & {
-  overview?: string;
-  gallery?: string[];
-  process?: { step: string; title: string; text: string }[];
-  benefits?: string[];
-  features?: string[];
+type ServiceDetail = {
+  title: string;
+  slug: string;
+  description: string;
+  image: string;
+  features: string[];
+  cta: { label: string; href: string; prominent?: boolean };
+  gallery: string[];
 };
 
-async function getService(slug: string): Promise<Service | null> {
-  let service: Service | null = null;
+async function getService(slug: string): Promise<ServiceDetail | null> {
+  if (!isApprovedServiceSlug(slug)) return null;
+
+  const brief = approvedServices.find((s) => s.slug === slug)!;
+  let apiDescription = brief.description;
+
   try {
-    const res = await fetch(`${siteConfig.apiUrl}/services/${slug}`, {
-      next: { revalidate: 0 },
-    });
+    const res = await fetch(`${siteConfig.apiUrl}/services/${slug}`, { next: { revalidate: 0 } });
     if (res.ok) {
       const json = await res.json();
-      if (json.data) service = json.data;
+      if (json.data?.description) apiDescription = json.data.description;
     }
   } catch {
-    /* fallback */
+    /* brief fallback */
   }
-  if (!service) {
-    service = fallbackServices.find((s) => s.slug === slug) || null;
-  }
-  if (!service) return null;
 
-  const image = resolveServiceImage(service.slug, service.image);
-  const gallery = resolveServiceGallery(service.slug, image, service.gallery);
+  const image = resolveServiceImage(slug);
+  const gallery = resolveServiceGallery(slug, image);
 
-  return { ...service, image, gallery };
+  return {
+    title: brief.title,
+    slug,
+    description: brief.description || apiDescription,
+    image,
+    features: brief.features,
+    cta: brief.cta,
+    gallery,
+  };
 }
 
 export async function generateStaticParams() {
-  return fallbackServices.map((s) => ({ slug: s.slug }));
+  return APPROVED_SERVICE_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -69,100 +82,91 @@ export default async function ServiceDetailPage({
   const service = await getService(slug);
   if (!service) notFound();
 
-  const process = service.process || [
-    { step: "01", title: "Discover", text: "Align on goals, audiences, and constraints." },
-    { step: "02", title: "Design", text: "Define creative and operational approach." },
-    { step: "03", title: "Deliver", text: "Execute with precision and live support." },
-    { step: "04", title: "Define", text: "Report, capture, and plan onward." },
-  ];
-  const benefits = service.benefits || [
-    "Dedicated project leadership",
-    "Brand-safe craft standards",
-    "Transparent commercial practice",
-    "International delivery capability",
-  ];
-  const gallery = service.gallery || [];
-
   return (
     <>
-      <PageHero
-        eyebrow="Service"
-        title={service.title}
-        description={service.tagline || service.description}
-        image={service.image}
-      />
+      <PageHero eyebrow="Service" title={service.title} description={service.description} image={service.image} />
 
       <section className="section-pad bg-white">
         <div className="container-premium grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeading eyebrow="Overview" title="How we approach this discipline" />
+            <SectionHeading eyebrow="Overview" title="What we deliver" />
           </div>
           <div className="lg:col-span-7 space-y-6 text-lg leading-relaxed text-muted">
             <FadeUp>
-              <p>{service.overview || service.description}</p>
+              <p>{service.description}</p>
             </FadeUp>
             <FadeUp delay={0.08}>
-              <p>{service.description}</p>
+              <Link
+                href={service.cta.href}
+                className={`mt-4 inline-flex rounded-full px-8 py-4 text-sm font-semibold uppercase tracking-wider transition ${
+                  service.cta.prominent
+                    ? "bg-pink text-white hover:bg-pink-soft"
+                    : "border border-pink text-pink hover:bg-pink hover:text-white"
+                }`}
+              >
+                {service.cta.label}
+              </Link>
             </FadeUp>
           </div>
         </div>
       </section>
 
-      {gallery.length > 0 && (
-      <section className="bg-soft section-pad">
-        <div className="container-premium">
-          <SectionHeading eyebrow="Gallery" title="Visual atmosphere" />
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {gallery.map((src, i) => (
-              <FadeUp key={`${src}-${i}`} delay={i * 0.06}>
-                <div className="relative aspect-[4/5] overflow-hidden image-zoom">
-                  <Image src={src} alt={`${service.title} gallery ${i + 1}`} fill sizes="33vw" className="object-cover" />
-                </div>
-              </FadeUp>
-            ))}
+      {service.gallery.length > 0 && (
+        <section className="section-pad bg-soft">
+          <div className="container-premium">
+            <SectionHeading eyebrow="Visual atmosphere" title="Premium event environments" />
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {service.gallery.map((src, i) => (
+                <FadeUp key={`${src}-${i}`} delay={i * 0.06}>
+                  <div className="relative aspect-[4/5] overflow-hidden image-zoom">
+                    <Image
+                      src={src}
+                      alt={`${service.title} visual ${i + 1}`}
+                      fill
+                      sizes="33vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
 
       <section className="section-pad bg-white">
-        <div className="container-premium">
-          <SectionHeading eyebrow="Process" title="Delivery pathway" />
-          <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-            {process.map((step, i) => (
-              <FadeUp key={step.step} delay={i * 0.06}>
-                <li>
-                  <p className="text-sm font-semibold text-pink">{step.step}</p>
-                  <h3 className="font-display mt-3 text-2xl">{step.title}</h3>
-                  <p className="mt-3 text-muted leading-relaxed">{step.text}</p>
-                </li>
-              </FadeUp>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="section-pad bg-soft">
         <div className="container-premium grid gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeading eyebrow="Benefits" title="What clients gain" />
+            <SectionHeading
+              eyebrow={service.slug === "event-staffing" ? "Staffing solutions" : "Services include"}
+              title="Scope & capability"
+            />
             <ul className="mt-10 space-y-4">
-              {benefits.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-muted">
+              {service.features.map((f) => (
+                <li key={f} className="flex items-start gap-3 text-muted">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-pink" />
-                  <span>{b}</span>
+                  <span>{f}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="flex flex-col justify-end">
-            <div className="relative aspect-[16/11] overflow-hidden">
+            <div className="relative aspect-[16/11] overflow-hidden image-zoom">
               <Image src={service.image} alt="" fill sizes="50vw" className="object-cover" />
             </div>
-            <div className="mt-8">
-              <Button href="/quote" size="lg">
-                Request this service
-              </Button>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href={service.cta.href}
+                className="inline-flex rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-pink-soft"
+              >
+                {service.cta.label}
+              </Link>
+              <Link
+                href="/quote"
+                className="inline-flex rounded-full border border-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-pink transition hover:bg-pink hover:text-white"
+              >
+                Get a Quote
+              </Link>
             </div>
           </div>
         </div>

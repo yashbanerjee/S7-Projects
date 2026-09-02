@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
 import { heroVideo, heroVideoPoster } from "@/lib/content";
+import { heroContent } from "@/lib/brief-content";
 import { ArrowDownRight } from "lucide-react";
 
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
-      {/* Pexels: spectacular fireworks over night carnival (video 29025244) */}
       <div className="absolute inset-0">
         <video
           className="absolute inset-0 h-full w-full scale-105 object-cover"
@@ -22,12 +22,11 @@ export function Hero() {
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
-        {/* Brand-readable overlays — keep luxury depth without killing the video */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(105deg, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.38) 42%, rgba(245,45,113,0.32) 100%), linear-gradient(to top, rgba(17,17,17,0.65) 0%, rgba(245,45,113,0.12) 50%, transparent 72%)",
+              "linear-gradient(105deg, rgba(17,17,17,0.78) 0%, rgba(17,17,17,0.42) 45%, rgba(245,45,113,0.22) 100%), linear-gradient(to top, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.15) 50%, transparent 75%)",
           }}
         />
       </div>
@@ -36,40 +35,40 @@ export function Hero() {
         <div className="container-premium">
           <FadeUp>
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-pink-soft">
-              Project S7 · Events & Exhibitions
+              {heroContent.eyebrow}
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <h1 className="font-display max-w-5xl text-balance text-5xl leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-              Experiences that elevate brands
+            <h1 className="font-display max-w-5xl text-balance text-4xl leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+              {heroContent.headline}
             </h1>
           </FadeUp>
           <FadeUp delay={0.18}>
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
-              Exhibition management, stand architecture, and event production for organisations that expect luxury craftsmanship and flawless delivery.
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-white/88 md:text-lg">
+              {heroContent.supporting}
             </p>
           </FadeUp>
           <FadeUp delay={0.26}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
-                href="/quote"
+                href={heroContent.primaryCta.href}
                 className="inline-flex items-center justify-center rounded-full bg-pink px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-pink/30 transition hover:bg-pink-soft"
               >
-                Make an Enquiry
+                {heroContent.primaryCta.label}
               </Link>
               <Link
-                href="/contact"
+                href={heroContent.secondaryCta.href}
                 className="inline-flex items-center justify-center rounded-full border-2 border-white bg-transparent px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-ink"
               >
-                Request Consultation
+                {heroContent.secondaryCta.label}
               </Link>
             </div>
           </FadeUp>
         </div>
 
         <div className="container-premium mt-16 flex items-center justify-between border-t border-white/20 pt-6 text-white/70">
-          <p className="text-xs uppercase tracking-[0.25em]">Scroll to explore</p>
-          <ArrowDownRight className="h-5 w-5" />
+          <p className="text-xs uppercase tracking-[0.25em]">Events · Exhibitions · Stands · Project Management</p>
+          <ArrowDownRight className="h-5 w-5" aria-hidden />
         </div>
       </div>
     </section>

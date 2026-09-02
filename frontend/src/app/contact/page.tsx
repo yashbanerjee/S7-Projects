@@ -7,17 +7,28 @@ import { siteConfig } from "@/lib/brand";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Project S7 — email, WhatsApp, phone, Google Map, and consultation form for luxury events and exhibitions.",
+    "Contact Project S7 for events, exhibitions, exhibition stands and project management enquiries.",
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ intent?: string }>;
+}) {
+  const { intent } = await searchParams;
+  const isConsultation = intent === "consultation";
+
   return (
     <>
       <PageHero
         eyebrow="Contact"
-        title="Let’s discuss your next programme"
-        description="Whether you are planning a national pavilion or a single signature stand, our team is ready to respond with clarity."
+        title={isConsultation ? "Request a Consultation" : "Get in touch"}
+        description={
+          isConsultation
+            ? "Not sure where to start? Share your objectives and our team will guide you through the right approach."
+            : "Whether you need a quote, design discussion, or strategic advice — our team is ready to respond with clarity."
+        }
         image={images.contact}
       />
       <ContactClient
@@ -26,6 +37,7 @@ export default function ContactPage() {
         whatsapp={siteConfig.whatsapp}
         address={siteConfig.address}
         social={siteConfig.social}
+        intent={isConsultation ? "consultation" : "general"}
       />
     </>
   );

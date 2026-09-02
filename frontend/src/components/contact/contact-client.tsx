@@ -26,12 +26,14 @@ export function ContactClient({
   whatsapp,
   address,
   social,
+  intent = "general",
 }: {
   email: string;
   phone: string;
   whatsapp: string;
   address: string;
   social: { linkedin: string; instagram: string; x: string };
+  intent?: "general" | "consultation";
 }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const {
@@ -45,13 +47,23 @@ export function ContactClient({
     defaultValues: { phone: "" },
   });
 
+  const isConsultation = intent === "consultation";
+
   const onSubmit = handleSubmit(async (data) => {
     setStatus("loading");
     try {
+      const subject = isConsultation
+        ? data.subject || "Consultation request"
+        : data.subject;
+      const messagePrefix = isConsultation ? "[Consultation request] " : "";
       const res = await fetch(`${siteConfig.apiUrl}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          subject,
+          message: `${messagePrefix}${data.message}`,
+        }),
       });
       if (!res.ok) throw new Error("fail");
       setStatus("success");
@@ -69,8 +81,12 @@ export function ContactClient({
         <div className="lg:col-span-5">
           <SectionHeading
             eyebrow="Details"
-            title="How to reach us"
-            description="Prefer email, WhatsApp, or a structured enquiry — choose the channel that suits your team."
+            title={isConsultation ? "Request a consultation" : "How to reach us"}
+            description={
+              isConsultation
+                ? "Share your objectives and we will recommend the right path — design, build, management, or full turnkey delivery."
+                : "Prefer email, WhatsApp, or a structured enquiry — choose the channel that suits your team."
+            }
           />
           <FadeUp delay={0.1}>
             <ul className="mt-10 space-y-6">
@@ -163,7 +179,7 @@ export function ContactClient({
               </label>
               <div className="sm:col-span-2 flex items-center gap-4">
                 <Button type="submit" disabled={status === "loading"}>
-                  {status === "loading" ? "Sending…" : "Send Message"}
+                  {status === "loading" ? "Sending…" : isConsultation ? "Request a Consultation" : "Send Message"}
                 </Button>
                 {status === "success" && <p className="text-sm text-pink">Message sent. We will respond shortly.</p>}
                 {status === "error" && (

@@ -4,22 +4,33 @@ import { QuoteForm } from "@/components/quote/quote-form";
 import { images } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Make an Enquiry",
+  title: "Get a Quote",
   description:
-    "Submit an enquiry to Project S7 for exhibition management, stand design & build, event production, and full programme delivery.",
+    "Request a quote from Project S7 for exhibition management, stand design, stand build, project management, and event staffing.",
   alternates: { canonical: "/quote" },
 };
 
-export default function QuotePage() {
+export default async function QuotePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ intent?: string }>;
+}) {
+  const { intent } = await searchParams;
+  const isDesign = intent === "design";
+
   return (
     <>
       <PageHero
-        eyebrow="Enquiry"
-        title="Tell us about your programme"
-        description="Share the essentials — we respond with a structured proposal, creative direction, and a practical delivery plan."
-        image={images.lighting}
+        eyebrow={isDesign ? "Design enquiry" : "Enquiry"}
+        title={isDesign ? "Start Designing" : "Get a Quote"}
+        description={
+          isDesign
+            ? "Share your exhibition stand vision — our creative team will respond with concept direction and next steps."
+            : "Tell us about your event, exhibition or stand project — we respond with clarity and a structured proposal."
+        }
+        image={isDesign ? images.booth : images.lighting}
       />
-      <QuoteForm />
+      <QuoteForm intent={isDesign ? "design" : "quote"} />
     </>
   );
 }

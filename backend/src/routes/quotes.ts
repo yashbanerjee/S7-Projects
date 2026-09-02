@@ -47,7 +47,7 @@ router.post(
        <p><strong>Email:</strong> ${data.email}</p>
        <p><strong>Phone:</strong> ${data.phone}</p>
        <p><strong>Service:</strong> ${data.service || "—"}</p>
-       <p><strong>Budget:</strong> ${data.budget || "—"}</p>
+       <p><strong>Event / Project Type:</strong> ${data.budget || "—"}</p>
        <p><strong>Event Date:</strong> ${data.eventDate || "—"}</p>
        <p><strong>Location:</strong> ${data.location || "—"}</p>
        <p><strong>Message:</strong> ${data.message || "—"}</p>`

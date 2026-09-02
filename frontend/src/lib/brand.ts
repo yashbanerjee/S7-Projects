@@ -14,9 +14,10 @@ export const brand = {
 export const siteConfig = {
   name: "Project S7",
   legalName: "Project S7 Event Management",
-  tagline: "Luxury Corporate Events & Exhibitions",
+  tagline: "Events & Exhibitions",
   description:
-    "Project S7 is a premium corporate events and exhibition company delivering world-class exhibition management, stand design & build, event production, and project management for government, corporate, and international clients.",
+    "Project S7 delivers premium events, exhibitions, bespoke exhibition stands and end-to-end project management with precision, creativity and professional execution.",
+  seoTitle: "Project S7 | Events, Exhibitions & Exhibition Stands",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
   email: "hello@projects7.com",
@@ -32,11 +33,15 @@ export const siteConfig = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Industries", href: "/industries" },
-    { label: "Careers", href: "/careers" },
-    { label: "FAQ", href: "/faq" },
+    { label: "Our Process", href: "/#process" },
     { label: "Contact", href: "/contact" },
+  ],
+  footerServices: [
+    { label: "Exhibition Management", href: "/services/exhibition-management" },
+    { label: "Exhibition Stand Design", href: "/services/exhibition-stand-design" },
+    { label: "Exhibition Stand Build", href: "/services/exhibition-stand-build" },
+    { label: "Project Management", href: "/services/project-management" },
+    { label: "Event Staffing", href: "/services/event-staffing" },
   ],
 } as const;
 
