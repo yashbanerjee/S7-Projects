@@ -138,7 +138,7 @@ export default async function ServiceDetailPage({
         <div className="container-premium grid gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow={service.slug === "event-staffing" ? "Staffing solutions" : "Services include"}
+              eyebrow="Services include"
               title="Scope & capability"
             />
             <ul className="mt-10 space-y-4">

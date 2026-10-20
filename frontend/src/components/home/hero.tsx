@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
-import { heroVideo, heroVideoPoster } from "@/lib/content";
+import { images } from "@/lib/content";
 import { heroContent } from "@/lib/brief-content";
 import { ArrowDownRight } from "lucide-react";
 
@@ -10,18 +11,14 @@ export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
       <div className="absolute inset-0">
-        <video
-          className="absolute inset-0 h-full w-full scale-105 object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster={heroVideoPoster}
-          aria-hidden
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
+        <Image
+          src={images.hero}
+          alt="Architectural exhibition hall with a large-scale visitor floor"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div
           className="absolute inset-0"
           style={{

@@ -10,8 +10,8 @@ export function ServicesShowcase() {
     <section className="section-pad bg-soft" id="services">
       <div className="container-premium">
         <SectionHeading
-          eyebrow="Services"
-          title="Events, exhibitions, stands & project management"
+          eyebrow="Our Expertise"
+          title="We bring ambitious projects to life."
           description="Five focused disciplines — delivered with creative excellence and operational precision for corporate, government and international programmes."
         />
       </div>
@@ -37,9 +37,6 @@ export function ServicesShowcase() {
                 </FadeUp>
 
                 <FadeUp delay={0.08} className={reverse ? "lg:order-1 lg:col-span-5" : "lg:col-span-5"}>
-                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.32em] text-pink">
-                    Service {String(index + 1).padStart(2, "0")}
-                  </p>
                   <h3 className="font-display text-3xl tracking-tight md:text-4xl lg:text-[2.75rem] lg:leading-tight">
                     {service.title}
                   </h3>
@@ -47,7 +44,7 @@ export function ServicesShowcase() {
 
                   <div className="mt-8">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink">
-                      {service.slug === "event-staffing" ? "Staffing Solutions" : "Services Include"}
+                      Services Include
                     </p>
                     <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                       {service.features.map((item) => (

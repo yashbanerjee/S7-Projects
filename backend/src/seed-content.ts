@@ -81,11 +81,11 @@ export async function seedContent(prisma: PrismaClient) {
       featured: true,
     },
     {
-      title: "Project Management",
+      title: "Project Management & Consultancy",
       slug: "project-management",
-      tagline: "Clarity under complexity",
+      tagline: "Strategic oversight and on-site delivery",
       description:
-        "Dedicated project directors who hold budgets, timelines, stakeholders, and creative delivery together.",
+        "We provide strategic oversight and hands-on project management for events, exhibitions and complex projects. From initial planning to supplier coordination and on-site delivery, we ensure every element is aligned, efficiently managed and delivered to the highest standard.",
       image: S.conference,
       gallery: [S.conference, S.boardroom, S.deal],
       icon: "Kanban",
@@ -93,11 +93,11 @@ export async function seedContent(prisma: PrismaClient) {
       featured: true,
     },
     {
-      title: "Event Staffing",
-      slug: "event-staffing",
-      tagline: "People who elevate every interaction",
+      title: "Speaker Management & VIP Services",
+      slug: "speaker-management",
+      tagline: "Speakers, guests and VIPs, coordinated end to end",
       description:
-        "Trained hosts, brand ambassadors, technical crew, and VIP stewards with polish and warmth.",
+        "We provide comprehensive speaker and VIP coordination for conferences, summits and corporate events. From travel arrangements and speaker briefings to on-site coordination and green room management, we ensure a seamless and professional experience for every speaker, guest and VIP.",
       image: S.network,
       gallery: [S.network, S.workshop, S.seminar],
       icon: "Users",
@@ -107,6 +107,7 @@ export async function seedContent(prisma: PrismaClient) {
   ];
 
   const removedSlugs = [
+    "event-staffing",
     "event-production",
     "creative-branding",
     "capabilities",

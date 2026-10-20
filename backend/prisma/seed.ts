@@ -108,11 +108,11 @@ async function main() {
       features: ["Modular systems", "Custom joinery", "AV integration", "Onsite supervision"],
     },
     {
-      title: "Project Management",
+      title: "Project Management & Consultancy",
       slug: "project-management",
-      tagline: "Clarity under complexity",
+      tagline: "Strategic oversight and on-site delivery",
       description:
-        "Dedicated project directors who hold the entire programme together — budgets, timelines, stakeholders, and creative delivery.",
+        "We provide strategic oversight and hands-on project management for events, exhibitions and complex projects. From initial planning to supplier coordination and on-site delivery, we ensure every element is aligned, efficiently managed and delivered to the highest standard.",
       overview:
         "Governance frameworks, risk registers, cost control, and transparent reporting. Ideal for multi-city roadshows, multi-stand campaigns, and hybrid programmes.",
       image: img("3184291"),
@@ -130,11 +130,11 @@ async function main() {
       features: ["RAID logs", "Budget tracking", "Vendor SQA", "Executive reporting"],
     },
     {
-      title: "Event Staffing",
-      slug: "event-staffing",
-      tagline: "People who elevate every interaction",
+      title: "Speaker Management & VIP Services",
+      slug: "speaker-management",
+      tagline: "Speakers, guests and VIPs, coordinated end to end",
       description:
-        "Trained hosts, brand ambassadors, technical crew, and VIP stewards who represent your brand with polish and warmth.",
+        "We provide comprehensive speaker and VIP coordination for conferences, summits and corporate events. From travel arrangements and speaker briefings to on-site coordination and green room management, we ensure a seamless and professional experience for every speaker, guest and VIP.",
       overview:
         "Recruitment, briefing, uniforming, and onsite management of front-of-house and production teams for expos, launches, and conferences.",
       image: img("3184360"),

@@ -11,8 +11,8 @@ export function AboutTeaser() {
         <FadeUp className="relative lg:col-span-6">
           <div className="relative aspect-[4/5] overflow-hidden image-zoom md:aspect-[5/6]">
             <Image
-              src={images.build}
-              alt="Premium exhibition stand build and production on a show floor"
+              src={images.about}
+              alt="Grand exhibition hall prepared for a large public show"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -21,8 +21,8 @@ export function AboutTeaser() {
           </div>
           <div className="absolute -bottom-6 -right-4 hidden aspect-[4/3] w-[42%] overflow-hidden border-4 border-white shadow-xl image-zoom md:block lg:-right-8">
             <Image
-              src={images.stage}
-              alt="Large-scale event production with LED staging"
+              src={images.build}
+              alt="Finished outdoor exhibition pavilion"
               fill
               sizes="25vw"
               className="object-cover"

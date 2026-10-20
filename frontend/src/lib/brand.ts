@@ -40,8 +40,8 @@ export const siteConfig = {
     { label: "Exhibition Management", href: "/services/exhibition-management" },
     { label: "Exhibition Stand Design", href: "/services/exhibition-stand-design" },
     { label: "Exhibition Stand Build", href: "/services/exhibition-stand-build" },
-    { label: "Project Management", href: "/services/project-management" },
-    { label: "Event Staffing", href: "/services/event-staffing" },
+    { label: "Project Management & Consultancy", href: "/services/project-management" },
+    { label: "Speaker Management & VIP Services", href: "/services/speaker-management" },
   ],
 } as const;
 

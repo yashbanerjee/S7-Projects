@@ -1,96 +1,50 @@
 /**
- * Curated Pexels imagery for Project S7 -
- * Visually verified event / exhibition / stage / hospitality photography.
- * Source: https://www.pexels.com (royalty-free)
+ * Client-supplied photography from the Project S7 company profile.
+ * Files live in /public/images so they can be replaced without touching components.
  */
-const px = (id: number | string, w = 1600) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
-
 export const images = {
-  /** Arena-scale production with LED wall & stage architecture */
-  hero: px(2263436, 2400),
-  /** Outdoor festival stage with pyrotechnic atmosphere */
-  heroAlt: px(1540406, 2400),
-  /** Formal banquet / reception table styling */
-  about: px(2306281, 1600),
-  /** Purple-lit auditorium audience */
-  aboutWide: px(2774557, 2000),
-  /** Creative workshop / live host presentation */
-  process: px(2608517, 1800),
-  /** Concert stage beams */
-  cta: px(2747449, 2400),
-  /** Professional seminar / conference attendees */
-  contact: px(7648047, 1800),
-  /** Behind-the-scenes creative gathering */
-  careers: px(2608517, 1800),
-  /** Champagne toast & celebration energy */
-  culture: px(3171837, 1600),
-  /** Intimate keynote speaker on stage */
-  leadership: px(3321793, 1400),
-  /** Casual hospitality networking moment */
-  networking: px(2422290, 1800),
-  /** Large-scale stage production */
-  stage: px(2263436, 1800),
-  /** Styled brand booth interior / spatial exhibit design */
-  booth: px(31311125, 1800),
-  /** Outdoor exhibition stand pavilion (Volvo show floor) */
-  build: px(12712474, 1800),
-  /** Outdoor hospitality catering display */
-  hospitality: px(587741, 1800),
-  /** Theatre stage curtains - awards / ceremony mood */
-  awards: px(713149, 1800),
-  /** Busy indoor trade-show hall with booth grid */
-  expo: px(35138560, 1800),
-  /** Monumental live-event structure / LED arena */
-  architecture: px(2263436, 1800),
-  /** People-forward event culture */
-  team: px(2422290, 1800),
-  /** Dramatic stage lighting wash */
-  lighting: px(2747446, 1800),
-  /** Conference hall / board meeting */
-  conference: px(1181406, 1800),
-  /** Gala dining setup */
-  gala: px(2306281, 1800),
-  /** Confetti toast celebration */
-  celebration: px(3171837, 1600),
-  /** Formal dinner atmosphere */
-  dinner: px(2306281, 1800),
-  /** High-energy outdoor show atmosphere */
-  lightsCrowd: px(1540406, 1800),
-  /** Briefing / seminar attendees */
-  briefing: px(7648047, 1800),
-  /** Panel / speaker forum */
-  panel: px(3321793, 1800),
-  /** Product-reveal / launch show energy */
-  launch: px(1763075, 1800),
-  /** Exhibition-floor hospitality / networking lounge */
-  skyline: px(860227, 1800),
-  /** Live show intensity */
-  automotive: px(167636, 1800),
-  /** Retail / experiential hospitality */
-  retail: px(587741, 1800),
-  /** Education forum audience */
-  education: px(1708988, 1800),
-  /** Healthcare-style professional congress */
-  healthcare: px(7648047, 1800),
-  /** Immersive tech / next-gen experience environment */
-  technology: px(19012064, 1800),
-  /** Blue-lit keynote auditorium */
-  keynoteHall: px(2774556, 1800),
-  /** Industrial machinery exhibit on a show floor */
-  tradeMachinery: px(36522033, 1800),
-  /** Designer studio — tablet + brand craft */
-  designStudio: px(4348401, 1800),
-  /** Creative desk with sketchbooks & brand tools */
-  brandCraft: px(4348374, 1800),
-  /** Stakeholder handshake / programme agreement */
-  dealClose: px(3184291, 1800),
-  /** Strategic presentation in a bright boardroom */
-  programmeBoard: px(1181395, 1800),
-  /** Host speaking to a live workshop audience */
-  hostCrew: px(2608517, 1800),
-  /** Concert crowd with raised hands (AV energy) */
-  productionCrowd: px(2747446, 1800),
+  hero: "/images/hero.jpg",
+  heroAlt: "/images/stage.jpg",
+  about: "/images/about.jpg",
+  aboutWide: "/images/expo-hall.jpg",
+  process: "/images/services/project-management.jpg",
+  cta: "/images/stage.jpg",
+  contact: "/images/services/project-management-3.jpg",
+  careers: "/images/services/project-management.jpg",
+  culture: "/images/services/speaker-vip.jpg",
+  leadership: "/images/services/project-management-2.jpg",
+  networking: "/images/services/speaker-vip.jpg",
+  stage: "/images/stage.jpg",
+  booth: "/images/services/stand-design.jpg",
+  build: "/images/about-build.jpg",
+  hospitality: "/images/services/speaker-vip.jpg",
+  awards: "/images/stage.jpg",
+  expo: "/images/expo-hall.jpg",
+  architecture: "/images/hero.jpg",
+  team: "/images/services/project-management.jpg",
+  lighting: "/images/stage.jpg",
+  conference: "/images/services/project-management.jpg",
+  gala: "/images/services/speaker-vip.jpg",
+  celebration: "/images/stage.jpg",
+  dinner: "/images/services/speaker-vip.jpg",
+  lightsCrowd: "/images/stage.jpg",
+  briefing: "/images/services/project-management-3.jpg",
+  panel: "/images/services/project-management-2.jpg",
+  launch: "/images/services/stand-design-2.jpg",
+  skyline: "/images/hero.jpg",
+  automotive: "/images/about-build.jpg",
+  retail: "/images/services/stand-design-2.jpg",
+  education: "/images/expo-hall.jpg",
+  healthcare: "/images/services/exhibition-management.jpg",
+  technology: "/images/services/stand-design.jpg",
+  keynoteHall: "/images/about.jpg",
+  tradeMachinery: "/images/services/stand-build-2.jpg",
+  designStudio: "/images/services/stand-design-3.jpg",
+  brandCraft: "/images/services/stand-design-2.jpg",
+  dealClose: "/images/services/project-management-2.jpg",
+  programmeBoard: "/images/services/project-management.jpg",
+  hostCrew: "/images/services/speaker-vip.jpg",
+  productionCrowd: "/images/stage.jpg",
 };
 
 /** Scroll-stopping event stills used in homepage gallery */
@@ -137,23 +91,12 @@ export const eventMoments = [
   },
 ];
 
-/** Hero video — Pexels 29025244: spectacular fireworks over night carnival */
-export const heroVideo =
-  "https://videos.pexels.com/video-files/29025244/12548877_3840_2160_30fps.mp4";
-
-/** Poster still while video loads (firework / carnival atmosphere) */
-export const heroVideoPoster = images.lightsCrowd;
-
 export const serviceImages: Record<string, string> = {
-  "exhibition-management": images.expo,
-  "exhibition-stand-design": images.booth,
-  "exhibition-stand-build": images.build,
-  "project-management": images.conference,
-  "event-staffing": images.networking,
-  "event-production": images.stage,
-  "creative-branding": images.designStudio,
-  capabilities: images.skyline,
-  "future-services": images.technology,
+  "exhibition-management": "/images/services/exhibition-management.jpg",
+  "exhibition-stand-design": "/images/services/stand-design.jpg",
+  "exhibition-stand-build": "/images/services/stand-build.jpg",
+  "project-management": "/images/services/project-management.jpg",
+  "speaker-management": "/images/services/speaker-vip.jpg",
 };
 /** Public service card shape used on home / services listing */
 export type PublicService = {
@@ -237,24 +180,31 @@ export const galleryStockPool = uniqueImageUrls([
  * Matched to what the service actually delivers — not generic office stock.
  */
 export const serviceGalleries: Record<string, string[]> = {
-  // Show-floor orchestration: hall, hospitality lounges, keynote audience
-  "exhibition-management": [images.expo, images.skyline, images.keynoteHall],
-  // Spatial design: styled booth interior, pavilion form, brand pop-up detail
-  "exhibition-stand-design": [images.booth, images.build, images.designStudio],
-  // Physical builds: pavilion, industrial exhibit install, trade-floor density
-  "exhibition-stand-build": [images.build, images.tradeMachinery, images.expo],
-  // Programme control: board meetings, briefings, stakeholder close
-  "project-management": [images.conference, images.programmeBoard, images.dealClose],
-  // People on the floor: hosts, workshop crew, guest networks
-  "event-staffing": [images.networking, images.hostCrew, images.briefing],
-  // Live technical craft: arena LED, lighting wash, festival stage
-  "event-production": [images.stage, images.lighting, images.lightsCrowd],
-  // Brand worlds: design studio craft, spatial brand booth, awards moments
-  "creative-branding": [images.designStudio, images.brandCraft, images.booth],
-  // Full delivery stack: expo floor, pavilion, live production
-  capabilities: [images.skyline, images.build, images.stage],
-  // Next formats: immersive tech spaces, tech expo machinery, product launch energy
-  "future-services": [images.technology, images.tradeMachinery, images.launch],
+  "exhibition-management": [
+    "/images/services/exhibition-management.jpg",
+    "/images/services/exhibition-management-2.jpg",
+    "/images/services/exhibition-management-3.jpg",
+  ],
+  "exhibition-stand-design": [
+    "/images/services/stand-design.jpg",
+    "/images/services/stand-design-2.jpg",
+    "/images/services/stand-design-3.jpg",
+  ],
+  "exhibition-stand-build": [
+    "/images/services/stand-build.jpg",
+    "/images/services/stand-build-2.jpg",
+    "/images/services/stand-build-3.jpg",
+  ],
+  "project-management": [
+    "/images/services/project-management.jpg",
+    "/images/services/project-management-2.jpg",
+    "/images/services/project-management-3.jpg",
+  ],
+  "speaker-management": [
+    "/images/services/speaker-vip.jpg",
+    "/images/services/speaker-vip-2.jpg",
+    "/images/services/speaker-vip-3.jpg",
+  ],
 };
 
 /**
@@ -357,20 +307,38 @@ export const fallbackServices = [
     image: images.build,
   },
   {
-    title: "Project Management",
+    title: "Project Management & Consultancy",
     slug: "project-management",
-    tagline: "Clarity under complexity",
     description:
-      "Dedicated project directors who hold the entire programme together — budgets, timelines, stakeholders, and creative delivery.",
+      "We provide strategic oversight and hands-on project management for events, exhibitions and complex projects. From initial planning to supplier coordination and on-site delivery, we ensure every element is aligned, efficiently managed and delivered to the highest standard.",
     image: images.conference,
+    features: [
+      "Project Planning & Scheduling",
+      "Procurement & Supplier Management",
+      "Technical & Operational Coordination",
+      "Risk Management & Compliance",
+      "Stakeholder & Client Management",
+      "On-Site Project Delivery",
+      "Project Reporting & Close-Out",
+    ],
   },
   {
-    title: "Event Staffing",
-    slug: "event-staffing",
-    tagline: "People who elevate every interaction",
+    title: "Speaker Management & VIP Services",
+    slug: "speaker-management",
     description:
-      "Trained hosts, brand ambassadors, technical crew, and VIP stewards who represent your brand with polish and warmth.",
-    image: images.networking,
+      "We provide comprehensive speaker and VIP coordination for conferences, summits and corporate events. From travel arrangements and speaker briefings to on-site coordination and green room management, we ensure a seamless and professional experience for every speaker, guest and VIP.",
+    image: serviceImages["speaker-management"],
+    features: [
+      "Speaker Liaison & Communication",
+      "Speaker Travel & Accommodation Coordination",
+      "Speaker Scheduling & Briefings",
+      "Presentation & Session Coordination",
+      "Green Room Management",
+      "Stage & Speaker Movement Coordination",
+      "VIP Guest Management & Protocol",
+      "Airport Transfers & Ground Transportation",
+      "Speaker Registration & Accreditation",
+    ],
   },
 ];
 

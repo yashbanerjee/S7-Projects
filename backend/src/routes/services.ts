@@ -32,7 +32,7 @@ const APPROVED_SERVICE_SLUGS = [
   "exhibition-stand-design",
   "exhibition-stand-build",
   "project-management",
-  "event-staffing",
+  "speaker-management",
 ];
 
 router.get(

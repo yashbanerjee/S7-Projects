@@ -5,6 +5,15 @@ import path from "path";
 const appRoot = process.cwd();
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/services/event-staffing",
+        destination: "/services/speaker-management",
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {
     root: appRoot,
   },

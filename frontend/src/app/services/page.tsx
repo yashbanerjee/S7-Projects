@@ -4,65 +4,36 @@ import Link from "next/link";
 import { PageHero } from "@/components/ui/page-hero";
 import { FadeUp, SectionHeading } from "@/components/ui/motion";
 import { CtaBand } from "@/components/home/cta-band";
-import {
-  approvedServices,
-  filterApprovedServices,
-  isApprovedServiceSlug,
-} from "@/lib/brief-content";
-import { applyServiceStockImages, images, resolveServiceImage, type PublicService } from "@/lib/content";
-import { siteConfig } from "@/lib/brand";
+import { approvedServices, isApprovedServiceSlug } from "@/lib/brief-content";
+import { images, resolveServiceImage } from "@/lib/content";
 import { ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Our Expertise",
   description:
-    "Exhibition management, exhibition stand design & build, project management, and event staffing from Project S7.",
+    "Exhibition management, exhibition stand design and build, project management and consultancy, and speaker and VIP services from Project S7.",
   alternates: { canonical: "/services" },
 };
 
-async function getServices(): Promise<PublicService[]> {
-  const approved = approvedServices.map((s) => ({
+function getServices() {
+  return approvedServices.map((s) => ({
     title: s.title,
     slug: s.slug,
     description: s.description,
-    features: s.features,
+    features: [...s.features],
     image: resolveServiceImage(s.slug),
   }));
-
-  try {
-    const res = await fetch(`${siteConfig.apiUrl}/services`, { next: { revalidate: 0 } });
-    const json = await res.json();
-    if (json.data?.length) {
-      const filtered = filterApprovedServices(json.data as PublicService[]);
-      if (filtered.length) {
-        return applyServiceStockImages(
-          filtered.map((api) => {
-            const brief = approvedServices.find((s) => s.slug === api.slug);
-            return {
-              ...api,
-              description: brief?.description || api.description,
-              features: brief?.features || api.features,
-            };
-          })
-        );
-      }
-    }
-  } catch {
-    /* fallback */
-  }
-
-  return applyServiceStockImages(approved);
 }
 
-export default async function ServicesPage() {
-  const services = await getServices();
+export default function ServicesPage() {
+  const services = getServices();
 
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="Events, exhibitions & stands — delivered end to end"
-        description="Five core disciplines. One accountable partner. From exhibition halls to bespoke stands, project leadership, and professional event teams."
+        eyebrow="Our Expertise"
+        title="We bring ambitious projects to life."
+        description="Five core disciplines. One accountable partner. From exhibition halls and bespoke stands to project leadership and speaker coordination."
         image={images.expo}
       />
 
@@ -93,14 +64,11 @@ export default async function ServicesPage() {
                       />
                     </div>
                     <div className={i % 2 ? "lg:order-1" : ""}>
-                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-pink">
-                        Service 0{i + 1}
-                      </p>
-                      <h2 className="font-display mt-4 text-3xl tracking-tight md:text-5xl">{s.title}</h2>
+                      <h2 className="font-display text-3xl tracking-tight md:text-5xl">{s.title}</h2>
                       <p className="mt-6 text-base leading-relaxed text-muted md:text-lg">{s.description}</p>
                       {brief?.features && (
                         <ul className="mt-6 grid gap-2 sm:grid-cols-2">
-                          {brief.features.slice(0, 6).map((f) => (
+                          {brief.features.map((f) => (
                             <li key={f} className="text-sm text-muted">
                               {f}
                             </li>
