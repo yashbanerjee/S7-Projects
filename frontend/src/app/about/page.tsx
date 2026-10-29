@@ -21,7 +21,7 @@ export default function AboutPage() {
         eyebrow={aboutPageContent.eyebrow}
         title={aboutPageContent.title}
         description={aboutPageContent.copy[0]}
-        image={images.build}
+        image={images.about}
       />
 
       <section className="section-pad bg-white">

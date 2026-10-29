@@ -53,7 +53,7 @@ export function Navbar() {
           "fixed inset-x-0 top-0 z-50 transition-all duration-500",
           solid
             ? "border-b border-pink/15 bg-pink-muted/75 py-3 shadow-sm shadow-pink/5 backdrop-blur-md"
-            : "bg-gradient-to-b from-black/55 via-pink/10 to-transparent py-5"
+            : "bg-gradient-to-b from-black/55 via-black/20 to-transparent py-5"
         )}
       >
         <div className="container-premium flex items-center justify-between gap-6">
