@@ -26,8 +26,14 @@ export const aboutSection = {
   eyebrow: "About Us",
   title: "Your Trusted Event & Exhibition Partner",
   copy: [
-    "We deliver seamless event experiences through expert planning, innovative design, and flawless execution. With extensive experience managing exhibitions, conferences, corporate events, and custom-built exhibition stands, we offer complete turnkey solutions tailored to every client's objectives.",
-    "From initial concept through to project completion, our team ensures every detail is managed with precision, professionalism, and creativity.",
+    "We plan, design, build, and run exhibitions and events with operational discipline. From floor plans, contractor coordination, and stand fabrication through to on-site delivery, our teams own the full production cycle — not just the concept.",
+    "Creative direction sits alongside project control: clear timelines, accountable workstreams, and turnkey solutions for exhibitions, conferences, corporate programmes, and bespoke stands.",
+  ],
+  capabilities: [
+    "Exhibition planning & operations",
+    "Stand design & build",
+    "On-site project control",
+    "Build-up & breakdown",
   ],
   cta: { label: "Request a Consultation", href: "/contact?intent=consultation" },
 };

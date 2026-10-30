@@ -12,20 +12,11 @@ export function AboutTeaser() {
           <div className="relative aspect-[4/5] overflow-hidden image-zoom md:aspect-[5/6]">
             <Image
               src={images.about}
-              alt="Grand exhibition hall prepared for a large public show"
+              alt="Busy exhibition floor with branded stands and visitors"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
               priority
-            />
-          </div>
-          <div className="absolute -bottom-6 -right-4 hidden aspect-[4/3] w-[42%] overflow-hidden border-4 border-white shadow-xl image-zoom md:block lg:-right-8">
-            <Image
-              src={images.build}
-              alt="Finished outdoor exhibition pavilion"
-              fill
-              sizes="25vw"
-              className="object-cover"
             />
           </div>
         </FadeUp>

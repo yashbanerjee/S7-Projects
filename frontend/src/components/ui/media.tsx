@@ -29,14 +29,14 @@ export function ParallaxImage({
 
   return (
     <div ref={ref} className={cn("relative overflow-hidden", className)}>
-      <motion.div style={{ y }} className="absolute inset-[-12%] h-[124%] w-full">
+      <motion.div style={{ y }} className="absolute -inset-[12%]">
         <Image
           src={src}
           alt={alt}
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover"
+          className="object-cover object-center"
         />
       </motion.div>
       {overlay && overlay !== "none" && (

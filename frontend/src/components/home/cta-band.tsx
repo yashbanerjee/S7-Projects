@@ -6,7 +6,7 @@ import { ctaBandContent } from "@/lib/brief-content";
 
 export function CtaBand() {
   return (
-    <section className="relative min-h-[60vh] overflow-hidden">
+    <section className="relative min-h-[60vh] overflow-hidden bg-ink">
       <ParallaxImage
         src={images.cta}
         alt="Premium event production with dramatic stage lighting"

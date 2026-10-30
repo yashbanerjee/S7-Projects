@@ -8,7 +8,7 @@ export const images = {
   about: "/images/about.jpg",
   aboutWide: "/images/expo-hall.jpg",
   process: "/images/services/project-management.jpg",
-  cta: "/images/stage.jpg",
+  cta: "/images/cta.jpg",
   contact: "/images/services/project-management-3.jpg",
   careers: "/images/services/project-management.jpg",
   culture: "/images/services/speaker-vip.jpg",

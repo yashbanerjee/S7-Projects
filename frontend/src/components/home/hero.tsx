@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { FadeUp } from "@/components/ui/motion";
 import { images } from "@/lib/content";
@@ -11,14 +10,18 @@ export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-ink">
       <div className="absolute inset-0">
-        <Image
-          src={images.hero}
-          alt="Architectural exhibition hall with a large-scale visitor floor"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={images.hero}
+          aria-hidden
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
         <div
           className="absolute inset-0"
           style={{
