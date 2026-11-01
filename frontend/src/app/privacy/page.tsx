@@ -20,7 +20,7 @@ export default function PrivacyPage() {
             File uploads are stored securely and used only for the purpose stated at collection. We do not sell personal data. Access is limited to authorised administrative personnel.
           </p>
           <p>
-            Email notifications may be sent via our SMTP provider. Analytics may process aggregated traffic data. You may request access or deletion of your personal data by writing to hello@projects7.com.
+            Email notifications may be sent via our SMTP provider. Analytics may process aggregated traffic data. You may request access or deletion of your personal data by writing to enquiries@projects7.com.
           </p>
           <p>This policy may be updated periodically. Continued use of the site constitutes acceptance of the then-current policy.</p>
         </div>

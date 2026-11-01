@@ -70,11 +70,6 @@ export function Footer() {
                   {siteConfig.email}
                 </a>
               </li>
-              <li>
-                <a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`} className="hover:text-pink">
-                  {siteConfig.phone}
-                </a>
-              </li>
               <li className="max-w-[16rem] leading-relaxed">{siteConfig.address}</li>
             </ul>
             <Link

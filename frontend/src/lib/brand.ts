@@ -20,7 +20,7 @@ export const siteConfig = {
   seoTitle: "Project S7 | Events, Exhibitions & Exhibition Stands",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
-  email: "hello@projects7.com",
+  email: "enquiries@projects7.com",
   phone: "+971 4 000 0000",
   whatsapp: "+971500000000",
   address: "Business Bay, Dubai, United Arab Emirates",

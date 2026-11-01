@@ -532,7 +532,7 @@ async function main() {
       value: {
         companyName: "Project S7",
         tagline: "Luxury Corporate Events & Exhibitions",
-        email: "hello@projects7.com",
+        email: "enquiries@projects7.com",
         phone: "+971 4 000 0000",
         whatsapp: "+971500000000",
         address: "Business Bay, Dubai, United Arab Emirates",
